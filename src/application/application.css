@@ -7,3 +7,13 @@
 .sidebar{
 	-fx-background-color: #333645;
 }
+
+.btns{
+	
+	-fx-background-color: transparent;
+}
+
+.btns:hover{
+	
+	-fx-background-color: #202332;
+}
