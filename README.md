@@ -2,17 +2,17 @@
 Chequeo y control de facturas a través de una aplicación, con una mayor organización y respaldo. El sistema funciona de la siguiente forma: oficina principal y sucursales, cada sucursal realiza por medios propios los pedidos a proveedores y por ende facturación propia, el pago puede ser contado o por cuenta corriente, dependiendo del proveedor. La oficina principal necesita realizar un control constante de todas las facturaciones realizadas en cada local, por diferentes motivos: pago de proveedores, control de stock, seguimientos, pago de impuestos entre otros. 
 Se representa el sistema en el siguiente gráfico:
 
- ![Descripcion](Presentacion1.png)
+ ![](Descripcion/Presentacion1.png)
 
 Principales datos de una factura que se cargan en la interfaz de la aplicación(VISTA SUCURSAL): Tipo de factura, prefijo de factura, numero de factura, nombre de proveedor, CUIT de proveedor, subtotal, IVA 1, IVA 2, IVA 3, otros impuestos y total de factura
 
 VISTA SUCURSAL
 
- ![Descripcion](VISTA OFICINA PRINCIPAL.png)
+ ![](Descripcion/VISTA OFICINA PRINCIPAL.png)
  
 VISTA OFICINA PRINCIPAL
 
- ![Descripcion](VISTA SUCURSAL.png)
+ ![](Descripcion/VISTA SUCURSAL.png)
  
 
 Todas las facturas de todos los locales se pueden visualizar en el modo de Oficina Principal, teniendo en cuenta la informacion a recibir se puede ordenar las facturas de cada local.
