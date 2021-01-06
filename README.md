@@ -8,11 +8,11 @@ Principales datos de una factura que se cargan en la interfaz de la aplicación(
 
 VISTA SUCURSAL
 
- ![](Descripcion/VISTA OFICINA PRINCIPAL.png)
+ ![](Descripcion/VSucursal.png)
  
 VISTA OFICINA PRINCIPAL
 
- ![](Descripcion/VISTA SUCURSAL.png)
+ ![](Descripcion/VOficinaPrincipal.png)
  
 
 Todas las facturas de todos los locales se pueden visualizar en el modo de Oficina Principal, teniendo en cuenta la informacion a recibir se puede ordenar las facturas de cada local.
