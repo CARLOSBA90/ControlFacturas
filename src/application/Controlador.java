@@ -56,6 +56,15 @@ public class Controlador implements Initializable {
 		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 25),"A","BEBIDAS","20-1021",1001,2004232,1002.44,102.5,1104.94));
 		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 29),"C","GALLETAS","20-1331",22,123553,1666.44,155.5,1821.94));
 		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 18),"A","SNACKS","10-1221",2,1453,666.33,333.99,999.99));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 25),"A","BEBIDAS","20-1021",1001,2004232,1002.44,102.5,1104.94));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 29),"C","GALLETAS","20-1331",22,123553,1666.44,155.5,1821.94));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 18),"A","SNACKS","10-1221",2,1453,666.33,333.99,999.99));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 25),"A","BEBIDAS","20-1021",1001,2004232,1002.44,102.5,1104.94));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 29),"C","GALLETAS","20-1331",22,123553,1666.44,155.5,1821.94));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 18),"A","SNACKS","10-1221",2,1453,666.33,333.99,999.99));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 25),"A","BEBIDAS","20-1021",1001,2004232,1002.44,102.5,1104.94));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 29),"C","GALLETAS","20-1331",22,123553,1666.44,155.5,1821.94));
+		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 18),"A","SNACKS","10-1221",2,1453,666.33,333.99,999.99));
 		return facturas;
 	}
 	
