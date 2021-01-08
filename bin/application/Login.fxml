@@ -29,7 +29,7 @@
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <Button layoutX="59.0" layoutY="222.0" mnemonicParsing="false" text="Acceso: Oficina Principal">
+      <Button layoutX="59.0" layoutY="222.0" mnemonicParsing="false" onAction="#OfPrincipal" text="Acceso: Oficina Principal">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>

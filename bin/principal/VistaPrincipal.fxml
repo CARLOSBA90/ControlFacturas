@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="757.0" styleClass="parent" stylesheets="@../application/application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorPrincipal">
+   <children>
+      <VBox prefHeight="600.0" prefWidth="300.0" styleClass="sidebar">
+         <children>
+            <Label prefHeight="75.0" prefWidth="300.0" style="-fx-background-color: #00A2D3;" text="CONTROL FACTURAS" textFill="WHITE">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font name="Ebrima" size="26.0" />
+               </font>
+            </Label>
+            <HBox />
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <children>
+                  <Label text="Historial facturas" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Calibri" size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <children>
+                  <Label text="Busqueda avanzada" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Calibri" size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+               </children>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <children>
+                  <Label text="Resumen de cuentas" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Calibri" size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+               </children>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <children>
+                  <Label text="Exportar facturas" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Calibri" size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+               </children>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <children>
+                  <Label text="Proveedores" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Calibri" size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+               </children>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <children>
+                  <Label text="Zonas" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Calibri" size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+               </children>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <children>
+                  <Label text="Credenciales" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Calibri" size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Label>
+               </children>
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </HBox>
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+               <effect>
+                  <Glow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+               <children>
+                  <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+                     <children>
+                        <Label text="Salir" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font name="Calibri" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </Label>
+                     </children>
+                     <effect>
+                        <Glow />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox layoutX="300.0" prefHeight="600.0" prefWidth="781.0">
+         <children>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="97.0" prefWidth="780.0" style="-fx-background-color: #ffff;">
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" color="WHITE" />
+               </effect>
+               <children>
+                  <Label layoutX="23.0" layoutY="14.0" prefHeight="60.0" prefWidth="402.0" text="Ultimas facturas ingresadas" textFill="#868686">
+                     <font>
+                        <Font name="Calibri" size="34.0" />
+                     </font>
+                  </Label>
+                  <Pane layoutX="4.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="774.0" style="-fx-background-color: #eeeeee;">
+                     <children>
+                        <SplitMenuButton layoutX="4.0" layoutY="4.0" mnemonicParsing="false" text="SplitMenuButton">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Action 1" />
+                            <MenuItem mnemonicParsing="false" text="Action 2" />
+                          </items>
+                        </SplitMenuButton>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <TableView fx:id="tableview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
+              <columns>
+                <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
+                <TableColumn fx:id="tipo" prefWidth="75.0" text="TIPO" />
+                  <TableColumn fx:id="prefijo" prefWidth="75.0" text="PREFIJO" />
+                  <TableColumn fx:id="nrofactura" prefWidth="114.0" text="FACTURA" />
+                  <TableColumn fx:id="proveedor" prefWidth="135.0" text="PROVEEDOR" />
+                  <TableColumn fx:id="cuit" prefWidth="71.0" text="CUIT" />
+                  <TableColumn fx:id="subtotal" prefWidth="75.0" text="SUBTOTAL" />
+                  <TableColumn fx:id="iva" prefWidth="75.0" text="IVA " />
+                  <TableColumn fx:id="total" prefWidth="75.0" text="TOTAL" />
+              </columns>
+            </TableView>
+         </children></VBox>
+   </children>
+</AnchorPane>

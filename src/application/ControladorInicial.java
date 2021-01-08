@@ -34,7 +34,7 @@ public class ControladorInicial {
 	
 	public void Sucursal(ActionEvent event) throws IOException {
 		Stage primaryStage = new Stage();
-		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("Vista.fxml"));
+		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/sucursal/VistaSucursal.fxml"));
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
@@ -44,7 +44,15 @@ public class ControladorInicial {
 		
 	}
 	
-	public void OfPrincipal(ActionEvent event) {
+	public void OfPrincipal(ActionEvent event) throws IOException {
+		Stage primaryStage = new Stage();
+		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/principal/VistaPrincipal.fxml"));
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
+		status.getScene().getWindow().hide();
 		
 	}
 
