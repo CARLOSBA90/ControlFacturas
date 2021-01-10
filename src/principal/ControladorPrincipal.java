@@ -7,8 +7,10 @@ import java.util.ResourceBundle;
 import clases.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,6 +32,10 @@ public class ControladorPrincipal implements Initializable {
 	@FXML private TableColumn<factura, Double> iva;
 	@FXML private TableColumn<factura, Double> total;
 	
+	@FXML private ComboBox<String> ListaSucursales;
+	
+	ObservableList<String> listaSuc = FXCollections.observableArrayList("Barrio Este", "Barrio Norte", "Barrio Norte-oeste");
+	
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		fecha.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
@@ -41,8 +47,9 @@ public class ControladorPrincipal implements Initializable {
 		subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
 		iva.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
-	
 		tableview.setItems(getData());
+		
+		ListaSucursales.setItems(listaSuc);
 	
 	}
 	
@@ -64,6 +71,11 @@ public class ControladorPrincipal implements Initializable {
 		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 21),"C","GASEOSAS","20-1231",22,123553,1666.44,155.5,1821.94));
 		facturas.add(new factura(LocalDate.of(2020, Month.DECEMBER, 21),"A","ALIMENTOS","10-1",2,1453,666.33,333.99,999.99));
 		return facturas;
+	}
+	
+	public void ListaSucursalesCambia(ActionEvent event) {
+		
+		
 	}
 	
 	

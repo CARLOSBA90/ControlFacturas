@@ -2,9 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
@@ -249,12 +248,7 @@
                   </Label>
                   <Pane layoutX="4.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="774.0" style="-fx-background-color: #eeeeee;">
                      <children>
-                        <SplitMenuButton layoutX="4.0" layoutY="4.0" mnemonicParsing="false" text="SplitMenuButton">
-                          <items>
-                            <MenuItem mnemonicParsing="false" text="Action 1" />
-                            <MenuItem mnemonicParsing="false" text="Action 2" />
-                          </items>
-                        </SplitMenuButton>
+                        <ComboBox fx:id="ListaSucursales" layoutY="2.0" prefWidth="150.0" promptText="Seleccione Sucursal" />
                      </children>
                   </Pane>
                </children>

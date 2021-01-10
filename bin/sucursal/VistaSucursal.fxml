@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="757.0" styleClass="parent" stylesheets="@../application/application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sucursal.ControladorSucursal">
+<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="757.0" styleClass="parent" stylesheets="@../application/application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sucursal.ControladorSucursal">
    <children>
       <VBox prefHeight="600.0" prefWidth="300.0" styleClass="sidebar">
          <children>
@@ -26,7 +26,7 @@
                </font>
             </Label>
             <HBox />
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#ingresar" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
                <children>
                   <Label text="Ingresar Factura" textFill="WHITE">
                      <HBox.margin>
@@ -55,7 +55,7 @@
             </HBox>
             <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
                <children>
-                  <Label text="Historial Facturas" textFill="WHITE">
+                  <Label onMouseClicked="#historial" text="Historial Facturas" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -77,7 +77,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </HBox>
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#salir" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
                <children>
                   <Label text="Salir" textFill="WHITE">
                      <HBox.margin>
@@ -105,7 +105,7 @@
       </VBox>
       <VBox layoutX="300.0" prefHeight="600.0" prefWidth="781.0">
          <children>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="780.0" style="-fx-background-color: #ffff;">
+            <Pane fx:id="cabecera" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="780.0" style="-fx-background-color: #ffff;">
                <effect>
                   <DropShadow blurType="ONE_PASS_BOX" color="WHITE" />
                </effect>
@@ -117,19 +117,24 @@
                   </Label>
                </children>
             </Pane>
-            <TableView fx:id="tableview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
-              <columns>
-                <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
-                <TableColumn fx:id="tipo" prefWidth="75.0" text="TIPO" />
-                  <TableColumn fx:id="prefijo" prefWidth="75.0" text="PREFIJO" />
-                  <TableColumn fx:id="nrofactura" prefWidth="114.0" text="FACTURA" />
-                  <TableColumn fx:id="proveedor" prefWidth="135.0" text="PROVEEDOR" />
-                  <TableColumn fx:id="cuit" prefWidth="71.0" text="CUIT" />
-                  <TableColumn fx:id="subtotal" prefWidth="75.0" text="SUBTOTAL" />
-                  <TableColumn fx:id="iva" prefWidth="75.0" text="IVA " />
-                  <TableColumn fx:id="total" prefWidth="75.0" text="TOTAL" />
-              </columns>
-            </TableView>
+            <Pane fx:id="central" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="780.0">
+               <children>
+                  <TableView fx:id="tableview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
+                    <columns>
+                      <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
+                      <TableColumn fx:id="tipo" prefWidth="75.0" text="TIPO" />
+                        <TableColumn fx:id="prefijo" prefWidth="75.0" text="PREFIJO" />
+                        <TableColumn fx:id="nrofactura" prefWidth="114.0" text="FACTURA" />
+                        <TableColumn fx:id="proveedor" prefWidth="135.0" text="PROVEEDOR" />
+                        <TableColumn fx:id="cuit" prefWidth="71.0" text="CUIT" />
+                        <TableColumn fx:id="subtotal" prefWidth="75.0" text="SUBTOTAL" />
+                        <TableColumn fx:id="iva" prefWidth="75.0" text="IVA " />
+                        <TableColumn fx:id="total" prefWidth="75.0" text="TOTAL" />
+                    </columns>
+                  </TableView>
+               </children>
+            </Pane>
+            <Pane fx:id="centralInferior" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="450.0" prefWidth="780.0" />
          </children></VBox>
    </children>
 </AnchorPane>
