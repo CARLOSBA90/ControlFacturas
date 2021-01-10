@@ -53,9 +53,9 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </HBox>
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#historial" prefHeight="40.0" prefWidth="300.0" scaleShape="false" styleClass="btns">
                <children>
-                  <Label onMouseClicked="#historial" text="Historial Facturas" textFill="WHITE">
+                  <Label text="Historial Facturas" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -119,7 +119,7 @@
             </Pane>
             <Pane fx:id="central" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="780.0">
                <children>
-                  <TableView fx:id="tableview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
+                  <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
                     <columns>
                       <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
                       <TableColumn fx:id="tipo" prefWidth="75.0" text="TIPO" />

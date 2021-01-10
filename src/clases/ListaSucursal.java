@@ -1,9 +1,8 @@
-package sucursal;
+package clases;
 
 import java.time.LocalDate;
 import java.time.Month;
 
-import clases.factura;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

@@ -241,19 +241,20 @@
                   <DropShadow blurType="ONE_PASS_BOX" color="WHITE" />
                </effect>
                <children>
-                  <Label layoutX="23.0" layoutY="14.0" prefHeight="60.0" prefWidth="402.0" text="Ultimas facturas ingresadas" textFill="#868686">
+                  <Label layoutX="23.0" layoutY="14.0" prefHeight="60.0" prefWidth="402.0" text="Historial de facturas" textFill="#868686">
                      <font>
                         <Font name="Calibri" size="34.0" />
                      </font>
                   </Label>
                   <Pane layoutX="4.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="774.0" style="-fx-background-color: #eeeeee;">
                      <children>
-                        <ComboBox fx:id="ListaSucursales" layoutY="2.0" prefWidth="150.0" promptText="Seleccione Sucursal" />
+                        <ComboBox fx:id="ListaZona" layoutY="2.0" prefWidth="150.0" promptText="Seleccione Zona" />
+                        <ComboBox fx:id="ListaSucursales" layoutX="162.0" layoutY="2.0" prefWidth="150.0" promptText="Seleccione Sucursal" />
                      </children>
                   </Pane>
                </children>
             </Pane>
-            <TableView fx:id="tableview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
+            <TableView fx:id="tableview" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="780.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
               <columns>
                 <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
                 <TableColumn fx:id="tipo" prefWidth="75.0" text="TIPO" />

@@ -19,6 +19,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
@@ -67,6 +69,22 @@ public class ControladorSucursal implements Initializable {
 		
 		central.getChildren().add(tableview);
 		
+		cabecera.getChildren().clear();
+		
+		centralInferior.getChildren().clear();
+		
+		Label tituloCabecera = new Label ("Ultimas facturas ingresadas");
+		
+		tituloCabecera.setFont(new Font("Calibri", 34));
+		
+		tituloCabecera.setTextFill(Color.web("#868686"));
+		
+		tituloCabecera.setTranslateX(23.0);
+		
+		tituloCabecera.setTranslateY(24.0);	
+		
+		cabecera.getChildren().add(tituloCabecera);
+		
 	}
 	
 	
@@ -95,7 +113,21 @@ public class ControladorSucursal implements Initializable {
 		
 		cabecera.getChildren().clear();
 		
-		cabecera.getChildren().add(new Label("Ingreso de nueva factura"));
+		centralInferior.getChildren().clear();
+		
+		Label tituloCabecera = new Label ("Ingreso de nueva factura");
+		
+		tituloCabecera.setFont(new Font("Calibri", 34));
+		
+		tituloCabecera.setTextFill(Color.web("#868686"));
+		
+		tituloCabecera.setTranslateX(23.0);
+		
+		tituloCabecera.setTranslateY(24.0);	
+		
+		cabecera.getChildren().add(tituloCabecera);
+		
+		cabecera.setStyle("-fx-background-color: #ffff");
 		
 		central.getChildren().add(root);
 	

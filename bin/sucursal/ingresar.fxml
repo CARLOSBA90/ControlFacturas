@@ -1,14 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="780.0" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="114.0" layoutY="83.0" text="central" />
+            <Label layoutX="27.0" layoutY="28.0" prefHeight="17.0" prefWidth="54.0" text="FECHA">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font></Label>
+            <DatePicker fx:id="fecha" layoutX="27.0" layoutY="52.0" />
+            <Label layoutX="230.0" layoutY="28.0" prefHeight="17.0" prefWidth="54.0" text="TIPO">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="315.0" layoutY="28.0" prefHeight="21.0" prefWidth="76.0" text="PREFIJO">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="402.0" layoutY="28.0" prefHeight="21.0" prefWidth="151.0" text="NÚMERO FACTURA">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="559.0" layoutY="28.0" prefHeight="21.0" prefWidth="96.0" text="PROVEEDOR">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="690.0" layoutY="28.0" prefHeight="21.0" prefWidth="46.0" text="CUIT">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="27.0" layoutY="100.0" prefHeight="21.0" prefWidth="91.0" text="SUBTOTAL">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="201.0" layoutY="100.0" prefHeight="21.0" prefWidth="44.0" text="IVA 1">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="296.0" layoutY="100.0" prefHeight="21.0" prefWidth="44.0" text="IVA 2">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="400.0" layoutY="100.0" prefHeight="21.0" prefWidth="44.0" text="IVA 3">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="508.0" layoutY="100.0" prefHeight="21.0" prefWidth="66.0" text="OTROS">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="626.0" layoutY="100.0" prefHeight="21.0" prefWidth="64.0" text="TOTAL">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="tipo" layoutX="230.0" layoutY="52.0" prefHeight="25.0" prefWidth="55.0" />
+            <ComboBox fx:id="cuit" layoutX="690.0" layoutY="52.0" prefHeight="25.0" prefWidth="55.0" />
+            <ComboBox fx:id="proveedor" layoutX="559.0" layoutY="52.0" prefHeight="25.0" prefWidth="89.0" />
+            <TextField fx:id="prefijo" layoutX="315.0" layoutY="52.0" prefHeight="25.0" prefWidth="69.0" />
+            <TextField fx:id="nrofactura" layoutX="402.0" layoutY="52.0" prefHeight="25.0" prefWidth="137.0" />
+            <TextField fx:id="subtotal" layoutX="27.0" layoutY="128.0" prefHeight="25.0" prefWidth="149.0" />
+            <TextField fx:id="iva1" layoutX="197.0" layoutY="128.0" prefHeight="25.0" prefWidth="90.0" />
+            <TextField fx:id="iva2" layoutX="292.0" layoutY="128.0" prefHeight="25.0" prefWidth="90.0" />
+            <TextField fx:id="iva3" layoutX="398.0" layoutY="128.0" prefHeight="25.0" prefWidth="90.0" />
+            <TextField fx:id="ivaotros" layoutX="508.0" layoutY="128.0" prefHeight="25.0" prefWidth="90.0" />
+            <TextField fx:id="total" layoutX="625.0" layoutY="128.0" prefHeight="25.0" prefWidth="149.0" />
+            <Button layoutX="665.0" layoutY="161.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="INGRESAR">
+               <font>
+                  <Font name="Calibri Bold" size="16.0" />
+               </font>
+            </Button>
          </children></Pane>
    </center>
 </BorderPane>
