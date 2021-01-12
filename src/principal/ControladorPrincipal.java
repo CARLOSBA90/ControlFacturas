@@ -25,12 +25,8 @@ public class ControladorPrincipal implements Initializable {
 	@FXML private TableColumn<factura, LocalDate> fecha;
 	@FXML private TableColumn<factura, String> tipo, proveedor, cuit;
 	@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
-	@FXML private TableColumn<factura, Double> subtotal, iva, total;
-
-	
-	@FXML private ComboBox<String> ListaSucursales;
-	
-	@FXML private ComboBox<String> ListaZona;
+	@FXML private TableColumn<factura, Double> subtotal, iva, iva2, iva3, otros, total;
+	@FXML private ComboBox<String> ListaSucursales, ListaZona;
 	
 	ObservableList<String> listaSuc = FXCollections.observableArrayList("Sucursal A", "Sucursal B", "Sucursal C");
 	
@@ -46,6 +42,9 @@ public class ControladorPrincipal implements Initializable {
 		nrofactura.setCellValueFactory(new PropertyValueFactory<factura, Integer>("nrofactura"));
 		subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
 		iva.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva"));
+		iva2.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva2"));
+		iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
+		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 		tableview.setItems(lista.getData());
 		

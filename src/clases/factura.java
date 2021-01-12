@@ -10,7 +10,7 @@ public class factura {
 	
 	
 	
-	public factura(LocalDate fecha, String tipo, String proveedor, String cuit, int prefijo, int nrofactura, double subtotal, double iva, double total) {
+	public factura(LocalDate fecha, String tipo, String proveedor, String cuit, int prefijo, int nrofactura, double subtotal, double iva, double iva2, double iva3, double otros, double total) {
 	
 		super();
 		this.fecha = fecha;
@@ -21,6 +21,9 @@ public class factura {
 		this.nrofactura = new SimpleIntegerProperty(nrofactura);
 		this.subtotal = new SimpleDoubleProperty(subtotal);
 		this.iva = new SimpleDoubleProperty(iva);
+		this.iva2 = new SimpleDoubleProperty(iva2);
+		this.iva3 = new SimpleDoubleProperty(iva3);
+		this.otros = new SimpleDoubleProperty(otros);
 		this.total = new SimpleDoubleProperty(total);
 	}
 	
@@ -74,6 +77,26 @@ public class factura {
 	public void setIva(SimpleDoubleProperty iva) {
 		this.iva = iva;
 	}
+	public double getIva2() {
+		return iva2.get();
+	}
+	public void setIva2(SimpleDoubleProperty iva2) {
+		this.iva2 = iva2;
+	}
+	public double getIva3() {
+		return iva3.get();
+	}
+	public void setIva3(SimpleDoubleProperty iva3) {
+		this.iva3 = iva3;
+	}
+	public double getOtros() {
+		return otros.get();
+	}
+	public void setOtros(SimpleDoubleProperty otros) {
+		this.otros = otros;
+	}
+	
+	
 	public double getTotal() {
 		return total.get();
 	}
@@ -89,6 +112,6 @@ public class factura {
 	private LocalDate fecha;
 	private SimpleStringProperty tipo, proveedor, cuit;
 	private SimpleIntegerProperty prefijo, nrofactura;
-	private SimpleDoubleProperty subtotal, iva, total;
+	private SimpleDoubleProperty subtotal, iva, iva2,iva3, otros, total;
 
 }

@@ -11,7 +11,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="780.0" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
+      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="850.0" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="27.0" layoutY="28.0" prefHeight="17.0" prefWidth="54.0" text="FECHA">
                <font>
@@ -84,11 +84,16 @@
             <TextField fx:id="iva3" layoutX="398.0" layoutY="128.0" prefHeight="25.0" prefWidth="90.0" />
             <TextField fx:id="ivaotros" layoutX="508.0" layoutY="128.0" prefHeight="25.0" prefWidth="90.0" />
             <TextField fx:id="total" layoutX="625.0" layoutY="128.0" prefHeight="25.0" prefWidth="149.0" />
-            <Button layoutX="665.0" layoutY="161.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="INGRESAR">
+            <Button fx:id="botonIngresar" layoutX="665.0" layoutY="161.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="INGRESAR">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
+            <Label layoutX="27.0" layoutY="176.0" prefHeight="21.0" prefWidth="254.0" text="ULTIMAS FACTURAS INGRESADAS">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
          </children></Pane>
    </center>
 </BorderPane>

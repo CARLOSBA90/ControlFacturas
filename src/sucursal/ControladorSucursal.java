@@ -39,7 +39,7 @@ public class ControladorSucursal implements Initializable {
 	@FXML private TableColumn<factura, LocalDate> fecha;
 	@FXML private TableColumn<factura, String> tipo, proveedor, cuit;
 	@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
-	@FXML private TableColumn<factura, Double> subtotal, iva, total;
+	@FXML private TableColumn<factura, Double> subtotal, iva, iva2,iva3, otros, total;
 	
 
 	
@@ -53,6 +53,9 @@ public class ControladorSucursal implements Initializable {
 		nrofactura.setCellValueFactory(new PropertyValueFactory<factura, Integer>("nrofactura"));
 		subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
 		iva.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva"));
+		iva2.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva2"));
+		iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
+		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 	
 		tableview.setItems(lista.getData());
@@ -66,6 +69,8 @@ public class ControladorSucursal implements Initializable {
 		central.getChildren().clear();
 	
 		tableview.setItems(lista.getData());
+		
+		tableview.setPrefHeight(524);
 		
 		central.getChildren().add(tableview);
 		
@@ -82,6 +87,8 @@ public class ControladorSucursal implements Initializable {
 		tituloCabecera.setTranslateX(23.0);
 		
 		tituloCabecera.setTranslateY(24.0);	
+		
+		cabecera.setStyle("-fx-background-color: #F8F8FF;");
 		
 		cabecera.getChildren().add(tituloCabecera);
 		
@@ -127,9 +134,11 @@ public class ControladorSucursal implements Initializable {
 		
 		cabecera.getChildren().add(tituloCabecera);
 		
-		cabecera.setStyle("-fx-background-color: #ffff");
+		cabecera.setStyle("-fx-background-color: #F8F8FF;");
 		
 		central.getChildren().add(root);
+		
+		tableview.setPrefHeight(322);
 	
 		tableview.setItems(lista.getData());
 		
