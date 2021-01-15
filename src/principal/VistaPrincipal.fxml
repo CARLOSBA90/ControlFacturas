@@ -54,7 +54,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </HBox>
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" scaleShape="false" styleClass="btns">
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#busqueda" prefHeight="40.0" prefWidth="200.0" scaleShape="false" styleClass="btns">
                <children>
                   <Label text="Busqueda avanzada" textFill="WHITE">
                      <HBox.margin>
@@ -152,31 +152,7 @@
             </HBox>
             <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
                <children>
-                  <Label text="Zonas" textFill="WHITE">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font name="Calibri" size="17.0" />
-                     </font>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                     <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                     </cursor>
-                  </Label>
-               </children>
-               <effect>
-                  <Glow />
-               </effect>
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </HBox>
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
-               <children>
-                  <Label text="Credenciales" textFill="WHITE">
+                  <Label text="Zonas - Credenciales" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -206,7 +182,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
                <children>
-                  <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
+                  <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#salir" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
                      <children>
                         <Label text="Salir" textFill="WHITE">
                            <HBox.margin>
@@ -236,7 +212,7 @@
       </VBox>
       <VBox layoutX="200.0" prefHeight="600.0" prefWidth="850.0">
          <children>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="121.0" prefWidth="850.0" style="-fx-background-color: #F8F8FF;">
+            <Pane fx:id="cabecera" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="121.0" prefWidth="850.0" style="-fx-background-color: #F8F8FF;">
                <effect>
                   <DropShadow blurType="ONE_PASS_BOX" color="WHITE" />
                </effect>
@@ -246,7 +222,7 @@
                         <Font name="Calibri" size="34.0" />
                      </font>
                   </Label>
-                  <Pane layoutX="1.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;">
+                  <Pane fx:id="menu" layoutX="1.0" layoutY="70.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;">
                      <children>
                         <ComboBox fx:id="ListaZona" layoutY="23.0" prefWidth="150.0" promptText="Seleccione Zona" />
                         <ComboBox fx:id="ListaSucursales" layoutX="160.0" layoutY="23.0" prefWidth="150.0" promptText="Seleccione Sucursal" />
@@ -269,7 +245,7 @@
                   </Pane>
                </children>
             </Pane>
-          <Pane fx:id="central" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="850.0">
+          <Pane fx:id="central" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="850.0">
                <children>
                   <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
                     <columns>
@@ -289,7 +265,7 @@
                   </TableView>
                </children>
             </Pane>
-            <Pane fx:id="paneInferior" prefHeight="279.0" prefWidth="850.0" />
+            <Pane fx:id="centralInferior" prefHeight="304.0" prefWidth="850.0" />
          </children></VBox>
    </children>
 </AnchorPane>
