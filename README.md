@@ -24,3 +24,19 @@ Lista de opciones para Oficina Principal:
 -	Proveedor: lista los proveedores, modificacion y actualizacion de cada uno de estos
 -	Zonas: lista grupal de cada uno de los locales, estos se dividen en Zonas(tambien llamado secciones) según posicion geografica para un mejor manejo general de los locales. Modificacion, actualizacion de cada uno de estos, cada local se etiqueta en una determinada zona. 
 -	Credenciales: se utiliza para asignar un  ID y clave de acceso para cada local, tambien para crear usuarios para la vista de Oficina Principal y asi realizar tareas de rutina.
+
+
+VISTA BUSQUEDA AVANZADA (OFICINA PRINCIPAL)
+ ![](Descripcion/VPbusquedaA.png)
+
+VISTA RESUMEN CUENTAS(OFICINA PRINCIPAL)
+ ![](Descripcion/VPcuentas.png)
+
+VISTA EXPORTACION(OFICINA PRINCIPAL)
+ ![](Descripcion/VPexportacion.png)
+
+VISTA PROVEEDORES(OFICINA PRINCIPAL)
+ ![](Descripcion/VPproveedor.png)
+
+VISTA ZONAS-CREDENCIALES(OFICINA PRINCIPAL)
+ ![](Descripcion/VPzonas.png)
