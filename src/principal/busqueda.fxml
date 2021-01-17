@@ -12,13 +12,13 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="120.0" prefWidth="850.0" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
+      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="120.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="6.0" layoutY="58.0" prefHeight="17.0" prefWidth="54.0" text="DESDE">
                <font>
                   <Font name="Calibri Bold" size="17.0" />
                </font></Label>
-            <DatePicker fx:id="fecha" layoutX="6.0" layoutY="80.0" />
+            <DatePicker fx:id="fechaDesde" layoutX="6.0" layoutY="80.0" />
             <Label layoutX="6.0" layoutY="-1.0" prefHeight="17.0" prefWidth="54.0" text="ZONA">
                <font>
                   <Font name="Calibri Bold" size="17.0" />
@@ -34,15 +34,15 @@
                   <Font name="Calibri Bold" size="17.0" />
                </font>
             </Label>
-            <ComboBox fx:id="tipo" layoutX="6.0" layoutY="23.0" prefHeight="25.0" prefWidth="117.0" />
-            <ComboBox fx:id="cuit" layoutX="291.0" layoutY="23.0" prefHeight="25.0" prefWidth="113.0" />
-            <ComboBox fx:id="proveedor" layoutX="151.0" layoutY="23.0" prefHeight="25.0" prefWidth="116.0" />
-            <Button fx:id="botonIngresar" layoutX="673.0" layoutY="85.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="MOSTRAR">
+            <ComboBox fx:id="ListaZona" layoutX="6.0" layoutY="23.0" prefHeight="25.0" prefWidth="117.0" promptText="Seleccione" />
+            <ComboBox fx:id="modo" layoutX="291.0" layoutY="23.0" prefHeight="25.0" prefWidth="113.0" promptText="CUIT" />
+            <ComboBox fx:id="ListaSucursales" layoutX="151.0" layoutY="23.0" prefHeight="25.0" prefWidth="116.0" promptText="Seleccione" />
+            <Button fx:id="botonMostrar" layoutX="673.0" layoutY="85.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="MOSTRAR">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <DatePicker fx:id="fecha1" layoutX="204.0" layoutY="79.0" />
+            <DatePicker fx:id="fechaHasta" layoutX="204.0" layoutY="79.0" />
             <Label layoutX="216.0" layoutY="57.0" prefHeight="17.0" prefWidth="54.0" text="HASTA">
                <font>
                   <Font name="Calibri Bold" size="17.0" />

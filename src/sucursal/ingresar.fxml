@@ -11,7 +11,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="850.0" style="-fx-background-color: #ECF0F1;" BorderPane.alignment="CENTER">
+      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="27.0" layoutY="28.0" prefHeight="17.0" prefWidth="54.0" text="FECHA">
                <font>

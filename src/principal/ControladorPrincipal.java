@@ -2,7 +2,6 @@ package principal;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ResourceBundle;
 import clases.*;
 import javafx.collections.FXCollections;
@@ -12,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -27,13 +27,30 @@ import javafx.stage.Stage;
 
 public class ControladorPrincipal implements Initializable {
 	
+	// Variables
+	
 	ListaSucursal lista = new ListaSucursal();
 	
 	@FXML private AnchorPane pane;
 	
 	@FXML private Pane central,centralInferior,cabecera, menu;
 	
-	// Configurar tabla
+	Label labelZona = new Label("ZONA");
+	
+	Label labelSucursal = new Label("SUCURSAL");
+	
+	ComboBox cbZona = new ComboBox();
+	
+	ComboBox cbSucursal = new ComboBox();
+	
+	Button botonBuscarH = new Button("BUSCAR");
+
+    Label tituloCabecera = new Label(" "); 
+		
+	
+	
+	
+	// Configurar tabla de un modelo de factura
 	
 	@FXML private TableView<factura> tableview;
 	@FXML private TableColumn<factura, LocalDate> fecha;
@@ -45,6 +62,9 @@ public class ControladorPrincipal implements Initializable {
 	ObservableList<String> listaSuc = FXCollections.observableArrayList("Sucursal A", "Sucursal B", "Sucursal C");
 	
 	ObservableList<String> listaZo = FXCollections.observableArrayList("Zona Norte", "Zona Sur");
+	
+	
+	 //// Inicializa la vista con las propiedades y atributos de la tabla de un modelo de factura
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -75,6 +95,89 @@ public class ControladorPrincipal implements Initializable {
 		
 	}
 	
+	/// Metodo para mostrar el historial de facturas en el sector derecho	
+	
+	@FXML 
+	private void historial(MouseEvent event) {
+		
+		blanquear();
+		
+		 cabecera.setPrefHeight(121);
+		 
+		 Label tituloCabecera = new Label ("Historial de facturas");
+
+		 tituloCabecera.setFont(new Font("Calibri", 34));
+
+		 tituloCabecera.setTextFill(Color.web("#868686"));
+
+		 tituloCabecera.setTranslateX(23.0);
+
+		 tituloCabecera.setTranslateY(24.0);	
+
+		 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+		 
+		 labelSucursal.setTranslateX(161.0);
+		 
+		 labelSucursal.setTranslateY(4.0);
+		 
+		 labelSucursal.setFont(new Font("Calibri Bold", 17));
+		
+		 menu.getChildren().add(labelSucursal);
+
+		 labelZona.setTranslateX(14.0);
+
+		 labelZona.setTranslateY(4.0);
+
+		 labelZona.setFont(new Font("Calibri Bold", 17));
+
+		 menu.getChildren().add(labelZona);
+		 
+		 cbZona.setItems(listaZo);
+		 
+		 cbZona.setPromptText("Seleccione Zona");
+		 
+		 cbZona.setLayoutY(23.0);
+		 
+		 cbZona.setPrefWidth(150);
+		 
+		 cbSucursal.setItems(listaSuc);
+		 
+		 cbSucursal.setPromptText("Seleccione Sucursal");
+		 
+		 cbSucursal.setLayoutX(160.0);
+		 
+		 cbSucursal.setLayoutY(23.0);
+		 
+		 cbSucursal.setPrefWidth(150.0);
+		 
+		 botonBuscarH.setFont(new Font("Calibri Bold", 14));
+		 
+		 botonBuscarH.setLayoutX(330.0);
+		 
+		 botonBuscarH.setLayoutY(20.0);
+
+		 menu.getChildren().add(cbZona);
+		 
+		 menu.getChildren().add(cbSucursal);
+		 
+		 menu.getChildren().add(botonBuscarH);
+
+		 cabecera.getChildren().add(menu);
+		 
+		 cabecera.getChildren().add(tituloCabecera);
+		 
+		 tableview.setItems(lista.getData());
+
+		 tableview.setPrefHeight(477); 
+		 
+		 central.getChildren().add(tableview);
+
+		
+	}
+	
+	
+	/// Metodo de salida del programa	
+	
 	@FXML 
 	private void salir(MouseEvent event) {
 		
@@ -83,12 +186,20 @@ public class ControladorPrincipal implements Initializable {
 		
 	}
 	
-	
 	@FXML 
 	private void busqueda(MouseEvent event) throws IOException {
 	
 		cargarUI("busqueda");
 	}
+	
+	@FXML 
+	private void resumen(MouseEvent event) throws IOException {
+	
+		cargarUI("resumen");
+	}
+	
+	/// Metodo para cargar diferentes vistas, mediante la estructura de control SWITCH
+	// Se compara con el string en el argumento para generar la determinada vista
 	
     private void cargarUI(String ui) throws IOException {
 		
@@ -96,42 +207,96 @@ public class ControladorPrincipal implements Initializable {
 	
 	     root = FXMLLoader.load(getClass().getResource(ui+".fxml"));
 		 
-		central.getChildren().clear();
+	     blanquear();
 		
+	     
+	       //// Seleccion de vista segun argumento
+	     
+	     switch(ui) {
+	     
+	     case "busqueda":
+	    	 
+	    	 cabecera.setPrefHeight(75);
+
+	    	 tituloCabecera.setText("Busqueda Avanzada");
+
+	    	// Label tituloCabecera = new Label ("Busqueda Avanzada");
+
+	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+
+	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+
+	    	 tituloCabecera.setTranslateX(23.0);
+
+	    	 tituloCabecera.setTranslateY(24.0);
+
+	    	 cabecera.getChildren().add(tituloCabecera);
+
+	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+
+	    	 central.setPrefHeight(120);
+
+	    	 central.getChildren().add(root);
+
+	    	 tableview.setPrefHeight(405);
+
+	    	 tableview.setItems(lista.getData());
+
+	    	 centralInferior.getChildren().add(tableview);
+
+	    	 break;
+	    	 
+	     case "resumen":
+	    	 
+	    	 cabecera.setPrefHeight(75);
+
+	    	 tituloCabecera.setText("Resumen de Cuentas");
+
+	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+
+	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+
+	    	 tituloCabecera.setTranslateX(23.0);
+
+	    	 tituloCabecera.setTranslateY(24.0);	
+
+	    	 cabecera.getChildren().add(tituloCabecera);
+
+	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+
+	    	 central.setPrefHeight(90);
+
+	    	 central.getChildren().add(root);
+
+	    	 tableview.setPrefHeight(440);
+
+	    	 tableview.setItems(lista.getData());
+
+	    	 centralInferior.getChildren().add(tableview);
+	    	 
+	    	 
+	    	 break;
+		
+		default:
+			
+	     }
+		
+		
+	}
+    
+  /// Meotdo para limpiar el sector derecho de la vista para generar una nueva vista
+    
+    public void blanquear() {
+    	
 		menu.getChildren().clear();
 	
 		cabecera.getChildren().clear();
 		
-		cabecera.setPrefHeight(75);
+		central.getChildren().clear();
 		
 		centralInferior.getChildren().clear();
-		
-		Label tituloCabecera = new Label ("Busqueda Avanzada");
-		
-		tituloCabecera.setFont(new Font("Calibri", 34));
-		
-		tituloCabecera.setTextFill(Color.web("#868686"));
-		
-		tituloCabecera.setTranslateX(23.0);
-		
-		tituloCabecera.setTranslateY(24.0);	
-		
-		cabecera.getChildren().add(tituloCabecera);
-		
-		cabecera.setStyle("-fx-background-color: #F8F8FF;");
-		
-		central.setPrefHeight(120);
-		
-		central.getChildren().add(root);
-		
-		tableview.setPrefHeight(405);
-	
-		tableview.setItems(lista.getData());
-		
-		centralInferior.getChildren().add(tableview);
-		
-		
-	}
+    	
+    }
 	
 	
 }

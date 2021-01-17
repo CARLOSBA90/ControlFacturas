@@ -2,12 +2,8 @@ package sucursal;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ResourceBundle;
-
 import clases.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +22,8 @@ import javafx.stage.Stage;
 
 public class ControladorSucursal implements Initializable {
 	
+	// Variables
+	
 	ListaSucursal lista = new ListaSucursal();
 	
 	@FXML private AnchorPane pane;
@@ -33,7 +31,7 @@ public class ControladorSucursal implements Initializable {
 	@FXML private Pane central,centralInferior,cabecera;
 	
 	
-	// Configurar tabla
+	// Configurar tabla de un modelo de factura
 	
 	@FXML private TableView<factura> tableview;
 	@FXML private TableColumn<factura, LocalDate> fecha;
@@ -42,6 +40,7 @@ public class ControladorSucursal implements Initializable {
 	@FXML private TableColumn<factura, Double> subtotal, iva, iva2,iva3, otros, total;
 	
 
+	 //// Inicializa la vista con las propiedades y atributos de la tabla de un modelo de factura
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -63,20 +62,19 @@ public class ControladorSucursal implements Initializable {
 	}
 	
 	
+	
+	/// Metodo para mostrar el historial de facturas en el sector derecho
+	
 	@FXML 
 	private void historial(MouseEvent event) {
 		
-		central.getChildren().clear();
-	
+		blanquear();
+		
 		tableview.setItems(lista.getData());
 		
 		tableview.setPrefHeight(524);
 		
 		central.getChildren().add(tableview);
-		
-		cabecera.getChildren().clear();
-		
-		centralInferior.getChildren().clear();
 		
 		Label tituloCabecera = new Label ("Ultimas facturas ingresadas");
 		
@@ -94,6 +92,7 @@ public class ControladorSucursal implements Initializable {
 		
 	}
 	
+    /// Metodo de salida del programa	
 	
 	@FXML 
 	private void salir(MouseEvent event) {
@@ -103,6 +102,8 @@ public class ControladorSucursal implements Initializable {
 		
 	}
 	
+	// Metodo para cargar en ventana el archivo FXML ingresar
+	
 	@FXML 
 	private void ingresar(MouseEvent event) throws IOException {
 	
@@ -110,17 +111,15 @@ public class ControladorSucursal implements Initializable {
 	}
 	
 	
+	/// Metodo para generar los nodos de la vista "Ingresar nueva factura"
+	
 	private void cargarUI(String ui) throws IOException {
 		
 		Parent root = null;
 	
-	     root = FXMLLoader.load(getClass().getResource(ui+".fxml"));
+	    root = FXMLLoader.load(getClass().getResource(ui+".fxml"));
 		 
-		central.getChildren().clear();
-		
-		cabecera.getChildren().clear();
-		
-		centralInferior.getChildren().clear();
+		blanquear();
 		
 		Label tituloCabecera = new Label ("Ingreso de nueva factura");
 		
@@ -132,9 +131,9 @@ public class ControladorSucursal implements Initializable {
 		
 		tituloCabecera.setTranslateY(24.0);	
 		
-		cabecera.getChildren().add(tituloCabecera);
-		
 		cabecera.setStyle("-fx-background-color: #F8F8FF;");
+		
+		cabecera.getChildren().add(tituloCabecera);
 		
 		central.getChildren().add(root);
 		
@@ -146,5 +145,17 @@ public class ControladorSucursal implements Initializable {
 		
 		
 	}
+	
+	/// Meotdo para limpiar el sector derecho de la vista para generar una nueva vista
+	
+    public void blanquear() {
+	
+		cabecera.getChildren().clear();
+		
+		central.getChildren().clear();
+		
+		centralInferior.getChildren().clear();
+    	
+    }
 	
 }

@@ -27,7 +27,7 @@
                   <Font name="Calibri Bold" size="21.0" />
                </font>
             </Label>
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#historial" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
                <children>
                   <Label text="Historial facturas" textFill="WHITE">
                      <HBox.margin>
@@ -78,7 +78,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </HBox>
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" scaleShape="false" styleClass="btns">
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#resumen" prefHeight="40.0" prefWidth="200.0" scaleShape="false" styleClass="btns">
                <children>
                   <Label text="Resumen de cuentas" textFill="WHITE">
                      <HBox.margin>
@@ -217,7 +217,7 @@
                   <DropShadow blurType="ONE_PASS_BOX" color="WHITE" />
                </effect>
                <children>
-                  <Label layoutX="14.0" layoutY="8.0" prefHeight="60.0" prefWidth="402.0" text="Historial de facturas" textFill="#868686">
+                  <Label layoutX="23.0" layoutY="14.0" prefHeight="60.0" prefWidth="402.0" text="Historial de facturas" textFill="#868686">
                      <font>
                         <Font name="Calibri" size="34.0" />
                      </font>
