@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorResumen">
    <left>
       <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="90.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
          <children>
@@ -25,7 +25,7 @@
             <ComboBox fx:id="ListaZona" layoutX="6.0" layoutY="23.0" prefHeight="25.0" prefWidth="135.0" promptText="Seleccione Zona" />
             <ComboBox fx:id="modo" layoutX="348.0" layoutY="23.0" prefHeight="25.0" prefWidth="133.0" promptText="Nombre" />
             <ComboBox fx:id="ListaSucursales" layoutX="167.0" layoutY="23.0" prefHeight="25.0" prefWidth="145.0" promptText="Seleccione Sucursal" />
-            <Button fx:id="botonMostrarResumen" layoutX="568.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="MOSTRAR">
+            <Button fx:id="botonMostrarResumen" layoutX="568.0" layoutY="33.0" mnemonicParsing="false" onMouseClicked="#evento" prefHeight="31.0" prefWidth="109.0" text="MOSTRAR">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>

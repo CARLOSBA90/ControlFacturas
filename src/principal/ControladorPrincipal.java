@@ -35,7 +35,7 @@ public class ControladorPrincipal implements Initializable {
 	
 	@FXML private Pane central,centralInferior,cabecera, menu;
 	
-	Label labelZona = new Label("ZONA");
+    Label labelZona = new Label("ZONA");
 	
 	Label labelSucursal = new Label("SUCURSAL");
 	
@@ -47,7 +47,6 @@ public class ControladorPrincipal implements Initializable {
 
     Label tituloCabecera = new Label(" "); 
 		
-	
 	
 	
 	// Configurar tabla de un modelo de factura
@@ -132,15 +131,11 @@ public class ControladorPrincipal implements Initializable {
 
 		 menu.getChildren().add(labelZona);
 		 
-		 cbZona.setItems(listaZo);
-		 
 		 cbZona.setPromptText("Seleccione Zona");
 		 
 		 cbZona.setLayoutY(23.0);
 		 
 		 cbZona.setPrefWidth(150);
-		 
-		 cbSucursal.setItems(listaSuc);
 		 
 		 cbSucursal.setPromptText("Seleccione Sucursal");
 		 
@@ -171,6 +166,10 @@ public class ControladorPrincipal implements Initializable {
 		 tableview.setPrefHeight(477); 
 		 
 		 central.getChildren().add(tableview);
+		 
+		/* cbSucursal.setItems(listaSuc);
+		 
+		 cbZona.setItems(listaZo);*/
 
 		
 	}
@@ -203,12 +202,12 @@ public class ControladorPrincipal implements Initializable {
 	
     private void cargarUI(String ui) throws IOException {
 		
-		Parent root = null;
+    	 blanquear();
+    	
+	  	Parent root = null;
 	
 	     root = FXMLLoader.load(getClass().getResource(ui+".fxml"));
 		 
-	     blanquear();
-		
 	     
 	       //// Seleccion de vista segun argumento
 	     
@@ -219,8 +218,6 @@ public class ControladorPrincipal implements Initializable {
 	    	 cabecera.setPrefHeight(75);
 
 	    	 tituloCabecera.setText("Busqueda Avanzada");
-
-	    	// Label tituloCabecera = new Label ("Busqueda Avanzada");
 
 	    	 tituloCabecera.setFont(new Font("Calibri", 34));
 
@@ -243,6 +240,11 @@ public class ControladorPrincipal implements Initializable {
 	    	 tableview.setItems(lista.getData());
 
 	    	 centralInferior.getChildren().add(tableview);
+	    	 
+	    	 ListaSucursales.setItems(listaSuc);
+	 		
+	 		ListaZona.setItems(listaZo);
+	    	 
 
 	    	 break;
 	    	 
@@ -275,6 +277,7 @@ public class ControladorPrincipal implements Initializable {
 	    	 centralInferior.getChildren().add(tableview);
 	    	 
 	    	 
+	    	 
 	    	 break;
 		
 		default:
@@ -296,6 +299,11 @@ public class ControladorPrincipal implements Initializable {
 		
 		centralInferior.getChildren().clear();
     	
+    }
+    
+    public void evento(MouseEvent event) {
+    	
+    	System.out.println("TEST");
     }
 	
 	
