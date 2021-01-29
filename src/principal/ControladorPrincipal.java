@@ -197,6 +197,19 @@ public class ControladorPrincipal implements Initializable {
 		cargarUI("resumen");
 	}
 	
+	@FXML 
+	private void exportar(MouseEvent event) throws IOException {
+	
+		cargarUI("exportar");
+	}
+	@FXML 
+	private void proveedores(MouseEvent event) throws IOException {
+	
+		cargarUI("proveedores");
+	}
+	
+	
+	
 	/// Metodo para cargar diferentes vistas, mediante la estructura de control SWITCH
 	// Se compara con el string en el argumento para generar la determinada vista
 	
@@ -277,6 +290,58 @@ public class ControladorPrincipal implements Initializable {
 	    	 centralInferior.getChildren().add(tableview);
 	    	 
 	    	 
+	    	 
+	    	 break;
+	    	 
+	     case "exportar":
+	    	 
+	    	 cabecera.setPrefHeight(75);
+
+	    	 tituloCabecera.setText("Exportar Facturas");
+
+	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+
+	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+
+	    	 tituloCabecera.setTranslateX(23.0);
+
+	    	 tituloCabecera.setTranslateY(24.0);	
+
+	    	 cabecera.getChildren().add(tituloCabecera);
+
+	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+
+	    	 central.setPrefHeight(600);
+
+	    	 central.getChildren().add(root);
+
+	    
+	    	 
+	    	 break;
+	    	 
+         case "proveedores":
+	    	 
+	    	 cabecera.setPrefHeight(75);
+
+	    	 tituloCabecera.setText("Proveedores");
+
+	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+
+	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+
+	    	 tituloCabecera.setTranslateX(23.0);
+
+	    	 tituloCabecera.setTranslateY(24.0);	
+
+	    	 cabecera.getChildren().add(tituloCabecera);
+
+	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+
+	    	 central.setPrefHeight(600);
+
+	    	 central.getChildren().add(root);
+
+	    
 	    	 
 	    	 break;
 		
