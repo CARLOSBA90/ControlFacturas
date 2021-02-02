@@ -4,6 +4,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import clases.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -29,6 +30,8 @@ public class ControladorSucursal implements Initializable {
 	@FXML private AnchorPane pane;
 	
 	@FXML private Pane central,centralInferior,cabecera;
+	
+	private int id;
 	
 	
 	// Configurar tabla de un modelo de factura
@@ -58,8 +61,11 @@ public class ControladorSucursal implements Initializable {
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 	
 		tableview.setItems(lista.getData());
+		
 	
 	}
+	
+
 	
 	
 	
@@ -157,5 +163,13 @@ public class ControladorSucursal implements Initializable {
 		centralInferior.getChildren().clear();
     	
     }
+
+
+
+	public void setUsuario(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+		
+	}
 	
 }

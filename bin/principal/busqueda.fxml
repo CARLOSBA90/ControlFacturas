@@ -5,6 +5,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
@@ -61,16 +63,20 @@
                   <Font name="Calibri Bold" size="17.0" />
                </font>
             </Label>
-            <CheckBox layoutX="423.0" layoutY="59.0" mnemonicParsing="false" text="CUENTA CORRIENTE" />
-            <CheckBox layoutX="424.0" layoutY="92.0" mnemonicParsing="false" text="CUENTA DE CONTADO" />
-            <CheckBox layoutX="423.0" layoutY="27.0" mnemonicParsing="false" text="TODOS" />
             <CheckBox layoutX="588.0" layoutY="27.0" mnemonicParsing="false" text="TODOS" />
             <CheckBox layoutX="589.0" layoutY="59.0" mnemonicParsing="false" text="IVA" />
             <CheckBox layoutX="588.0" layoutY="92.0" mnemonicParsing="false" text="IVA 2" />
             <CheckBox layoutX="663.0" layoutY="27.0" mnemonicParsing="false" text="IVA 3" />
-            <CheckBox layoutX="658.0" layoutY="59.0" mnemonicParsing="false" text="OTROS" />
+            <CheckBox layoutX="663.0" layoutY="59.0" mnemonicParsing="false" text="OTROS" />
             <Line endX="-100.0" endY="112.0" layoutX="675.0" layoutY="2.0" startX="-100.0" stroke="#cdcdcd" />
             <Line endX="-100.0" endY="112.0" layoutX="509.0" layoutY="2.0" startX="-100.0" stroke="#cdcdcd" />
+            <RadioButton layoutX="425.0" layoutY="27.0" mnemonicParsing="false" text="TODOS">
+               <toggleGroup>
+                  <ToggleGroup fx:id="FORMAP" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="425.0" layoutY="52.0" mnemonicParsing="false" text="CUENTA CORRIENTE" toggleGroup="$FORMAP" />
+            <RadioButton layoutX="425.0" layoutY="77.0" mnemonicParsing="false" text="CUENTA DE CONTADO" toggleGroup="$FORMAP" />
          </children></Pane>
    </center>
 </BorderPane>

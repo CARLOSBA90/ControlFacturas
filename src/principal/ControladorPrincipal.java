@@ -208,6 +208,14 @@ public class ControladorPrincipal implements Initializable {
 		cargarUI("proveedores");
 	}
 	
+	@FXML 
+	private void zonas(MouseEvent event) throws IOException {
+	
+		cargarUI("zonas");
+	}
+	
+	
+	
 	
 	
 	/// Metodo para cargar diferentes vistas, mediante la estructura de control SWITCH
@@ -324,6 +332,32 @@ public class ControladorPrincipal implements Initializable {
 	    	 cabecera.setPrefHeight(75);
 
 	    	 tituloCabecera.setText("Proveedores");
+
+	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+
+	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+
+	    	 tituloCabecera.setTranslateX(23.0);
+
+	    	 tituloCabecera.setTranslateY(24.0);	
+
+	    	 cabecera.getChildren().add(tituloCabecera);
+
+	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+
+	    	 central.setPrefHeight(600);
+
+	    	 central.getChildren().add(root);
+
+	    
+	    	 
+	    	 break;
+	    	 
+           case "zonas":
+	    	 
+	    	 cabecera.setPrefHeight(75);
+
+	    	 tituloCabecera.setText("Zonas");
 
 	    	 tituloCabecera.setFont(new Font("Calibri", 34));
 

@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import modelo.ModeloLogin;
+import sucursal.ControladorSucursal;
 
 public class ControladorInicial {
+
 	@FXML
 	private Label status;
 	
@@ -22,13 +26,24 @@ public class ControladorInicial {
 	@FXML
 	private TextField txtContra;
 	
-	public void Login(ActionEvent event) {
+	ModeloLogin modelo = new ModeloLogin();
 	
-		if (txtUsuario.getText().equals("1") && txtContra.getText().equals("")){
-			status.setText("Valido");
-		}else {
-			status.setText("Denegado");
-		}
+	public void Login(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+		
+		
+		int nivel = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
+		
+		if(nivel!=0)
+			//status.setText("PERMITIDO");
+		{
+			if(nivel==1) OfPrincipal(nivel);
+			
+			else  Sucursal(nivel);
+			
+		}	
+			
+		else status.setText("DENEGADO!");
+	
 		
 	}
 	
@@ -55,5 +70,39 @@ public class ControladorInicial {
 		status.getScene().getWindow().hide();
 		
 	}
+	
+	
+	//-----------------------------------------------------------------------------------------------------/
+	
+	
+	public void Sucursal(int id) throws IOException {
+		Stage primaryStage = new Stage();
+		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/sucursal/VistaSucursal.fxml"));
+		
+		
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
+		status.getScene().getWindow().hide();
+		
+	}
+	
+	public void OfPrincipal(int id) throws IOException {
+		Stage primaryStage = new Stage();
+		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/principal/VistaPrincipal.fxml"));
+		
+		
+		
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
+		status.getScene().getWindow().hide();
+		
+	}
+	
 
 }
