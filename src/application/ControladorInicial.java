@@ -77,13 +77,25 @@ public class ControladorInicial {
 	
 	public void Sucursal(int id) throws IOException {
 		Stage primaryStage = new Stage();
-		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/sucursal/VistaSucursal.fxml"));
+	//	Parent root = FXMLLoader.load(getClass().getResource("/sucursal/VistaSucursal.fxml"));
 		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucursal/VistaSucursal.fxml"));
+		
+		Parent root = (Parent) loader.load();
+		
+        ControladorSucursal controlador = loader.getController();
+		
+		controlador.setUsuario(id);
 		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
+		
+		
+		
+		
+		
 		primaryStage.show();
 		status.getScene().getWindow().hide();
 		

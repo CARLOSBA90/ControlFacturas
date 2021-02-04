@@ -28,8 +28,8 @@ public class ControladorSucursal implements Initializable {
 	ListaSucursal lista = new ListaSucursal();
 	
 	@FXML private AnchorPane pane;
-	
 	@FXML private Pane central,centralInferior,cabecera;
+	@FXML private Label idLabel;
 	
 	private int id;
 	
@@ -62,6 +62,14 @@ public class ControladorSucursal implements Initializable {
 	
 		tableview.setItems(lista.getData());
 		
+	    Platform.runLater(() -> {
+
+			idLabel.setText("Sucursal "+id);
+			
+
+	    });
+		
+	
 	
 	}
 	
@@ -143,7 +151,7 @@ public class ControladorSucursal implements Initializable {
 		
 		central.getChildren().add(root);
 		
-		tableview.setPrefHeight(322);
+		tableview.setPrefHeight(392);
 	
 		tableview.setItems(lista.getData());
 		
