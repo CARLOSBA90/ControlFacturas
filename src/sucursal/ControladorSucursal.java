@@ -1,6 +1,7 @@
 package sucursal;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import clases.*;
@@ -19,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modelo.ModeloSucursal;
 
 
 public class ControladorSucursal implements Initializable {
@@ -64,8 +66,24 @@ public class ControladorSucursal implements Initializable {
 		
 	    Platform.runLater(() -> {
 
+	    	if(id!=0) {
 			idLabel.setText("Sucursal "+id);
 			
+			ModeloSucursal modelo = new ModeloSucursal();
+
+			tableview.getItems().clear();
+			
+			try {
+				tableview.setItems(modelo.cargarData(id));
+				
+			} catch (ClassNotFoundException | IOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+	    	
+	    	}
 
 	    });
 		
