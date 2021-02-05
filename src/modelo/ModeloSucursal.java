@@ -41,7 +41,7 @@ public class ModeloSucursal {
 				String instruccion="SELECT facturas.id, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura, facturas.proveedor,"
 						+ " facturas.cuit, facturas.subtotal, facturas.iva1, facturas.iva2, facturas.iva3, "
 						+ " facturas.otro, facturas.total from facturas INNER JOIN sucursal_factura on"
-                        + " facturas.id=sucursal_factura.idfactura where sucursal_factura.idsucursal="+id;
+                        + " facturas.id=sucursal_factura.idfactura where sucursal_factura.idsucursal="+Integer.toString(id);// 
 
 			  miStatement=miConexion.createStatement();
 
@@ -63,7 +63,7 @@ public class ModeloSucursal {
 	   				miResulset.getString(7),miResulset.getInt(4),miResulset.getInt(5), miResulset.getDouble(8),
 	   				miResulset.getDouble(9), miResulset.getDouble(10), miResulset.getDouble(11), miResulset.getDouble(12),
 	   				miResulset.getDouble(13)));
-				
+				System.out.println (""+miResulset.getString(7));
 				
 			}}catch(SQLException e) {
 
