@@ -61,8 +61,6 @@ public class ControladorSucursal implements Initializable {
 		iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
-	
-		tableview.setItems(lista.getData());
 		
 	    Platform.runLater(() -> {
 
@@ -83,6 +81,12 @@ public class ControladorSucursal implements Initializable {
 			
 			
 	    	
+	    	}else {
+	    		
+	    		/// Tablas de ejemplo
+	    		tableview.setItems(lista.getData());
+	    		
+	    		
 	    	}
 
 	    });

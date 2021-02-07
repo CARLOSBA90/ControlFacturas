@@ -28,7 +28,7 @@ public class ModeloSucursal {
 		// TODO Auto-generated method stub
 		
 		ObservableList<factura> lista = FXCollections.observableArrayList();
-		
+       
 		Statement miStatement=null;
 
 		ResultSet miResulset=null;
@@ -54,16 +54,14 @@ public class ModeloSucursal {
 
 	       while(miResulset.next()) {
 	    	   
-	    	   Date entrada = miResulset.getDate(2);
-	    	   LocalDate fecha = entrada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    	   Date fechaSQL = miResulset.getDate(2);
 	    	   
-	    	 //  System.out.println(fecha);
-				
+	    	   LocalDate fecha = fechaSQL.toLocalDate(); 
+			
 	   		lista.add(new factura(fecha ,miResulset.getString(3),miResulset.getString(6),
 	   				miResulset.getString(7),miResulset.getInt(4),miResulset.getInt(5), miResulset.getDouble(8),
 	   				miResulset.getDouble(9), miResulset.getDouble(10), miResulset.getDouble(11), miResulset.getDouble(12),
 	   				miResulset.getDouble(13)));
-				System.out.println (""+miResulset.getString(7));
 				
 			}}catch(SQLException e) {
 
