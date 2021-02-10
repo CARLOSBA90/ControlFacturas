@@ -41,7 +41,7 @@ public class ModeloSucursal {
 				String instruccion="SELECT facturas.id, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura, facturas.proveedor,"
 						+ " facturas.cuit, facturas.subtotal, facturas.iva1, facturas.iva2, facturas.iva3, "
 						+ " facturas.otro, facturas.total from facturas INNER JOIN sucursal_factura on"
-                        + " facturas.id=sucursal_factura.idfactura where sucursal_factura.idsucursal="+Integer.toString(id);// 
+                        + " facturas.id=sucursal_factura.idfactura where sucursal_factura.idsucursal="+id;// 
 
 			  miStatement=miConexion.createStatement();
 

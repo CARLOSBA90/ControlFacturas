@@ -30,7 +30,11 @@ public class ControladorInicial {
 	
 	public void Login(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
 		
-		
+		if(txtUsuario.getText().equals("")||txtContra.getText().equals(""))
+		   {
+			status.setText("ACCESO INCORRECTO");
+		   }
+		else {
 		int nivel = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
 		
 		if(nivel!=0)
@@ -44,6 +48,7 @@ public class ControladorInicial {
 			
 		else status.setText("DENEGADO!");
 	
+		}
 		
 	}
 	
