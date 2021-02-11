@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sucursal.ControladorIngresarFactura">
    <center>
       <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="130.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
          <children>
@@ -73,9 +73,9 @@
                   <Font name="Calibri Bold" size="17.0" />
                </font>
             </Label>
-            <ComboBox fx:id="tipo" layoutX="196.0" layoutY="26.0" prefHeight="25.0" prefWidth="55.0" />
-            <ComboBox fx:id="cuit" layoutX="608.0" layoutY="26.0" prefHeight="25.0" prefWidth="55.0" />
-            <ComboBox fx:id="proveedor" layoutX="509.0" layoutY="26.0" prefHeight="25.0" prefWidth="89.0" />
+            <ComboBox fx:id="listaDeTipos" layoutX="196.0" layoutY="26.0" prefHeight="25.0" prefWidth="55.0" />
+            <ComboBox fx:id="listaCuit" layoutX="608.0" layoutY="26.0" prefHeight="25.0" prefWidth="55.0" />
+            <ComboBox fx:id="listaProveedor" layoutX="509.0" layoutY="26.0" prefHeight="25.0" prefWidth="89.0" />
             <TextField fx:id="prefijo" layoutX="262.0" layoutY="26.0" prefHeight="25.0" prefWidth="69.0" />
             <TextField fx:id="nrofactura" layoutX="347.0" layoutY="26.0" prefHeight="25.0" prefWidth="137.0" />
             <TextField fx:id="subtotal" layoutX="5.0" layoutY="80.0" prefHeight="25.0" prefWidth="149.0" />
@@ -84,7 +84,7 @@
             <TextField fx:id="iva3" layoutX="353.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" />
             <TextField fx:id="ivaotros" layoutX="451.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" />
             <TextField fx:id="total" layoutX="546.0" layoutY="80.0" prefHeight="25.0" prefWidth="132.0" />
-            <Button fx:id="botonIngresar" layoutX="688.0" layoutY="76.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="96.0" text="INGRESAR">
+            <Button fx:id="botonIngresar" layoutX="688.0" layoutY="76.0" mnemonicParsing="false" onMouseClicked="#ingresarFactura" prefHeight="31.0" prefWidth="96.0" text="INGRESAR">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>

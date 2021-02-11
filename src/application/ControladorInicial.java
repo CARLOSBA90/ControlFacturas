@@ -109,9 +109,6 @@ public class ControladorInicial {
 	public void OfPrincipal(int id) throws IOException {
 		Stage primaryStage = new Stage();
 		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/principal/VistaPrincipal.fxml"));
-		
-		
-		
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setScene(scene);

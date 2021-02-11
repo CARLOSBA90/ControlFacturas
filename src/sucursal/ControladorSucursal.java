@@ -177,8 +177,7 @@ public class ControladorSucursal implements Initializable {
 		centralInferior.getChildren().clear();
     	
     }
-
-
+    
 
 	public void setUsuario(int id) {
 		// TODO Auto-generated method stub

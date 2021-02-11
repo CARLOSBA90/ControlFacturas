@@ -52,7 +52,10 @@ public class ModeloSucursal {
 
 			/// RECORRER EL RESULSET
 
-	       while(miResulset.next()) {
+			 if(miResulset.next() == false)
+			       lista.add(new factura(LocalDate.now(),"-","SIN DATOS","SIN DATOS",0,0,0,0,0,0,0,0));
+			 else {
+	                do {
 	    	   
 	    	   Date fechaSQL = miResulset.getDate(2);
 	    	   
@@ -63,17 +66,8 @@ public class ModeloSucursal {
 	   				miResulset.getDouble(9), miResulset.getDouble(10), miResulset.getDouble(11), miResulset.getDouble(12),
 	   				miResulset.getDouble(13)));
 				
-			}
-	       
-	       if(miResulset.getRow()==0)
-	       {
-	    	   System.out.println("vacio");
-	    	   lista.add(new factura(LocalDate.now(),"-","SIN DATOS","SIN DATOS",0,0,0,0,0,0,0,0));
-	       }
-	    	   
-	    	   
-		
-		
+			           }while(miResulset.next());
+			            }
 		}catch(SQLException e) {
 
 				e.printStackTrace();
@@ -81,10 +75,6 @@ public class ModeloSucursal {
 				miStatement.close();
 				miConexion.close();
 			}
-		
-		
-		
-		
 		
 		return lista;
 	}
