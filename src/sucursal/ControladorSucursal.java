@@ -29,6 +29,8 @@ public class ControladorSucursal implements Initializable {
 	
 	ListaSucursal lista = new ListaSucursal();
 	
+	ModeloSucursal modelo;
+	
 	@FXML private AnchorPane pane;
 	@FXML private Pane central,centralInferior,cabecera;
 	@FXML private Label idLabel;
@@ -63,31 +65,9 @@ public class ControladorSucursal implements Initializable {
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 		
 	    Platform.runLater(() -> {
+	    		    	
+	    	cargarLista(id);
 
-	    	if(id!=0) {
-			idLabel.setText("Sucursal "+id);
-			
-			ModeloSucursal modelo = new ModeloSucursal();
-
-			tableview.getItems().clear();
-			
-			try {
-				tableview.setItems(modelo.cargarData(id));
-				
-			} catch (ClassNotFoundException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-	    	
-	    	}else {
-	    		
-	    		/// Tablas de ejemplo
-	    		tableview.setItems(lista.getData());
-	    		
-	    		
-	    	}
 
 	    });
 		
@@ -106,7 +86,9 @@ public class ControladorSucursal implements Initializable {
 		
 		blanquear();
 		
-		tableview.setItems(lista.getData());
+	//	tableview.setItems(lista.getData());
+		
+		cargarLista(id);
 		
 		tableview.setPrefHeight(524);
 		
@@ -175,7 +157,9 @@ public class ControladorSucursal implements Initializable {
 		
 		tableview.setPrefHeight(392);
 	
-		tableview.setItems(lista.getData());
+		//tableview.setItems(lista.getData());
+		
+		cargarLista(id);
 		
 		centralInferior.getChildren().add(tableview);
 		
@@ -199,6 +183,33 @@ public class ControladorSucursal implements Initializable {
 	public void setUsuario(int id) {
 		// TODO Auto-generated method stub
 		this.id = id;
+		modelo = new ModeloSucursal();
+		
+	}
+	
+	public void cargarLista(int id) {
+		
+		if(id!=0) {
+			idLabel.setText("Sucursal "+id);
+			
+			tableview.getItems().clear();
+			
+			try {
+				tableview.setItems(modelo.cargarData(id));
+				
+			} catch (ClassNotFoundException | IOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	    	}else {
+	    		
+	    		/// Tablas de ejemplo
+	    		tableview.setItems(lista.getData());
+	    		
+	    		
+	    	}
+		
 		
 	}
 	

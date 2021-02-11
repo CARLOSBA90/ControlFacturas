@@ -35,14 +35,14 @@ public class ControladorInicial {
 			status.setText("ACCESO INCORRECTO");
 		   }
 		else {
-		int nivel = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
+		int id = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
 		
-		if(nivel!=0)
+		if(id!=0)
 			//status.setText("PERMITIDO");
 		{
-			if(nivel==1) OfPrincipal(nivel);
+			if(id==1) OfPrincipal(id);
 			
-			else  Sucursal(nivel);
+			else  Sucursal(id);
 			
 		}	
 			

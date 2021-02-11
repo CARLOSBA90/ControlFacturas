@@ -63,7 +63,18 @@ public class ModeloSucursal {
 	   				miResulset.getDouble(9), miResulset.getDouble(10), miResulset.getDouble(11), miResulset.getDouble(12),
 	   				miResulset.getDouble(13)));
 				
-			}}catch(SQLException e) {
+			}
+	       
+	       if(miResulset.getRow()==0)
+	       {
+	    	   System.out.println("vacio");
+	    	   lista.add(new factura(LocalDate.now(),"-","SIN DATOS","SIN DATOS",0,0,0,0,0,0,0,0));
+	       }
+	    	   
+	    	   
+		
+		
+		}catch(SQLException e) {
 
 				e.printStackTrace();
 			}finally {

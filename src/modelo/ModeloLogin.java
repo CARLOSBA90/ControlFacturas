@@ -51,7 +51,7 @@ public class ModeloLogin {
 			while(miResulset.next()) {
 				
 				if(usuario.toLowerCase().equals(miResulset.getString(2)) && contrasena.equals(miResulset.getString(3)))
-				acceso=miResulset.getInt(4);
+				acceso=miResulset.getInt(1);
 
 			}}catch(SQLException e) {
 
