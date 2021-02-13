@@ -6,7 +6,6 @@ public class usuario {
 	
 	public usuario(int id, String usuario, String contrasena, int nivel) {
 		super();
-		
 		this.id = new SimpleIntegerProperty(id);
 		this.usuario = new SimpleStringProperty(usuario);
 		this.contrasena = new SimpleStringProperty(contrasena);

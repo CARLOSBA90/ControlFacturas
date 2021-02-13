@@ -33,12 +33,12 @@
                   <Font name="Calibri Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="505.0" layoutY="4.0" prefHeight="21.0" prefWidth="96.0" text="PROVEEDOR">
+            <Label layoutX="495.0" layoutY="4.0" prefHeight="21.0" prefWidth="96.0" text="PROVEEDOR">
                <font>
                   <Font name="Calibri Bold" size="17.0" />
                </font>
             </Label>
-            <Label layoutX="612.0" layoutY="4.0" prefHeight="21.0" prefWidth="46.0" text="CUIT">
+            <Label layoutX="667.0" layoutY="4.0" prefHeight="21.0" prefWidth="46.0" text="CUIT">
                <font>
                   <Font name="Calibri Bold" size="17.0" />
                </font>
@@ -74,8 +74,8 @@
                </font>
             </Label>
             <ComboBox fx:id="listaDeTipos" layoutX="196.0" layoutY="26.0" prefHeight="25.0" prefWidth="55.0" />
-            <ComboBox fx:id="listaCuit" layoutX="608.0" layoutY="26.0" prefHeight="25.0" prefWidth="55.0" />
-            <ComboBox fx:id="listaProveedor" layoutX="509.0" layoutY="26.0" prefHeight="25.0" prefWidth="89.0" />
+            <ComboBox fx:id="listaCuit" layoutX="666.0" layoutY="26.0" prefHeight="25.0" prefWidth="116.0" />
+            <ComboBox fx:id="listaProveedor" layoutX="496.0" layoutY="26.0" onAction="#seleccionPro" prefHeight="25.0" prefWidth="165.0" />
             <TextField fx:id="prefijo" layoutX="262.0" layoutY="26.0" prefHeight="25.0" prefWidth="69.0" />
             <TextField fx:id="nrofactura" layoutX="347.0" layoutY="26.0" prefHeight="25.0" prefWidth="137.0" />
             <TextField fx:id="subtotal" layoutX="5.0" layoutY="80.0" prefHeight="25.0" prefWidth="149.0" />

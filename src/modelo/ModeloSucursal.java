@@ -8,8 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 import clases.factura;
+import clases.proveedor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -68,6 +70,45 @@ public class ModeloSucursal {
 				
 			           }while(miResulset.next());
 			            }
+		}catch(SQLException e) {
+
+				e.printStackTrace();
+			}finally {
+				miStatement.close();
+				miConexion.close();
+			}
+		
+		return lista;
+	}
+
+	public ArrayList<proveedor> listaProveedores() throws SQLException, ClassNotFoundException, IOException {
+		// TODO Auto-generated method stub
+		
+		ArrayList<proveedor> lista = new ArrayList<proveedor>();
+		
+		Statement miStatement=null;
+
+		ResultSet miResulset=null;
+		
+		try {
+			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
+
+				miConexion = conectar.conectar();
+			
+				String instruccion="SELECT * FROM proveedores";// 
+
+			  miStatement=miConexion.createStatement();
+
+			/// EJECUTAR SQL
+
+			miResulset=miStatement.executeQuery(instruccion);
+
+			/// RECORRER EL RESULSET
+
+			while(miResulset.next()){
+	   		lista.add(new proveedor(miResulset.getInt(1),miResulset.getString(2),miResulset.getString(3)));
+		  };
+			            
 		}catch(SQLException e) {
 
 				e.printStackTrace();
