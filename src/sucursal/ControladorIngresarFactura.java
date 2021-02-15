@@ -23,9 +23,10 @@ public class ControladorIngresarFactura implements Initializable {
 	@FXML private ComboBox<String> listaDeTipos, listaProveedor, listaCuit;
 	
    ObservableList<String> tipo = FXCollections.observableArrayList("A", "B", "C");
-   ObservableList<String> proveedor;
-   ObservableList<String> cuit;
-	
+   ObservableList<String> proveedor,cuit;
+   ArrayList<String> listaNombreArray, listaCuitArray;
+   
+   
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		ModeloSucursal modelo =	 new ModeloSucursal();
@@ -62,18 +63,18 @@ public class ControladorIngresarFactura implements Initializable {
 	private void generarListas(ArrayList<clases.proveedor> listaProveedores) {
 		// TODO Auto-generated method stub
 		
-		ArrayList<String> listaNombre = new ArrayList<String>();
+	     listaNombreArray = new ArrayList<String>();
 		
-		ArrayList<String> listaCuit = new ArrayList<String>();
+		 listaCuitArray = new ArrayList<String>();
 		
 		for(proveedor temp: listaProveedores) {
 			
-			listaNombre.add(temp.getNombre());
-			listaCuit.add(temp.getCuit());
+			listaNombreArray.add(temp.getNombre());
+			listaCuitArray.add(temp.getCuit());
 		}
 		
-		proveedor = FXCollections.observableArrayList(listaNombre);
-		cuit = FXCollections.observableArrayList(listaCuit);
+		proveedor = FXCollections.observableArrayList(listaNombreArray);
+		cuit = FXCollections.observableArrayList(listaCuitArray);
 		
 	}
 
@@ -90,7 +91,37 @@ public class ControladorIngresarFactura implements Initializable {
 	@FXML
 	private void seleccionPro(ActionEvent e) {
 		
-		//System.out.println(listaProveedor.getValue());
+		String texto =  listaProveedor.getValue();
+		
+		int c =0;
+		
+		for(int i=0;i<listaNombreArray.size();i++) {
+			
+			if(texto==listaNombreArray.get(i))
+				{c=i;break;}
+			
+		}
+		
+		listaCuit.getSelectionModel().select(c);
+		
+	}
+	
+	@FXML
+	private void seleccionCuit(ActionEvent e) {
+		
+		String texto =  listaCuit.getValue();
+		
+		int c =0;
+		
+		for(int i=0;i<listaCuitArray.size();i++) {
+			
+			if(texto==listaCuitArray.get(i))
+				{c=i;break;}
+			
+		}
+		
+		listaProveedor.getSelectionModel().select(c);
+		
 	}
 
 }
