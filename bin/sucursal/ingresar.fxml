@@ -78,7 +78,7 @@
             <ComboBox fx:id="listaProveedor" layoutX="496.0" layoutY="26.0" onAction="#seleccionPro" prefHeight="25.0" prefWidth="165.0" />
             <TextField fx:id="prefijo" layoutX="262.0" layoutY="26.0" prefHeight="25.0" prefWidth="69.0" />
             <TextField fx:id="nrofactura" layoutX="347.0" layoutY="26.0" prefHeight="25.0" prefWidth="137.0" />
-            <TextField fx:id="subtotal" layoutX="5.0" layoutY="80.0" onInputMethodTextChanged="#nuevoMonto" prefHeight="25.0" prefWidth="149.0" />
+            <TextField fx:id="subtotal" layoutX="5.0" layoutY="80.0" prefHeight="25.0" prefWidth="149.0" />
             <TextField fx:id="iva1" layoutX="161.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" />
             <TextField fx:id="iva2" layoutX="257.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" />
             <TextField fx:id="iva3" layoutX="353.0" layoutY="80.0" prefHeight="25.0" prefWidth="90.0" />

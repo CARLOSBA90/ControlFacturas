@@ -132,10 +132,18 @@ public class ControladorSucursal implements Initializable {
 	/// Metodo para generar los nodos de la vista "Ingresar nueva factura"
 	
 	private void cargarUI(String ui) throws IOException {
-		
+		/*
 		Parent root = null;
 	
-	    root = FXMLLoader.load(getClass().getResource(ui+".fxml"));
+	    root = FXMLLoader.load(getClass().getResource(ui+".fxml"));*/
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(ui+".fxml"));
+		
+		Parent root = (Parent) loader.load();
+		
+	    ControladorIngresarFactura controlador = loader.getController();
+	    
+	    controlador.setUsuario(id);
 		 
 		blanquear();
 		

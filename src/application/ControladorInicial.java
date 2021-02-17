@@ -89,12 +89,15 @@ public class ControladorInicial {
 		Parent root = (Parent) loader.load();
 		
         ControladorSucursal controlador = loader.getController();
-		
+        
 		controlador.setUsuario(id);
 		
 		Scene scene = new Scene(root);
+		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		
 		primaryStage.setScene(scene);
+		
 		primaryStage.setResizable(false);
 		
 		

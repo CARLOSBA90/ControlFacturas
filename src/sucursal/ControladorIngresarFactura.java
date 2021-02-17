@@ -25,6 +25,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import modelo.ModeloSucursal;
+import clases.factura;
 import clases.proveedor;
 
 public class ControladorIngresarFactura implements Initializable {
@@ -40,6 +41,8 @@ public class ControladorIngresarFactura implements Initializable {
    ObservableList<String> proveedor,cuit;
    
    ArrayList<String> listaNombreArray, listaCuitArray;
+   
+   private int id;
    
    
 	public void initialize(URL location, ResourceBundle resources) {
@@ -207,7 +210,7 @@ public class ControladorIngresarFactura implements Initializable {
 
 
 	@FXML 
-	private void ingresarFactura(MouseEvent event) {
+	private void ingresarFactura(MouseEvent event) throws SQLException {
     	
 		/// Validacion de datos entradas, verifica los campos minimos para realizar una entrada a la BBDD
 		if(
@@ -254,20 +257,74 @@ public class ControladorIngresarFactura implements Initializable {
 		
     } 
 	
-	private void facturaBBDD() {
+	private void facturaBBDD() throws SQLException {
 		// TODO Auto-generated method stub
-		
-		ModeloSucursal modelo = new ModeloSucursal();
 		
 		LocalDate datoFecha = fecha.getValue();
 		
 		String datoTipo = listaDeTipos.getValue();
 		
+		int datoPrefijo = Integer.parseInt(prefijo.getText());
+		
+		int datoNroFactura = Integer.parseInt(nrofactura.getText());
+		
 		String datoProveedor = listaProveedor.getValue();
 		
 		String datoCuit = listaCuit.getValue();
+	
+		double datoSubtotal = Double.parseDouble(subtotal.getText());
 		
-		/// continuacion ..
+		double datoIva1 = (!iva1.getText().trim().isEmpty())?  Double.parseDouble(iva1.getText()) : 0;
+		
+		double datoIva2 = (!iva2.getText().trim().isEmpty())?  Double.parseDouble(iva2.getText()) : 0;
+		
+		double datoIva3 = (!iva3.getText().trim().isEmpty())?  Double.parseDouble(iva3.getText()) : 0;
+		
+		double datoIvaOtros = (!ivaotros.getText().trim().isEmpty())?  Double.parseDouble(ivaotros.getText()) : 0;
+		
+		double datoTotal = (!total.getText().trim().isEmpty())?  Double.parseDouble(total.getText().replaceAll(",",".")) : 0;
+		
+		factura factura = new factura(datoFecha, datoTipo,datoProveedor,datoCuit,datoPrefijo,datoNroFactura,datoSubtotal,
+				datoIva1,datoIva2,datoIva3,datoIvaOtros,datoTotal);
+		
+		ModeloSucursal modelo = new ModeloSucursal();
+		
+		boolean insercion = modelo.insertarFactura(factura, id);
+		
+		
+		if(insercion) {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			  
+		    alert.setHeaderText(null);
+		    
+		    alert.setTitle("Factura insertada");
+		    
+		    alert.setContentText("Los datos han sido guardados correctamente ID "+id);
+		    
+		    ButtonType boton = new ButtonType("Ok");
+		    
+            ButtonType cancelar = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(boton, cancelar);
+            
+            alert.getDialogPane().lookupButton(cancelar).setVisible(false);
+            
+		    alert.showAndWait();
+		    
+		    blanquear();
+		    
+			
+		}else {
+			  Alert alert = new Alert(Alert.AlertType.ERROR);
+			  
+			    alert.setHeaderText(null);
+			    
+			    alert.setTitle("Error");
+			    
+			    alert.setContentText("Intento de guardar datos fallido!");
+			    
+			    alert.showAndWait();
+		}
 		
 		
 	}
@@ -310,11 +367,28 @@ public class ControladorIngresarFactura implements Initializable {
 		
 	}
 	
-	@FXML
-	private void nuevoMonto(ActionEvent e) {
-		
-		//total.setText(""+Double.parseDouble(subtotal.getText()));
+	public void setUsuario(int id) {
+		// TODO Auto-generated method stub
+		this.id = id;
 		
 	}
+	
+	public void blanquear() {
+		
+		fecha.setValue(null);
+		listaDeTipos.setValue(null);
+		listaProveedor.setValue(null);
+		listaCuit.setValue(null);
+		prefijo.clear();
+		nrofactura.clear();
+		subtotal.clear();
+		iva1.clear();
+		iva2.clear();
+		iva3.clear();
+		ivaotros.clear();
+		total.clear();
+		
+	}
+	
 
 }

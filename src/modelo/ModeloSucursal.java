@@ -3,6 +3,7 @@ package modelo;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -118,6 +119,92 @@ public class ModeloSucursal {
 			}
 		
 		return lista;
+	}
+
+	public boolean insertarFactura(factura factura, int id) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		boolean insercion = false;
+		
+		PreparedStatement miStatement=null;
+
+		try {
+			miConexion = conectar.conectar();
+			
+			miConexion.setAutoCommit(false);
+			
+			/// OBTENER EL PROXIMO AUTO-INCREMENT DE LA TABLA PEDIDOS PARA UTILIZARLO EN LA TABLA PEDIDO_PRODUCTO
+
+			Statement statementAU = null;
+
+			ResultSet rs_AU = null;
+			
+			int proximo=0;
+
+					String sqlAU="SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'controlfacturas' " +
+		  					"AND   TABLE_NAME   = 'factura'";
+
+
+			statementAU = miConexion.createStatement();
+
+			rs_AU = statementAU.executeQuery(sqlAU);
+
+			if(rs_AU.next()) {
+
+				proximo = rs_AU.getInt(1);}
+
+			rs_AU.close();
+			
+			String sql="INSERT INTO factura(fecha,tipo,prefijo,nrofactura,proveedor,cuit,"
+					+ "subtotal,iva1,iva2,iva3,otro,total,id"
+					+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			miStatement= miConexion.prepareStatement(sql);
+
+			miStatement.setDate(1, Date.valueOf(factura.getFecha()));
+			miStatement.setString(2,factura.getTipo());
+			miStatement.setInt(3,factura.getPrefijo());
+			miStatement.setInt(4,factura.getNrofactura());
+			miStatement.setString(5,factura.getProveedor());
+			miStatement.setString(6,factura.getCuit());
+			miStatement.setDouble(7, factura.getSubtotal());
+			miStatement.setDouble(8, factura.getIva());
+			miStatement.setDouble(9, factura.getIva2());
+			miStatement.setDouble(10, factura.getIva3());
+			miStatement.setDouble(11, factura.getOtros());
+			miStatement.setDouble(12, factura.getTotal());
+			miStatement.setInt(13, proximo);
+
+			miStatement.execute();
+			
+			
+			
+			// continuacion ...
+			
+			
+			
+
+			///COMPLETAR TODOS LOS QUERYS O NO COMPLETAR NINGUNO, TRANSACCION
+			miConexion.commit();
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+			miConexion.rollback();
+
+		}finally {
+			try {
+				miStatement.close();
+				miConexion.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		
+		return insercion;
 	}
 
 
