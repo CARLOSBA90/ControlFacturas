@@ -42,6 +42,8 @@ public class ControladorIngresarFactura implements Initializable {
    
    ArrayList<String> listaNombreArray, listaCuitArray;
    
+   ControladorSucursal superior;
+   
    private int id;
    
    
@@ -299,7 +301,7 @@ public class ControladorIngresarFactura implements Initializable {
 		    
 		    alert.setTitle("Factura insertada");
 		    
-		    alert.setContentText("Los datos han sido guardados correctamente ID "+id);
+		    alert.setContentText("Los datos han sido guardados correctamente");
 		    
 		    ButtonType boton = new ButtonType("Ok");
 		    
@@ -311,6 +313,8 @@ public class ControladorIngresarFactura implements Initializable {
             
 		    alert.showAndWait();
 		    
+		    superior.refrescarLista();
+		    
 		    blanquear();
 		    
 			
@@ -321,7 +325,7 @@ public class ControladorIngresarFactura implements Initializable {
 			    
 			    alert.setTitle("Error");
 			    
-			    alert.setContentText("Intento de guardar datos fallido!");
+			    alert.setContentText("Intento de guardar datos: fallido!");
 			    
 			    alert.showAndWait();
 		}
@@ -388,6 +392,14 @@ public class ControladorIngresarFactura implements Initializable {
 		ivaotros.clear();
 		total.clear();
 		
+	}
+
+
+
+
+	public void setClase(ControladorSucursal controladorSucursal) {
+		// TODO Auto-generated method stub
+		superior = controladorSucursal;
 	}
 	
 

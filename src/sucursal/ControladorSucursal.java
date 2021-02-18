@@ -64,6 +64,8 @@ public class ControladorSucursal implements Initializable {
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 		
+		
+		/// Carga de datos despues de generar las vista, para poder cargar el ID
 	    Platform.runLater(() -> {
 	    		    	
 	    	cargarLista(id);
@@ -74,9 +76,6 @@ public class ControladorSucursal implements Initializable {
 	
 	
 	}
-	
-
-	
 	
 	
 	/// Metodo para mostrar el historial de facturas en el sector derecho
@@ -144,6 +143,8 @@ public class ControladorSucursal implements Initializable {
 	    ControladorIngresarFactura controlador = loader.getController();
 	    
 	    controlador.setUsuario(id);
+	    
+	    controlador.setClase(this);
 		 
 		blanquear();
 		
@@ -186,6 +187,7 @@ public class ControladorSucursal implements Initializable {
     	
     }
     
+    // Codigo para identificar de que sucursal se carga el ID
 
 	public void setUsuario(int id) {
 		// TODO Auto-generated method stub
@@ -193,6 +195,8 @@ public class ControladorSucursal implements Initializable {
 		modelo = new ModeloSucursal();
 		
 	}
+	
+	/// Carga la listview desde la BBDD
 	
 	public void cargarLista(int id) {
 		
@@ -217,6 +221,15 @@ public class ControladorSucursal implements Initializable {
 	    		
 	    	}
 		
+		
+	}
+
+	 /// Refresca la vista despues de insertar una nueva factura, desde el controlador Ingresar Factura
+
+	public void refrescarLista() {
+		// TODO Auto-generated method stub
+		
+		cargarLista(id);
 		
 	}
 	

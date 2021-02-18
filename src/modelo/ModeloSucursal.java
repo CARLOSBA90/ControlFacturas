@@ -126,12 +126,15 @@ public class ModeloSucursal {
 		
 		boolean insercion = false;
 		
-		PreparedStatement miStatement=null;
 
 		try {
+			
+			/// Transaccion!
 			miConexion = conectar.conectar();
 			
 			miConexion.setAutoCommit(false);
+			
+			///------------------------------------------------------------------------------------------------
 			
 			/// OBTENER EL PROXIMO AUTO-INCREMENT DE LA TABLA PEDIDOS PARA UTILIZARLO EN LA TABLA PEDIDO_PRODUCTO
 
@@ -142,7 +145,7 @@ public class ModeloSucursal {
 			int proximo=0;
 
 					String sqlAU="SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'controlfacturas' " +
-		  					"AND   TABLE_NAME   = 'factura'";
+		  					"AND   TABLE_NAME   = 'facturas'";
 
 
 			statementAU = miConexion.createStatement();
@@ -154,47 +157,131 @@ public class ModeloSucursal {
 				proximo = rs_AU.getInt(1);}
 
 			rs_AU.close();
+		
 			
-			String sql="INSERT INTO factura(fecha,tipo,prefijo,nrofactura,proveedor,cuit,"
+			///------------------------------------------------------------------------------------------------
+			
+			////INSERCION RELACION TABLA FACTURA PROVEEDOR
+			
+			// PRIMERO BUSCA SI EL PROVEEDOR EXISTE DENTRO DE LA TABLA(SELECCIONA EL NUMERO DE CODIGO DE PROVEEDOR)
+			
+			Statement statementProveedor = null;
+
+			ResultSet rs_Proveedor = null;
+			
+			String sqlProveedor = "SELECT proveedores.id FROM proveedores WHERE proveedores.nombre = '"+factura.getProveedor().toString()+"' AND proveedores.cuit = '"+factura.getCuit().toString()+"'";
+			
+			int cod_proveedor = 0;
+			
+			statementProveedor = miConexion.createStatement();
+			
+			rs_Proveedor = statementProveedor.executeQuery(sqlProveedor);
+			
+			if(rs_Proveedor.next()) {
+
+				cod_proveedor = rs_Proveedor.getInt(1);}
+			
+
+			rs_Proveedor.close();
+
+			
+			if(cod_proveedor == 0 || proximo == 0) throw new Exception("Valores no encontrado: proximo ID factura o codigo Proveedor");
+			
+			
+			
+			///------------------------------------------------------------------------------------------------
+			/// INSERCION VALORES TABLA FACTURA
+			
+			String sql="INSERT INTO facturas(fecha,tipo,prefijo,nrofactura,proveedor,cuit,"
 					+ "subtotal,iva1,iva2,iva3,otro,total,id"
 					+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			PreparedStatement miStatement=null;
 
 			miStatement= miConexion.prepareStatement(sql);
 
 			miStatement.setDate(1, Date.valueOf(factura.getFecha()));
+			
 			miStatement.setString(2,factura.getTipo());
+			
 			miStatement.setInt(3,factura.getPrefijo());
+			
 			miStatement.setInt(4,factura.getNrofactura());
+			
 			miStatement.setString(5,factura.getProveedor());
+			
 			miStatement.setString(6,factura.getCuit());
+			
 			miStatement.setDouble(7, factura.getSubtotal());
+			
 			miStatement.setDouble(8, factura.getIva());
+			
 			miStatement.setDouble(9, factura.getIva2());
+			
 			miStatement.setDouble(10, factura.getIva3());
+			
 			miStatement.setDouble(11, factura.getOtros());
+			
 			miStatement.setDouble(12, factura.getTotal());
+			
 			miStatement.setInt(13, proximo);
-
+			
 			miStatement.execute();
 			
+			miStatement.close();
 			
+			///------------------------------------------------------------------------------------------------
+			/// INSERCION VALORES FACTURA PROVEEDOR EN DICHA TABLA
 			
-			// continuacion ...
+			String sqlFP= "INSERT INTO factura_proveedor(idfactura,idproveedor) values(?,?)";
 			
+			PreparedStatement ST_FP=null;
+			
+			ST_FP = miConexion.prepareStatement(sqlFP);
+			
+			ST_FP.setInt(1,proximo);
+			
+			ST_FP.setInt(2, cod_proveedor);
+			
+			ST_FP.execute();
+			
+			ST_FP.close();
+			
+		
+			
+			///------------------------------------------------------------------------------------------------
+			/// INSERCION VALORES SUCURSAL FACTURA EN DICHA TABLA
+			
+            String sqlSF= "INSERT INTO sucursal_factura(idsucursal,idfactura) values(?,?)";
+			
+			PreparedStatement ST_SF=null;
+			
+			ST_SF = miConexion.prepareStatement(sqlSF);
+			
+			ST_SF.setInt(1, id);
+			
+			ST_SF.setInt(2, proximo);
+			
+			ST_SF.execute();
+			
+			ST_SF.close();
 			
 			
 
 			///COMPLETAR TODOS LOS QUERYS O NO COMPLETAR NINGUNO, TRANSACCION
 			miConexion.commit();
+			
+			insercion = true;
 
 		}catch(Exception e) {
 			e.printStackTrace();
 			
 			miConexion.rollback();
+			
+			insercion = false;
 
 		}finally {
 			try {
-				miStatement.close();
 				miConexion.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
