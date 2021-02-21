@@ -29,8 +29,6 @@ public class ControladorPrincipal implements Initializable {
 	
 	// Variables
 	
-	ListaSucursal lista = new ListaSucursal();
-	
 	@FXML private AnchorPane pane;
 	
 	@FXML private Pane central,centralInferior,cabecera, menu;
@@ -79,16 +77,16 @@ public class ControladorPrincipal implements Initializable {
 		iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
-		tableview.setItems(lista.getData());
+		tableview.setItems(null);
 		
-		ListaSucursales.setItems(listaSuc);
+		ListaZona.setItems(listaZonas());
 		
-		ListaZona.setItems(listaZo);
+		ListaSucursales.setItems(null);
+		
 	
 	}
 	
-	
-	
+
 	public void ListaSucursalesCambia(ActionEvent event) {
 		
 		
@@ -161,7 +159,7 @@ public class ControladorPrincipal implements Initializable {
 		 
 		 cabecera.getChildren().add(tituloCabecera);
 		 
-		 tableview.setItems(lista.getData());
+		 tableview.setItems(null);
 
 		 tableview.setPrefHeight(477); 
 		 
@@ -258,7 +256,7 @@ public class ControladorPrincipal implements Initializable {
 
 	    	 tableview.setPrefHeight(405);
 
-	    	 tableview.setItems(lista.getData());
+	    	 tableview.setItems(null);
 
 	    	 centralInferior.getChildren().add(tableview);
 	    	 
@@ -293,7 +291,7 @@ public class ControladorPrincipal implements Initializable {
 
 	    	 tableview.setPrefHeight(440);
 
-	    	 tableview.setItems(lista.getData());
+	    	 tableview.setItems(null);
 
 	    	 centralInferior.getChildren().add(tableview);
 	    	 
@@ -404,6 +402,17 @@ public class ControladorPrincipal implements Initializable {
     	
     	System.out.println("TEST");
     }
+    
+    
+    private ObservableList<String> listaZonas (){
+    	
+    	return null;
+    }
+    
+    private ObservableList<String> listaSucursales() {
+    	
+		return null;
+	}
 	
 	
 }

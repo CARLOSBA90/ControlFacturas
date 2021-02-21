@@ -27,8 +27,6 @@ public class ControladorSucursal implements Initializable {
 	
 	// Variables
 	
-	ListaSucursal lista = new ListaSucursal();
-	
 	ModeloSucursal modelo;
 	
 	@FXML private AnchorPane pane;
@@ -216,7 +214,7 @@ public class ControladorSucursal implements Initializable {
 	    	}else {
 	    		
 	    		/// Tablas de ejemplo
-	    		tableview.setItems(lista.getData());
+	    		tableview.setItems(null);
 	    		
 	    		
 	    	}

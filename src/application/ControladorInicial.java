@@ -29,22 +29,20 @@ public class ControladorInicial {
 	ModeloLogin modelo = new ModeloLogin();
 	
 	public void Login(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
-		
-		if(txtUsuario.getText().equals("")||txtContra.getText().equals(""))
-		   {
+
+		if (txtUsuario.getText().equals("") || txtContra.getText().equals("")) {
 			status.setText("ACCESO INCORRECTO");
-		   }
-		else {
-		int id = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
-		
-		if(id!=0)
-			//status.setText("PERMITIDO");
-		{
-			if(id==1) OfPrincipal(id);
-			
-			else  Sucursal(id);
-			
-		}	
+		} else {
+			int id = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
+
+			if (id != 0) {
+				if (id == 1)
+					OfPrincipal(id);
+
+				else
+					Sucursal(id);
+
+			}
 			
 		else status.setText("DENEGADO!");
 	
@@ -52,26 +50,22 @@ public class ControladorInicial {
 		
 	}
 	
-	public void Sucursal(ActionEvent event) throws IOException {
-		Stage primaryStage = new Stage();
-		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/sucursal/VistaSucursal.fxml"));
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.show();
-		status.getScene().getWindow().hide();
-		
-	}
-	
 	public void OfPrincipal(ActionEvent event) throws IOException {
+		
 		Stage primaryStage = new Stage();
+		
 		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/principal/VistaPrincipal.fxml"));
+		
 		Scene scene = new Scene(root);
+		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		
 		primaryStage.setScene(scene);
+		
 		primaryStage.setResizable(false);
+		
 		primaryStage.show();
+		
 		status.getScene().getWindow().hide();
 		
 	}
@@ -81,7 +75,9 @@ public class ControladorInicial {
 	
 	
 	public void Sucursal(int id) throws IOException {
+		
 		Stage primaryStage = new Stage();
+		
 	//	Parent root = FXMLLoader.load(getClass().getResource("/sucursal/VistaSucursal.fxml"));
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucursal/VistaSucursal.fxml"));
@@ -100,26 +96,60 @@ public class ControladorInicial {
 		
 		primaryStage.setResizable(false);
 		
-		
-		
-		
-		
 		primaryStage.show();
+		
 		status.getScene().getWindow().hide();
 		
 	}
 	
 	public void OfPrincipal(int id) throws IOException {
+		
 		Stage primaryStage = new Stage();
+		
 		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/principal/VistaPrincipal.fxml"));
+		
 		Scene scene = new Scene(root);
+		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		
 		primaryStage.setScene(scene);
+		
 		primaryStage.setResizable(false);
+		
 		primaryStage.show();
+		
 		status.getScene().getWindow().hide();
 		
 	}
+	
+	public void accesoSucursal() throws IOException {
+		
+		Stage primaryStage = new Stage();
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucursal/VistaSucursal.fxml"));
+			
+			Parent root = (Parent) loader.load();
+			
+	        ControladorSucursal controlador = loader.getController();
+	        
+			controlador.setUsuario(2);
+			
+			Scene scene = new Scene(root);
+			
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			
+			primaryStage.setScene(scene);
+			
+			primaryStage.setResizable(false);
+			
+			primaryStage.show();
+			
+			status.getScene().getWindow().hide();
+		
+		
+	}
+	
+	
 	
 
 }
