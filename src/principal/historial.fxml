@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorHistorial">
+   <children>
+      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;">
+        
+              
+         <children>
+            <Label layoutX="8.0" layoutY="2.0" prefHeight="17.0" prefWidth="54.0" text="ZONA">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="ListaZona" layoutX="7.0" layoutY="26.0" onAction="#seleccionZonas" prefHeight="25.0" prefWidth="132.0" promptText="Seleccione Zona" />
+            <ComboBox fx:id="ListaSucursales" layoutX="167.0" layoutY="26.0" onAction="#seleccionSucursal" prefHeight="25.0" prefWidth="150.0" promptText="Seleccione Sucursal" />
+            <Label layoutX="162.0" layoutY="4.0" prefHeight="21.0" prefWidth="90.0" text="SUCURSAL">
+               <font>
+                  <Font name="Calibri Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onSort="#seleccionSucursal" prefHeight="472.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
+         <columns>
+            <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
+            <TableColumn fx:id="tipo" prefWidth="40.0" text="TIPO" />
+            <TableColumn fx:id="prefijo" prefWidth="51.0" text="PREFIJO" />
+            <TableColumn fx:id="nrofactura" prefWidth="84.0" text="FACTURA" />
+            <TableColumn fx:id="proveedor" prefWidth="100.0" text="PROVEEDOR" />
+            <TableColumn fx:id="cuit" prefWidth="90.0" text="CUIT" />
+            <TableColumn fx:id="subtotal" prefWidth="84.0" text="SUBTOTAL" />
+            <TableColumn fx:id="iva" prefWidth="65.0" text="IVA " />
+            <TableColumn fx:id="iva2" prefWidth="56.0" text="IVA 2 " />
+            <TableColumn fx:id="iva3" prefWidth="56.0" text="IVA 3 " />
+            <TableColumn fx:id="otros" prefWidth="56.0" text="OTROS " />
+            <TableColumn fx:id="total" prefWidth="70.0" text="TOTAL" />
+         </columns>
+      </TableView>
+   </children>
+</VBox>

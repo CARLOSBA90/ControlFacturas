@@ -22,7 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 
-public class ControladorBusqueda  implements Initializable{
+public class ControladorHistorial implements Initializable{
 
 	// Variables
 	
@@ -79,6 +79,7 @@ public class ControladorBusqueda  implements Initializable{
 		
 	}
 	
+	
 	 private ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
 		// TODO Auto-generated method stub
 			/// Listar todas las zonas
@@ -107,6 +108,15 @@ public class ControladorBusqueda  implements Initializable{
 		sucursales.forEach((n) -> lista.add(n.getNombre()));
 		
 		ListaSucursales.setItems(lista);
+		
+		
+	}
+	
+	public void seleccionSucursal(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
+		
+		if(ListaSucursales.getSelectionModel().getSelectedIndex()>=0)
+		
+		tableview.setItems(modeloSucursal.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
 		
 		
 	}

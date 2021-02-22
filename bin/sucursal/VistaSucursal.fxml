@@ -113,7 +113,7 @@
       </VBox>
       <VBox layoutX="200.0" prefHeight="600.0" prefWidth="850.0">
          <children>
-            <Pane fx:id="cabecera" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="850.0" style="-fx-background-color: #F8F8FF;">
+            <Pane fx:id="cabecera" cacheShape="false" centerShape="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="76.0" prefWidth="850.0" scaleShape="false" style="-fx-background-color: #F8F8FF;">
                <effect>
                   <DropShadow blurType="ONE_PASS_BOX" color="WHITE" />
                </effect>

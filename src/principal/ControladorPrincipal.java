@@ -26,6 +26,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
+import modelo.ModeloSucursal;
 
 
 public class ControladorPrincipal implements Initializable {
@@ -39,16 +40,12 @@ public class ControladorPrincipal implements Initializable {
     Label labelZona = new Label("ZONA");
 	
 	Label labelSucursal = new Label("SUCURSAL");
-	
-	ComboBox cbZona = new ComboBox();
-	
-	ComboBox cbSucursal = new ComboBox();
-	
-	Button botonBuscarH = new Button("BUSCAR");
 
     Label tituloCabecera = new Label(" "); 
     
     ModeloPrincipal modelo;
+    
+    ModeloSucursal modeloSucursal;
     
     ArrayList<zona>  zonas;
     
@@ -65,9 +62,6 @@ public class ControladorPrincipal implements Initializable {
 	@FXML private TableColumn<factura, Double> subtotal, iva, iva2, iva3, otros, total;
 	@FXML private ComboBox<String> ListaSucursales, ListaZona;
 	
-	ObservableList<String> listaSuc = FXCollections.observableArrayList("Sucursal A", "Sucursal B", "Sucursal C");
-	
-	ObservableList<String> listaZo = FXCollections.observableArrayList("Zona Norte", "Zona Sur");
 	
 	
 	 //// Inicializa la vista con las propiedades y atributos de la tabla de un modelo de factura
@@ -90,6 +84,8 @@ public class ControladorPrincipal implements Initializable {
 		
 		modelo = new ModeloPrincipal();
 		
+		modeloSucursal = new ModeloSucursal();
+		
 		try {
 			ListaZona.setItems(listarZonas());
 		} catch (ClassNotFoundException | SQLException | IOException e) {
@@ -105,7 +101,7 @@ public class ControladorPrincipal implements Initializable {
 	}
 	
 
-	private ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
+	public ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
 		// TODO Auto-generated method stub
 		
 		/// Listar todas las zonas
@@ -124,7 +120,7 @@ public class ControladorPrincipal implements Initializable {
 	}
 
 
-	public void seleccionZonas(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
+	 public void seleccionZonas(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
 		
 		// System.out.println(""+ zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
 		
@@ -141,85 +137,15 @@ public class ControladorPrincipal implements Initializable {
 		
 	}
 	
-	/// Metodo para mostrar el historial de facturas en el sector derecho	
-	
-	@FXML 
-	private void historial(MouseEvent event) {
+	public void seleccionSucursal(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
 		
-		blanquear();
+		if(ListaSucursales.getSelectionModel().getSelectedIndex()>=0)
 		
-		 cabecera.setPrefHeight(121);
-		 
-		 Label tituloCabecera = new Label ("Historial de facturas");
-
-		 tituloCabecera.setFont(new Font("Calibri", 34));
-
-		 tituloCabecera.setTextFill(Color.web("#868686"));
-
-		 tituloCabecera.setTranslateX(23.0);
-
-		 tituloCabecera.setTranslateY(24.0);	
-
-		 cabecera.setStyle("-fx-background-color: #F8F8FF;");
-		 
-		 labelSucursal.setTranslateX(161.0);
-		 
-		 labelSucursal.setTranslateY(4.0);
-		 
-		 labelSucursal.setFont(new Font("Calibri Bold", 17));
+		tableview.setItems(modeloSucursal.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
 		
-		 menu.getChildren().add(labelSucursal);
-
-		 labelZona.setTranslateX(14.0);
-
-		 labelZona.setTranslateY(4.0);
-
-		 labelZona.setFont(new Font("Calibri Bold", 17));
-
-		 menu.getChildren().add(labelZona);
-		 
-		 cbZona.setPromptText("Seleccione Zona");
-		 
-		 cbZona.setLayoutY(23.0);
-		 
-		 cbZona.setPrefWidth(150);
-		 
-		 cbSucursal.setPromptText("Seleccione Sucursal");
-		 
-		 cbSucursal.setLayoutX(160.0);
-		 
-		 cbSucursal.setLayoutY(23.0);
-		 
-		 cbSucursal.setPrefWidth(150.0);
-		 
-		 botonBuscarH.setFont(new Font("Calibri Bold", 14));
-		 
-		 botonBuscarH.setLayoutX(330.0);
-		 
-		 botonBuscarH.setLayoutY(20.0);
-
-		 menu.getChildren().add(cbZona);
-		 
-		 menu.getChildren().add(cbSucursal);
-		 
-		 menu.getChildren().add(botonBuscarH);
-
-		 cabecera.getChildren().add(menu);
-		 
-		 cabecera.getChildren().add(tituloCabecera);
-		 
-		 tableview.setItems(null);
-
-		 tableview.setPrefHeight(477); 
-		 
-		 central.getChildren().add(tableview);
-		 
-		/* cbSucursal.setItems(listaSuc);
-		 
-		 cbZona.setItems(listaZo);*/
-
 		
 	}
+	
 	
 	
 	/// Metodo de salida del programa	
@@ -233,30 +159,37 @@ public class ControladorPrincipal implements Initializable {
 	}
 	
 	@FXML 
-	private void busqueda(MouseEvent event) throws IOException {
+	private void historial(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
+	
+		cargarUI("historial");
+	}
+	
+	
+	@FXML 
+	private void busqueda(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
 	
 		cargarUI("busqueda");
 	}
 	
 	@FXML 
-	private void resumen(MouseEvent event) throws IOException {
+	private void resumen(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
 	
 		cargarUI("resumen");
 	}
 	
 	@FXML 
-	private void exportar(MouseEvent event) throws IOException {
+	private void exportar(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
 	
 		cargarUI("exportar");
 	}
 	@FXML 
-	private void proveedores(MouseEvent event) throws IOException {
+	private void proveedores(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
 	
 		cargarUI("proveedores");
 	}
 	
 	@FXML 
-	private void zonas(MouseEvent event) throws IOException {
+	private void zonas(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
 	
 		cargarUI("zonas");
 	}
@@ -268,7 +201,7 @@ public class ControladorPrincipal implements Initializable {
 	/// Metodo para cargar diferentes vistas, mediante la estructura de control SWITCH
 	// Se compara con el string en el argumento para generar la determinada vista
 	
-    private void cargarUI(String ui) throws IOException {
+    private void cargarUI(String ui) throws IOException, ClassNotFoundException, SQLException {
 		
     	 blanquear();
     	
@@ -280,6 +213,34 @@ public class ControladorPrincipal implements Initializable {
 	       //// Seleccion de vista segun argumento
 	     
 	     switch(ui) {
+	     
+	     case "historial":
+	    	 
+	    	 blanquear();
+	 		
+			 cabecera.setPrefHeight(70);
+			 
+			 tituloCabecera = new Label ("Historial de facturas");
+
+			 tituloCabecera.setFont(new Font("Calibri", 34));
+
+			 tituloCabecera.setTextFill(Color.web("#868686"));
+
+			 tituloCabecera.setTranslateX(23.0);
+
+			 tituloCabecera.setTranslateY(24.0);	
+
+			 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+			 
+			 cabecera.getChildren().add(tituloCabecera);
+			 
+			 central.getChildren().add(root);
+	    	 
+	    	 
+	    	 
+	    	 break;
+	    	 
+	    	 
 	     
 	     case "busqueda":
 	    	 
@@ -303,15 +264,11 @@ public class ControladorPrincipal implements Initializable {
 
 	    	 central.getChildren().add(root);
 
-	    	 tableview.setPrefHeight(405);
+	    	/* tableview.setPrefHeight(405);
 
 	    	 tableview.setItems(null);
 
-	    	 centralInferior.getChildren().add(tableview);
-	    	 
-	    	 ListaSucursales.setItems(listaSuc);
-	 		
-	 		ListaZona.setItems(listaZo);
+	    	 centralInferior.getChildren().add(tableview);*/
 	    	 
 
 	    	 break;
@@ -338,11 +295,11 @@ public class ControladorPrincipal implements Initializable {
 
 	    	 central.getChildren().add(root);
 
-	    	 tableview.setPrefHeight(440);
+	  //  	 tableview.setPrefHeight(440);
 
-	    	 tableview.setItems(null);
+	    //	 tableview.setItems(null);
 
-	    	 centralInferior.getChildren().add(tableview);
+	    //	 centralInferior.getChildren().add(tableview);
 	    	 
 	    	 
 	    	 
@@ -443,7 +400,7 @@ public class ControladorPrincipal implements Initializable {
 		
 		central.getChildren().clear();
 		
-		centralInferior.getChildren().clear();
+		//centralInferior.getChildren().clear();
     	
     }
     
