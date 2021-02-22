@@ -1,7 +1,9 @@
 package principal;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import clases.*;
 import javafx.collections.FXCollections;
@@ -23,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modelo.ModeloPrincipal;
 
 
 public class ControladorPrincipal implements Initializable {
@@ -44,6 +47,12 @@ public class ControladorPrincipal implements Initializable {
 	Button botonBuscarH = new Button("BUSCAR");
 
     Label tituloCabecera = new Label(" "); 
+    
+    ModeloPrincipal modelo;
+    
+    ArrayList<zona>  zonas;
+    
+    ArrayList<sucursal> sucursales;
 		
 	
 	
@@ -79,15 +88,55 @@ public class ControladorPrincipal implements Initializable {
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 		tableview.setItems(null);
 		
-		ListaZona.setItems(listaZonas());
+		modelo = new ModeloPrincipal();
+		
+		try {
+			ListaZona.setItems(listarZonas());
+		} catch (ClassNotFoundException | SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		ListaSucursales.setItems(null);
+		
+		
 		
 	
 	}
 	
 
-	public void ListaSucursalesCambia(ActionEvent event) {
+	private ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
+		// TODO Auto-generated method stub
+		
+		/// Listar todas las zonas
+		
+		zonas = modelo.listaZonas();
+		
+		ObservableList<String> lista = FXCollections.observableArrayList();
+		
+				/// Uso for each mejorado, expresión Lambda.
+		
+		zonas.forEach((n) -> lista.add(n.getNombre()));
+		
+		return lista;
+		
+		
+	}
+
+
+	public void seleccionZonas(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
+		
+		// System.out.println(""+ zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
+		
+		// Listar las sucursales de la zona seleccionada
+		
+		sucursales = modelo.listaSucursales(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
+		
+		ObservableList<String> lista = FXCollections.observableArrayList();
+		
+		sucursales.forEach((n) -> lista.add(n.getNombre()));
+		
+		ListaSucursales.setItems(lista);
 		
 		
 	}
@@ -403,16 +452,8 @@ public class ControladorPrincipal implements Initializable {
     	System.out.println("TEST");
     }
     
+   
     
-    private ObservableList<String> listaZonas (){
-    	
-    	return null;
-    }
-    
-    private ObservableList<String> listaSucursales() {
-    	
-		return null;
-	}
-	
+
 	
 }

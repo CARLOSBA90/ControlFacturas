@@ -224,7 +224,7 @@
                   </Label>
                   <Pane fx:id="menu" layoutX="1.0" layoutY="70.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;">
                      <children>
-                        <ComboBox fx:id="ListaZona" layoutY="23.0" prefWidth="150.0" promptText="Seleccione Zona" />
+                        <ComboBox fx:id="ListaZona" layoutY="23.0" onAction="#seleccionZonas" prefWidth="150.0" promptText="Seleccione Zona" />
                         <ComboBox fx:id="ListaSucursales" layoutX="160.0" layoutY="23.0" prefWidth="150.0" promptText="Seleccione Sucursal" />
                         <Label layoutX="14.0" layoutY="4.0" text="ZONA">
                            <font>
