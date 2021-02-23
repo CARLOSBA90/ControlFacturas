@@ -121,4 +121,18 @@ public class ModeloPrincipal {
 		return lista;
 	}
 
+
+
+	public ObservableList<String> cargarListaProve() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	public ObservableList<String> cargarListaPre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -16,6 +16,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -33,17 +35,30 @@ public class ControladorBusqueda  implements Initializable{
 	    ArrayList<zona>  zonas;
 	    
 	    ArrayList<sucursal> sucursales;
-			
-		
+	    
+	    ObservableList<String> listaCondicion1 = FXCollections.observableArrayList("PROVEEDOR", "TIPO", "PREFIJO", "FECHA");
+	
+	    ObservableList<String> listaFecha = FXCollections.observableArrayList("ULTIMO DIA", "ULTIMA SEMANA", "ULTIMO MES", "ULTIMO AÑO");
+	    
+	    ObservableList<String> listaTipo = FXCollections.observableArrayList("A", "B", "C");
+	    
+	    ObservableList<String> listaProve, listaPrefijo;
 		
 		// Configurar tabla de un modelo de factura
 		
 		@FXML private TableView<factura> tableview;
+		
 		@FXML private TableColumn<factura, LocalDate> fecha;
+		
 		@FXML private TableColumn<factura, String> tipo, proveedor, cuit;
+		
 		@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
+		
 		@FXML private TableColumn<factura, Double> subtotal, iva, iva2, iva3, otros, total;
-		@FXML private ComboBox<String> ListaSucursales, ListaZona;
+		
+		@FXML private ComboBox<String> ListaSucursales, ListaZona, condicion1, condicion2;
+		
+		@FXML private DatePicker fechaDesde, fechaHasta;
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -60,11 +75,41 @@ public class ControladorBusqueda  implements Initializable{
 		iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
+		
 		tableview.setItems(null);
+		
+		condicion1.setItems(listaCondicion1);
 		
 		modelo = new ModeloPrincipal();
 		
 		modeloSucursal = new ModeloSucursal();
+		
+		/// Oyente para colocar la fecha como tope hasta el dia actual
+		
+				fechaDesde.setDayCellFactory(picker -> new DateCell() {
+			        public void updateItem(LocalDate date, boolean empty) {
+			        	
+			            super.updateItem(date, empty);
+			            
+			            LocalDate today = LocalDate.now();
+			            
+			            
+			            setDisable(empty || date.compareTo(today) > 0 );
+			        }
+			    });
+				
+				
+				fechaHasta.setDayCellFactory(picker -> new DateCell() {
+			        public void updateItem(LocalDate date, boolean empty) {
+			        	
+			            super.updateItem(date, empty);
+			            
+			            LocalDate today = LocalDate.now();
+			            
+			            
+			            setDisable(empty || date.compareTo(today) > 0 );
+			        }
+			    });
 		
 		
 		try {
@@ -110,5 +155,50 @@ public class ControladorBusqueda  implements Initializable{
 		
 		
 	}
+	
+	public void mostrarPor(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
+		
+		if(condicion2 != null)  condicion2.getItems().clear();
+
+		switch(condicion1.getSelectionModel().getSelectedItem()) {
+		
+		
+		
+		case "PROVEEDOR":
+			
+			condicion2.setItems(modelo.cargarListaProve());
+			
+			break;
+			
+        case "TIPO":
+        	
+        	condicion2.setItems(listaTipo);
+			
+			break;
+		
+        case "PREFIJO":
+        	
+        	condicion2.setItems(modelo.cargarListaPre());
+			
+			break;
+			
+        case "FECHA":
+        	
+        	condicion2.setItems(listaFecha);
+	
+        	break;
+			
+			
+			default:
+				System.out.println("Default");
+		
+		
+		
+		}
+	}
+	
+	
+	
+	
 	
 }
