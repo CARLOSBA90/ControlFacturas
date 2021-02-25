@@ -16,6 +16,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
@@ -60,6 +61,8 @@ public class ControladorBusqueda  implements Initializable{
 		@FXML private ComboBox<String> ListaSucursales, ListaZona, condicion1, condicion2;
 		
 		@FXML private DatePicker fechaDesde, fechaHasta;
+		
+		@FXML private CheckBox impuestoTodos, impuestoIva1, impuestoIva2, impuestoIva3, impuestoIvaOtros;
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -201,7 +204,37 @@ public class ControladorBusqueda  implements Initializable{
 	}
 	
 	
+	public void estadoImpuestos(ActionEvent event) {
+		
+		if(impuestoTodos.isSelected()) {
+			
+			impuestoIva1.setSelected(false);
+			
+			impuestoIva2.setSelected(false);
+			
+			impuestoIva3.setSelected(false);
+			
+			impuestoIvaOtros.setSelected(false);
+		}
+	}
 	
+	public void busqueda (ActionEvent event) {
+		
+		
+		String zona = (ListaZona.getSelectionModel().getSelectedItem()==null)? "todos" : ListaZona.getSelectionModel().getSelectedItem();
+	
+		String sucursal = (ListaSucursales.getSelectionModel().getSelectedItem()==null)? "todos" : ListaSucursales.getSelectionModel().getSelectedItem();
+		
+		String condicional1 = (condicion1.getSelectionModel().getSelectedItem()==null)? "todos" : condicion1.getSelectionModel().getSelectedItem();
+		
+	    String condicional2 = (condicion2.getSelectionModel().getSelectedItem()==null)? "todos" : condicion2.getSelectionModel().getSelectedItem();
+		
+	    
+		
+   ///	System.out.println(zona+" : "+sucursal+ "Condicion 1: "+ condicional1+", Condicion 2: "+condicional2);
+	
+	
+	}
 	
 	
 }

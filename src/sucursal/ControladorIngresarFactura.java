@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
@@ -18,10 +19,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import modelo.ModeloSucursal;
@@ -32,11 +36,13 @@ public class ControladorIngresarFactura implements Initializable {
 	
 	@FXML private DatePicker fecha;
 	
-	@FXML private ComboBox<String> listaDeTipos, listaProveedor, listaCuit;
+	@FXML private ComboBox<String> listaDeTipos, listaProveedor, listaCuit, listaPago;
 	
 	@FXML private TextField subtotal, iva1, iva2, iva3, ivaotros, total, nrofactura, prefijo = new TextField();
 	
    ObservableList<String> tipo = FXCollections.observableArrayList("A", "B", "C");
+   
+   ObservableList<String> pago = FXCollections.observableArrayList("corriente", "contado");
    
    ObservableList<String> proveedor,cuit;
    
@@ -44,13 +50,48 @@ public class ControladorIngresarFactura implements Initializable {
    
    ControladorSucursal superior;
    
+   ModeloSucursal modelo;
+   
    private int id;
+   
+	// Configurar tabla de un modelo de factura
+	
+	@FXML private TableView<factura> tableview;
+	@FXML private TableColumn<factura, LocalDate> fechaT;
+	@FXML private TableColumn<factura, String> tipoT, proveedorT, cuitT,formaT;
+	@FXML private TableColumn<factura, Integer> prefijoT, nrofacturaT;
+	@FXML private TableColumn<factura, Double> subtotalT, ivaT, iva2T,iva3T, otrosT, totalT;
    
    
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		
-		/// Solicita los datos a la BBDD de nombre de proveedor y su CUIT
+		fechaT.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
+		tipoT.setCellValueFactory(new PropertyValueFactory<factura, String>("tipo"));
+		proveedorT.setCellValueFactory(new PropertyValueFactory<factura, String>("proveedor"));
+		cuitT.setCellValueFactory(new PropertyValueFactory<factura, String>("cuit"));
+		prefijoT.setCellValueFactory(new PropertyValueFactory<factura, Integer>("prefijo"));
+		nrofacturaT.setCellValueFactory(new PropertyValueFactory<factura, Integer>("nrofactura"));
+		subtotalT.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
+		formaT.setCellValueFactory(new PropertyValueFactory<factura, String>("forma"));
+		ivaT.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva"));
+		iva2T.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva2"));
+		iva3T.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
+		otrosT.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
+		totalT.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
+		
+		
+		/// Carga de datos despues de generar las vista, para poder cargar el ID
+	    Platform.runLater(() -> {
+	    		    	
+	    	cargarLista(id);
+
+
+	    });
+		
+		
+		
+		/// Solicita los datos a la BBDD los nombres de proveedor y su CUIT
 		
 		ModeloSucursal modelo =	 new ModeloSucursal();
 		
@@ -74,6 +115,8 @@ public class ControladorIngresarFactura implements Initializable {
 		listaCuit.setItems(cuit);
 		
 		listaDeTipos.setItems(tipo);
+		
+		listaPago.setItems(pago);
 		
 		///Desactiva el textField total
 		
@@ -273,6 +316,8 @@ public class ControladorIngresarFactura implements Initializable {
 		String datoProveedor = listaProveedor.getValue();
 		
 		String datoCuit = listaCuit.getValue();
+		
+		String datoPago = listaPago.getValue();
 	
 		double datoSubtotal = Double.parseDouble(subtotal.getText());
 		
@@ -286,7 +331,7 @@ public class ControladorIngresarFactura implements Initializable {
 		
 		double datoTotal = (!total.getText().trim().isEmpty())?  Double.parseDouble(total.getText().replaceAll(",",".")) : 0;
 		
-		factura factura = new factura(datoFecha, datoTipo,datoProveedor,datoCuit,datoPrefijo,datoNroFactura,datoSubtotal,
+		factura factura = new factura(datoFecha, datoTipo,datoProveedor,datoCuit,datoPrefijo,datoNroFactura, datoPago, datoSubtotal,
 				datoIva1,datoIva2,datoIva3,datoIvaOtros,datoTotal);
 		
 		ModeloSucursal modelo = new ModeloSucursal();
@@ -313,7 +358,7 @@ public class ControladorIngresarFactura implements Initializable {
             
 		    alert.showAndWait();
 		    
-		    superior.refrescarLista();
+		    cargarLista(id);
 		    
 		    blanquear();
 		    
@@ -373,7 +418,10 @@ public class ControladorIngresarFactura implements Initializable {
 	
 	public void setUsuario(int id) {
 		// TODO Auto-generated method stub
+		
 		this.id = id;
+		
+		modelo = new ModeloSucursal();
 		
 	}
 	
@@ -386,11 +434,36 @@ public class ControladorIngresarFactura implements Initializable {
 		prefijo.clear();
 		nrofactura.clear();
 		subtotal.clear();
+		listaPago.setValue(null);
 		iva1.clear();
 		iva2.clear();
 		iva3.clear();
 		ivaotros.clear();
 		total.clear();
+		
+	}
+	
+	public void cargarLista(int id) {
+		
+		if(id!=0) {
+			tableview.getItems().clear();
+			
+			try {
+				tableview.setItems(modelo.cargarData(id));
+				
+			} catch (ClassNotFoundException | IOException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	    	}else {
+	    		
+	    		/// Tablas de ejemplo
+	    		tableview.setItems(null);
+	    		
+	    		
+	    	}
+		
 		
 	}
 

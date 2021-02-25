@@ -43,7 +43,7 @@ public class ModeloSucursal {
 			
 				String instruccion="SELECT facturas.id, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura, facturas.proveedor,"
 						+ " facturas.cuit, facturas.subtotal, facturas.iva1, facturas.iva2, facturas.iva3, "
-						+ " facturas.otro, facturas.total from facturas INNER JOIN sucursal_factura on"
+						+ " facturas.otro, facturas.total, facturas.forma from facturas INNER JOIN sucursal_factura on"
                         + " facturas.id=sucursal_factura.idfactura where sucursal_factura.idsucursal="+id;// 
 
 			  miStatement=miConexion.createStatement();
@@ -65,9 +65,9 @@ public class ModeloSucursal {
 	    	   LocalDate fecha = fechaSQL.toLocalDate(); 
 			
 	   		lista.add(new factura(fecha ,miResulset.getString(3),miResulset.getString(6),
-	   				miResulset.getString(7),miResulset.getInt(4),miResulset.getInt(5), miResulset.getDouble(8),
-	   				miResulset.getDouble(9), miResulset.getDouble(10), miResulset.getDouble(11), miResulset.getDouble(12),
-	   				miResulset.getDouble(13)));
+	   				miResulset.getString(7),miResulset.getInt(4),miResulset.getInt(5),miResulset.getString(14),
+	   				miResulset.getDouble(8), miResulset.getDouble(9), miResulset.getDouble(10), miResulset.getDouble(11),
+	   				miResulset.getDouble(12), miResulset.getDouble(13)));
 				
 			           }while(miResulset.next());
 			            }
@@ -193,8 +193,8 @@ public class ModeloSucursal {
 			/// INSERCION VALORES TABLA FACTURA
 			
 			String sql="INSERT INTO facturas(fecha,tipo,prefijo,nrofactura,proveedor,cuit,"
-					+ "subtotal,iva1,iva2,iva3,otro,total,id"
-					+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "subtotal,iva1,iva2,iva3,otro,total,id,forma"
+					+ ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			PreparedStatement miStatement=null;
 
@@ -225,6 +225,8 @@ public class ModeloSucursal {
 			miStatement.setDouble(12, factura.getTotal());
 			
 			miStatement.setInt(13, proximo);
+			
+			miStatement.setString(14, factura.getForma());
 			
 			miStatement.execute();
 			

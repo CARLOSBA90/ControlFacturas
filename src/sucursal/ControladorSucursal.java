@@ -30,7 +30,7 @@ public class ControladorSucursal implements Initializable {
 	ModeloSucursal modelo;
 	
 	@FXML private AnchorPane pane;
-	@FXML private Pane central,centralInferior,cabecera;
+	@FXML private Pane central, cabecera;
 	@FXML private Label idLabel;
 	
 	private int id;
@@ -40,7 +40,7 @@ public class ControladorSucursal implements Initializable {
 	
 	@FXML private TableView<factura> tableview;
 	@FXML private TableColumn<factura, LocalDate> fecha;
-	@FXML private TableColumn<factura, String> tipo, proveedor, cuit;
+	@FXML private TableColumn<factura, String> tipo, proveedor, cuit, forma;
 	@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
 	@FXML private TableColumn<factura, Double> subtotal, iva, iva2,iva3, otros, total;
 	
@@ -56,6 +56,7 @@ public class ControladorSucursal implements Initializable {
 		prefijo.setCellValueFactory(new PropertyValueFactory<factura, Integer>("prefijo"));
 		nrofactura.setCellValueFactory(new PropertyValueFactory<factura, Integer>("nrofactura"));
 		subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
+		forma.setCellValueFactory(new PropertyValueFactory<factura, String>("forma"));
 		iva.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva"));
 		iva2.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva2"));
 		iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
@@ -166,9 +167,7 @@ public class ControladorSucursal implements Initializable {
 	
 		//tableview.setItems(lista.getData());
 		
-		cargarLista(id);
-		
-		centralInferior.getChildren().add(tableview);
+	//	cargarLista(id);
 		
 		
 	}
@@ -180,8 +179,6 @@ public class ControladorSucursal implements Initializable {
 		cabecera.getChildren().clear();
 		
 		central.getChildren().clear();
-		
-		centralInferior.getChildren().clear();
     	
     }
     

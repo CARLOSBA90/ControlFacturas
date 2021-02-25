@@ -57,7 +57,7 @@ public class ControladorPrincipal implements Initializable {
 	
 	@FXML private TableView<factura> tableview;
 	@FXML private TableColumn<factura, LocalDate> fecha;
-	@FXML private TableColumn<factura, String> tipo, proveedor, cuit;
+	@FXML private TableColumn<factura, String> tipo, proveedor, cuit, forma;
 	@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
 	@FXML private TableColumn<factura, Double> subtotal, iva, iva2, iva3, otros, total;
 	@FXML private ComboBox<String> ListaSucursales, ListaZona;
@@ -74,6 +74,7 @@ public class ControladorPrincipal implements Initializable {
 		cuit.setCellValueFactory(new PropertyValueFactory<factura, String>("cuit"));
 		prefijo.setCellValueFactory(new PropertyValueFactory<factura, Integer>("prefijo"));
 		nrofactura.setCellValueFactory(new PropertyValueFactory<factura, Integer>("nrofactura"));
+		forma.setCellValueFactory(new PropertyValueFactory<factura, String>("forma"));
 		subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
 		iva.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva"));
 		iva2.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva2"));
