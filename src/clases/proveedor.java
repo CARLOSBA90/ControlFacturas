@@ -14,6 +14,17 @@ public class proveedor {
 		
 	}
 	
+	
+	
+	public proveedor(int id, String nombre) {
+		super();
+		this.id = new SimpleIntegerProperty(id);
+		this.nombre =  new SimpleStringProperty(nombre);
+	}
+
+
+
+
 	public String getNombre() {
 		return nombre.get();
 	}

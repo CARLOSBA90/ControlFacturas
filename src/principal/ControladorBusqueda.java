@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import clases.factura;
+import clases.proveedor;
 import clases.sucursal;
 import clases.zona;
 import javafx.collections.FXCollections;
@@ -157,16 +158,18 @@ public class ControladorBusqueda  implements Initializable{
 	}
 	
 	public void mostrarPor(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
-		
-		if(condicion2 != null)  condicion2.getItems().clear();
 
 		switch(condicion1.getSelectionModel().getSelectedItem()) {
 		
-		
-		
 		case "PROVEEDOR":
 			
-			condicion2.setItems(modelo.cargarListaProve());
+			ArrayList<proveedor> proveedores = modelo.cargarListaProve();
+			
+			ObservableList<String> lista = FXCollections.observableArrayList();
+			
+			proveedores.forEach((n) -> lista.add(n.getNombre()));
+			
+			condicion2.setItems(lista);
 			
 			break;
 			
@@ -190,7 +193,7 @@ public class ControladorBusqueda  implements Initializable{
 			
 			
 			default:
-				System.out.println("Default");
+				System.out.println("Entrada en default de switch combobox condicion 1");
 		
 		
 		

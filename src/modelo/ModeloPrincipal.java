@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import clases.factura;
+import clases.proveedor;
 import clases.sucursal;
 import clases.zona;
 import javafx.collections.FXCollections;
@@ -123,16 +124,98 @@ public class ModeloPrincipal {
 
 
 
-	public ObservableList<String> cargarListaProve() {
+	public ArrayList<proveedor> cargarListaProve() throws ClassNotFoundException, IOException, SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<proveedor> lista = new ArrayList<>();
+		
+		Statement miStatement = null;
+
+		ResultSet miResulset = null;
+		
+
+		try {
+			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
+
+			miConexion = conectar.conectar();
+
+			String instruccion = "SELECT * FROM proveedores";//
+
+			miStatement = miConexion.createStatement();
+
+			/// EJECUTAR SQL
+
+			miResulset = miStatement.executeQuery(instruccion);
+
+			/// RECORRER EL RESULSET
+
+			if (miResulset.next() == false)
+				return null;
+			else {
+				do {
+
+					lista.add(new proveedor(miResulset.getInt(1), miResulset.getString(2)));
+
+				} while (miResulset.next());
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			miStatement.close();
+			miConexion.close();
+		}
+
+		
+		return lista;
 	}
 
 
 
-	public ObservableList<String> cargarListaPre() {
+	public ObservableList<String> cargarListaPre() throws ClassNotFoundException, IOException, SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		
+		ObservableList<String> lista = FXCollections.observableArrayList();
+		
+		Statement miStatement = null;
+
+		ResultSet miResulset = null;
+		
+
+		try {
+			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
+
+			miConexion = conectar.conectar();
+
+			String instruccion = "SELECT DISTINCT prefijo FROM facturas";//
+
+			miStatement = miConexion.createStatement();
+
+			/// EJECUTAR SQL
+
+			miResulset = miStatement.executeQuery(instruccion);
+
+			/// RECORRER EL RESULSET
+
+			if (miResulset.next() == false)
+				return null;
+			else {
+				do {
+
+					lista.add(miResulset.getString(1));
+
+				} while (miResulset.next());
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			miStatement.close();
+			miConexion.close();
+		}
+
+		
+		return lista;
 	}
 
 }
