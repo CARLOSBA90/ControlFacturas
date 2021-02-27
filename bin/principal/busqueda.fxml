@@ -73,7 +73,7 @@
             <CheckBox fx:id="impuestoIvaOtros" layoutX="752.0" layoutY="59.0" mnemonicParsing="false" onAction="#estadoImpuestos" text="OTROS" />
             <Line endX="-100.0" endY="112.0" layoutX="764.0" layoutY="2.0" startX="-100.0" stroke="#cdcdcd" />
             <Line endX="-100.0" endY="112.0" layoutX="598.0" layoutY="2.0" startX="-100.0" stroke="#cdcdcd" />
-            <RadioButton fx:id="pagoTodos" layoutX="514.0" layoutY="27.0" mnemonicParsing="false" text="TODOS">
+            <RadioButton fx:id="pagoTodos" layoutX="514.0" layoutY="27.0" mnemonicParsing="false" selected="true" text="TODOS">
                <toggleGroup>
                   <ToggleGroup fx:id="FORMAP" />
                </toggleGroup>
@@ -90,12 +90,12 @@
       </Pane>
      <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
                     <columns>
-                      <TableColumn fx:id="fecha" prefWidth="77.0" text="FECHA" />
+            <TableColumn fx:id="sucursal" text="SUCURSAL" />
+                      <TableColumn fx:id="fecha" prefWidth="72.0" text="FECHA" />
                       <TableColumn fx:id="tipo" prefWidth="33.0" text="TIPO" />
                         <TableColumn fx:id="prefijo" prefWidth="57.0" text="PREFIJO" />
                         <TableColumn fx:id="nrofactura" prefWidth="64.0" text="FACTURA" />
                         <TableColumn fx:id="proveedor" prefWidth="109.0" text="PROVEEDOR" />
-                        <TableColumn fx:id="cuit" prefWidth="69.0" text="CUIT" />
                         <TableColumn fx:id="forma" prefWidth="65.0" text="PAGO" />
                         <TableColumn fx:id="subtotal" prefWidth="75.0" text="SUBTOTAL" />
                         <TableColumn fx:id="iva" prefWidth="59.0" text="IVA " />

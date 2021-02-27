@@ -20,9 +20,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import modelo.ModeloBusquedaPrincipal;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 
@@ -33,6 +36,8 @@ public class ControladorBusqueda  implements Initializable{
 	    ModeloPrincipal modelo;
 	    
 	    ModeloSucursal modeloSucursal;
+	    
+	    ModeloBusquedaPrincipal modeloBusqueda;
 	    
 	    ArrayList<zona>  zonas;
 	    
@@ -52,7 +57,7 @@ public class ControladorBusqueda  implements Initializable{
 		
 		@FXML private TableColumn<factura, LocalDate> fecha;
 		
-		@FXML private TableColumn<factura, String> tipo, proveedor, cuit;
+		@FXML private TableColumn<factura, String> tipo, proveedor, cuit, sucursal;
 		
 		@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
 		
@@ -63,14 +68,16 @@ public class ControladorBusqueda  implements Initializable{
 		@FXML private DatePicker fechaDesde, fechaHasta;
 		
 		@FXML private CheckBox impuestoTodos, impuestoIva1, impuestoIva2, impuestoIva3, impuestoIvaOtros;
+		
+		@FXML private ToggleGroup FORMAP;
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		
+		sucursal.setCellValueFactory(new PropertyValueFactory<factura, String>("sucursal"));
 		fecha.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
 		tipo.setCellValueFactory(new PropertyValueFactory<factura, String>("tipo"));
 		proveedor.setCellValueFactory(new PropertyValueFactory<factura, String>("proveedor"));
-		cuit.setCellValueFactory(new PropertyValueFactory<factura, String>("cuit"));
+	//	cuit.setCellValueFactory(new PropertyValueFactory<factura, String>("cuit"));
 		prefijo.setCellValueFactory(new PropertyValueFactory<factura, Integer>("prefijo"));
 		nrofactura.setCellValueFactory(new PropertyValueFactory<factura, Integer>("nrofactura"));
 		subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
@@ -87,6 +94,8 @@ public class ControladorBusqueda  implements Initializable{
 		modelo = new ModeloPrincipal();
 		
 		modeloSucursal = new ModeloSucursal();
+		
+		modeloBusqueda = new ModeloBusquedaPrincipal();
 		
 		/// Oyente para colocar la fecha como tope hasta el dia actual
 		
@@ -191,6 +200,10 @@ public class ControladorBusqueda  implements Initializable{
         case "FECHA":
         	
         	condicion2.setItems(listaFecha);
+        	
+        	fechaDesde.getEditor().setDisable(true);
+        	
+        	fechaHasta.getEditor().setDisable(true);
 	
         	break;
 			
@@ -221,18 +234,56 @@ public class ControladorBusqueda  implements Initializable{
 	public void busqueda (ActionEvent event) {
 		
 		
-		String zona = (ListaZona.getSelectionModel().getSelectedItem()==null)? "todos" : ListaZona.getSelectionModel().getSelectedItem();
+		int zona = (ListaZona.getSelectionModel().getSelectedItem()==null)? -1 : zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId();
 	
-		String sucursal = (ListaSucursales.getSelectionModel().getSelectedItem()==null)? "todos" : ListaSucursales.getSelectionModel().getSelectedItem();
+		int sucursal = (ListaSucursales.getSelectionModel().getSelectedItem()==null)? -1 : sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId();
 		
 		String condicional1 = (condicion1.getSelectionModel().getSelectedItem()==null)? "todos" : condicion1.getSelectionModel().getSelectedItem();
 		
 	    String condicional2 = (condicion2.getSelectionModel().getSelectedItem()==null)? "todos" : condicion2.getSelectionModel().getSelectedItem();
-		
+
+	 
+	    RadioButton botonSeleccion = (RadioButton) FORMAP.getSelectedToggle();
 	    
-		
-   ///	System.out.println(zona+" : "+sucursal+ "Condicion 1: "+ condicional1+", Condicion 2: "+condicional2);
+	     String formaPago = botonSeleccion.getText();
+	    
 	
+	    
+	    String impuestos = "";
+	    
+	    if(impuestoTodos.isSelected()) {
+	    	impuestos = "todos";
+	    }else {
+	    	
+               boolean iva1 = impuestoIva1.isSelected();
+               
+               boolean iva2 = impuestoIva2.isSelected();
+               
+               boolean iva3 = impuestoIva3.isSelected();
+               
+               boolean ivaOtros = impuestoIvaOtros.isSelected();
+	    	   
+	    	  if(!(iva1 || iva2 || iva3 || ivaOtros))impuestos = "nada";
+              
+	    	  else {
+	    		     if(iva1) impuestos+= "iva1 ";
+	    		     
+	    		     if(iva2) impuestos+= "iva2 ";
+	    		     
+	    		     if(iva3) impuestos+= "iva3 ";
+	    		     
+	    		     if(ivaOtros) impuestos+= "ivaOtros";
+	    	  }
+	    	  
+	    	  
+	    }
+	    
+	    LocalDate fecha1 = fechaDesde.getValue();
+	    
+	    LocalDate fecha2 = fechaHasta.getValue();
+	    
+	   
+	   tableview = modeloBusqueda.obtenerLista(zona, sucursal, condicional1, condicional2, formaPago, impuestos, fecha1, fecha2);
 	
 	}
 	
