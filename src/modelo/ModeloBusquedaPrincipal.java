@@ -34,12 +34,29 @@ public class ModeloBusquedaPrincipal {
 		/// Condicion de busqueda por Proveedor
 		case "PROVEEDOR":
 			
-			String condicional = (condicional2 == "todos")? "*": condicional2;
+			String condicional = (condicional2 == "todos")? "-1": condicional2;
 			
-			System.out.println(condicional);
+			int proveedor = Integer.parseInt(condicional);
 			
+			/*
+			 * 
+			 * SELECT usuario.usuario, facturas.*, facturas.proveedor FROM facturas INNER
+			 * JOIN sucursal_factura on sucursal_factura.idfactura = facturas.id INNER JOIN
+			 * usuario on usuario.id = sucursal_factura.id WHERE
+			 * facturas.proveedor="Aguas S.A";
+			 * 
+			 */
 			/// colocar condicional2 como INT id de proveedor o prefijo
 			
+			
+			
+			// Todos excepto eleccion de proveedor
+			if(Zona == "*" && Sucursal=="*" && formaPago.equals("TODOS") && impuestos.equals("todos") && fecha1==null && fecha2==null)
+				{
+				
+				
+				
+				}
 			
 			
 			break;

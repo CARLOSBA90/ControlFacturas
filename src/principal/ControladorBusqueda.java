@@ -50,6 +50,8 @@ public class ControladorBusqueda  implements Initializable{
 	    ObservableList<String> listaTipo = FXCollections.observableArrayList("A", "B", "C");
 	    
 	    ObservableList<String> listaProve, listaPrefijo;
+	    
+	    ArrayList<proveedor> proveedores;
 		
 		// Configurar tabla de un modelo de factura
 		
@@ -175,7 +177,7 @@ public class ControladorBusqueda  implements Initializable{
 		
 		case "PROVEEDOR":
 			
-			ArrayList<proveedor> proveedores = modelo.cargarListaProve();
+			proveedores = modelo.cargarListaProve();
 			
 			ObservableList<String> lista = FXCollections.observableArrayList();
 			
@@ -240,7 +242,12 @@ public class ControladorBusqueda  implements Initializable{
 		
 		String condicional1 = (condicion1.getSelectionModel().getSelectedItem()==null)? "todos" : condicion1.getSelectionModel().getSelectedItem();
 		
-	    String condicional2 = (condicion2.getSelectionModel().getSelectedItem()==null)? "todos" : condicion2.getSelectionModel().getSelectedItem();
+		String condicional2;
+		
+		if(condicional1=="PROVEEDOR") condicional2 = (condicion2.getSelectionModel().getSelectedItem()==null)? "todos" : ""+proveedores.get(condicion2.getSelectionModel().getSelectedIndex()).getId();
+		else
+		
+	    condicional2 = (condicion2.getSelectionModel().getSelectedItem()==null)? "todos" : condicion2.getSelectionModel().getSelectedItem();
 
 	 
 	    RadioButton botonSeleccion = (RadioButton) FORMAP.getSelectedToggle();
