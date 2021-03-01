@@ -6,7 +6,6 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.Pane?>
@@ -88,22 +87,6 @@
             </Label>
          </children>
       </Pane>
-     <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
-                    <columns>
-            <TableColumn fx:id="sucursal" text="SUCURSAL" />
-                      <TableColumn fx:id="fecha" prefWidth="72.0" text="FECHA" />
-                      <TableColumn fx:id="tipo" prefWidth="33.0" text="TIPO" />
-                        <TableColumn fx:id="prefijo" prefWidth="57.0" text="PREFIJO" />
-                        <TableColumn fx:id="nrofactura" prefWidth="64.0" text="FACTURA" />
-                        <TableColumn fx:id="proveedor" prefWidth="109.0" text="PROVEEDOR" />
-                        <TableColumn fx:id="forma" prefWidth="65.0" text="PAGO" />
-                        <TableColumn fx:id="subtotal" prefWidth="75.0" text="SUBTOTAL" />
-                        <TableColumn fx:id="iva" prefWidth="59.0" text="IVA " />
-                        <TableColumn fx:id="iva2" prefWidth="52.0" text="IVA 2 " />
-                        <TableColumn fx:id="iva3" prefWidth="54.0" text="IVA 3 " />
-                        <TableColumn fx:id="otros" minWidth="0.0" prefWidth="61.0" text="OTROS " />
-                        <TableColumn fx:id="total" prefWidth="60.0" text="TOTAL" />
-                    </columns>
-      </TableView>
+     <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true" />
    </children>
 </VBox>

@@ -45,6 +45,39 @@ public class factura {
 		this.total = new SimpleDoubleProperty(total);
 	}
 	
+	public factura(String sucursal, LocalDate fecha, String tipo, String proveedor, String cuit, int prefijo, int nrofactura, String forma, double subtotal, double iva, double iva2, double iva3, double otros, double total) {
+		
+		super();
+		this.sucursal = new SimpleStringProperty(sucursal);
+		this.fecha = fecha;
+		this.tipo = new SimpleStringProperty(tipo);
+		this.proveedor = new SimpleStringProperty(proveedor);
+		this.cuit = new SimpleStringProperty(cuit);
+		this.prefijo = new SimpleIntegerProperty(prefijo);
+		this.nrofactura = new SimpleIntegerProperty(nrofactura);
+		this.forma = new SimpleStringProperty(forma);
+		this.subtotal = new SimpleDoubleProperty(subtotal);
+		this.iva = new SimpleDoubleProperty(iva);
+		this.iva2 = new SimpleDoubleProperty(iva2);
+		this.iva3 = new SimpleDoubleProperty(iva3);
+		this.otros = new SimpleDoubleProperty(otros);
+		this.total = new SimpleDoubleProperty(total);
+	}
+	
+	public factura(String sucursal, LocalDate fecha, String tipo, String proveedor, int prefijo, int nrofactura, String forma, double subtotal, double total) {
+		
+		super();
+		this.sucursal = new SimpleStringProperty(sucursal);
+		this.fecha = fecha;
+		this.tipo = new SimpleStringProperty(tipo);
+		this.proveedor = new SimpleStringProperty(proveedor);
+		this.prefijo = new SimpleIntegerProperty(prefijo);
+		this.nrofactura = new SimpleIntegerProperty(nrofactura);
+		this.forma = new SimpleStringProperty(forma);
+		this.subtotal = new SimpleDoubleProperty(subtotal);
+		this.total = new SimpleDoubleProperty(total);
+	}
+	
 	
 	
 	public LocalDate getFecha() {
@@ -52,6 +85,12 @@ public class factura {
 	}
 	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
+	}
+	public String getSucursal() {
+		return sucursal.get();
+	}
+	public void setSucursal(SimpleStringProperty tipo) {
+		this.sucursal = sucursal;
 	}
 	public String getTipo() {
 		return tipo.get();
@@ -128,9 +167,21 @@ public class factura {
 	public void setTotal(SimpleDoubleProperty total) {
 		this.total = total;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "factura [fecha=" + fecha + ", tipo=" + tipo + ", proveedor=" + proveedor + ", cuit=" + cuit + ", forma="
+				+ forma + ", sucursal=" + sucursal + ", prefijo=" + prefijo + ", nrofactura=" + nrofactura
+				+ ", subtotal=" + subtotal + ", iva=" + iva + ", iva2=" + iva2 + ", iva3=" + iva3 + ", otros=" + otros
+				+ ", total=" + total + "]";
+	}
+
+
 
 	private LocalDate fecha;
-	private SimpleStringProperty tipo, proveedor, cuit, forma;
+	private SimpleStringProperty tipo, proveedor, cuit, forma, sucursal;
 	private SimpleIntegerProperty prefijo, nrofactura;
 	private SimpleDoubleProperty subtotal, iva, iva2,iva3, otros, total;
 
