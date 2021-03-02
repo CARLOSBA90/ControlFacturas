@@ -11,6 +11,8 @@ import clases.factura;
 import clases.proveedor;
 import clases.sucursal;
 import clases.zona;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +26,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import modelo.ModeloBusquedaPrincipal;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
@@ -279,33 +283,46 @@ public class ControladorBusqueda  implements Initializable{
 	   lista = modeloBusqueda.obtenerLista(zona, sucursal, condicional1, condicional2, formaPago, impuestos, fecha1, fecha2);
 	
 	   
-	   
-	   
-	   tableview.getColumns().clear();
+	   if(Bindings.isEmpty(tableview.getItems()).get()) {
+	        //EMPTY
+
+
+	    }else{
+	        //FILLED
+	    	 tableview.getColumns().clear();
+	    	 tableview.getItems().clear();
+
+	    }
+
 	  
 	   
-	   TableColumn Sucursal = new TableColumn("Sucursal");
-       TableColumn Fecha = new TableColumn("Fecha");
-       TableColumn Tipo = new TableColumn("Tipo");
-       TableColumn Proveedor = new TableColumn("Proveedor");
-       TableColumn Prefijo = new TableColumn("Prefijo");
-       TableColumn NroFactura = new TableColumn("NroFactura");
-       TableColumn FormaPago = new TableColumn("FormaPago");
-       TableColumn Subtotal = new TableColumn("Subtotal");
-       TableColumn Total = new TableColumn("Total");
+	   TableColumn<factura,String> Sucursal = new TableColumn<factura,String>("Sucursal");
+       TableColumn<factura, LocalDate> Fecha = new TableColumn<factura, LocalDate>("Fecha");
+       TableColumn<factura, String> Tipo = new TableColumn<factura, String>("Tipo");
+       TableColumn<factura, String> Proveedor = new TableColumn<factura, String>("Proveedor");
+       TableColumn<factura, Integer> Prefijo = new TableColumn<factura, Integer>("Prefijo");
+       TableColumn<factura, Integer> NroFactura = new TableColumn<factura, Integer>("NroFactura");
+       TableColumn<factura, String> FormaPago = new TableColumn<factura, String>("FormaPago");
+       TableColumn<factura, Double> Subtotal = new TableColumn<factura, Double>("Subtotal");
+       TableColumn<factura, Double> Total = new TableColumn<factura, Double>("Total");
        
-       
-      
-       
-   	Sucursal.setCellValueFactory(new PropertyValueFactory<factura, String>("Sucursal"));
-	Fecha.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("Fecha"));
-	Tipo.setCellValueFactory(new PropertyValueFactory<factura, String>("Tipo"));
-	Proveedor.setCellValueFactory(new PropertyValueFactory<factura, String>("Proveedor"));
-	Prefijo.setCellValueFactory(new PropertyValueFactory<factura, Integer>("Prefijo"));
-	NroFactura.setCellValueFactory(new PropertyValueFactory<factura, Integer>("NroFactura"));
-	Sucursal.setCellValueFactory(new PropertyValueFactory<factura, String>("FormaPago"));
-	Subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("Subtotal"));
-	Total.setCellValueFactory(new PropertyValueFactory<factura, Double>("Total"));
+   	Sucursal.setCellValueFactory(new PropertyValueFactory<factura, String>("sucursal"));
+	Fecha.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
+	Tipo.setCellValueFactory(new PropertyValueFactory<factura, String>("tipo"));
+	Proveedor.setCellValueFactory(new PropertyValueFactory<factura, String>("proveedor"));
+	Prefijo.setCellValueFactory(new PropertyValueFactory<factura, Integer>("prefijo"));
+	NroFactura.setCellValueFactory(new PropertyValueFactory<factura, Integer>("nrofactura"));
+	FormaPago.setCellValueFactory(new PropertyValueFactory<factura, String>("forma"));
+	Subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
+	Total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
+	
+	//continuacion
+	
+	if(lista.get(0).getConstructor()==1) {
+		
+		System.out.println("Es igual a uno");
+	}
+	
 	   
 	 tableview.getColumns().addAll(Sucursal, Fecha, Tipo, Proveedor, Prefijo, NroFactura, FormaPago, Subtotal, Total);
 	   

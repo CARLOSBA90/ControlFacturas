@@ -67,6 +67,7 @@ public class factura {
 	public factura(String sucursal, LocalDate fecha, String tipo, String proveedor, int prefijo, int nrofactura, String forma, double subtotal, double total) {
 		
 		super();
+		this.constructor = 1;
 		this.sucursal = new SimpleStringProperty(sucursal);
 		this.fecha = fecha;
 		this.tipo = new SimpleStringProperty(tipo);
@@ -79,6 +80,12 @@ public class factura {
 	}
 	
 	
+	public int getConstructor() {
+		return constructor;
+	}
+	public void setConstructor(int constructor) {
+		this.constructor = constructor;
+	}
 	
 	public LocalDate getFecha() {
 		return fecha;
@@ -180,6 +187,7 @@ public class factura {
 
 
 
+	private int constructor;
 	private LocalDate fecha;
 	private SimpleStringProperty tipo, proveedor, cuit, forma, sucursal;
 	private SimpleIntegerProperty prefijo, nrofactura;

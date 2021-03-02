@@ -59,14 +59,14 @@ public class ModeloBusquedaPrincipal {
 			///BUSQUEDA TIPO 1 CAMPOS: (SUCURSAL, FECHA, TIPO, PREFIJO, NROFACTURA, PROVEEDOR, FORMA, SUBTOTAL, TOTAL)
 			
 			
-			// CONDICIONES: ZONAS -> TODOS, SUCURSAL -> TODOS, FORMA PAGO -> TODOS, IMPUESTOS -> TODOS, FECHAS -> CAMPOS VACIOS
+			// CONDICIONES: ZONAS -> TODOS, SUCURSAL -> TODOS, FORMA PAGO -> TODOS, IMPUESTOS -> NADA, FECHAS -> CAMPOS VACIOS
 			// CONDICION 2: ELECCION DE PROVEEDOR BUSQUEDA TIPO 1 
-			if(Zona == "*" && Sucursal=="*" && formaPago.equals("TODOS") && impuestos.equals("todos") && fecha1==null && fecha2==null)
+			if(Zona == "*" && Sucursal=="*" && formaPago.equals("TODOS") && impuestos.equals("nada") && fecha1==null && fecha2==null)
 				{
 				 String bus = "1";
 				String sql = "SELECT usuario.usuario, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura," + 
 						"facturas.proveedor, facturas.forma, facturas.subtotal, facturas.total FROM facturas INNER JOIN sucursal_factura ON"
-						+ " sucursal_factura.idfactura = facturas.id INNER JOIN usuario ON usuario.id = sucursal_factura.id INNER JOIN factura_proveedor ON"
+						+ " sucursal_factura.idfactura = facturas.id INNER JOIN usuario ON usuario.id = sucursal_factura.idsucursal INNER JOIN factura_proveedor ON"
 						+ " factura_proveedor.idfactura = facturas.id INNER JOIN proveedores ON factura_proveedor.idproveedor = proveedores.id WHERE "
 						+ "proveedores.id= "+proveedor;
 				
@@ -97,7 +97,7 @@ public class ModeloBusquedaPrincipal {
 			
 			
 		default:
-			System.out.println("Entrada al default en metodo obtenerLista, clase ModeloBusquedaPrincipal");
+			System.out.println("ENTRADA METODO DEFAULT, CLASE ModeloBusquedaPrincipal");
 		
 		
 		
@@ -137,7 +137,7 @@ public class ModeloBusquedaPrincipal {
 			/// RECORRER EL RESULSET
 			
 			 if(miResulset.next() == false)
-			       lista.add(new factura(LocalDate.now(),"-","SIN DATOS","SIN DATOS",0,0,0,0,0,0,0,0));
+			       lista.add(new factura("SIN DATOS",LocalDate.now(),"SIN DATOS","SIN DATOS",0,0,"SIN DATOS",0,0));
 			 else {
 				 
 				 switch (bus) {
@@ -159,7 +159,7 @@ public class ModeloBusquedaPrincipal {
 	                
 	                
 	             default:
-	            	 System.out.println("No bus, no sentencia");
+	            	 System.out.println("NO BUS, NO SENTENCIA");
 				             }
 			            }
 		}catch(SQLException e) {
@@ -170,7 +170,6 @@ public class ModeloBusquedaPrincipal {
 				miConexion.close();
 			}
 		
-		System.out.println(lista.toString());
 		
 		return lista;
 		
