@@ -61,25 +61,75 @@ public class ModeloBusquedaPrincipal {
 			
 			// CONDICIONES: ZONAS -> TODOS, SUCURSAL -> TODOS, FORMA PAGO -> TODOS, IMPUESTOS -> NADA, FECHAS -> CAMPOS VACIOS
 			// CONDICION 2: ELECCION DE PROVEEDOR BUSQUEDA TIPO 1 
-			if(Zona == "*" && Sucursal=="*" && formaPago.equals("TODOS") && impuestos.equals("nada") && fecha1==null && fecha2==null)
+			
+			String bus ="";
+			
+			String sql ="";
+			
+			boolean puerta = false;
+			
+			if(impuestos.equals("NINGUNO") && fecha1==null && fecha2==null)
 				{
-				 String bus = "1";
-				String sql = "SELECT usuario.usuario, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura," + 
+				 bus = "1";
+				 sql = "SELECT usuario.usuario, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura," + 
 						"facturas.proveedor, facturas.forma, facturas.subtotal, facturas.total FROM facturas INNER JOIN sucursal_factura ON"
 						+ " sucursal_factura.idfactura = facturas.id INNER JOIN usuario ON usuario.id = sucursal_factura.idsucursal INNER JOIN factura_proveedor ON"
-						+ " factura_proveedor.idfactura = facturas.id INNER JOIN proveedores ON factura_proveedor.idproveedor = proveedores.id WHERE "
-						+ "proveedores.id= "+proveedor;
+						+ " factura_proveedor.idfactura = facturas.id INNER JOIN proveedores ON factura_proveedor.idproveedor = proveedores.id";
 				
+				 
+				 //////
 				
-				
-				return busquedaBBDD(sql, bus);
-				
+				 if(proveedor!=-1)
+				 { 
+				   sql+=" WHERE proveedores.id="+proveedor; 
+				   
+				   if(!puerta) puerta=true;
+				    }
+				 
+				 //////
+				 
+				 
+				 if(!formaPago.equals("TODOS") && proveedor==-1) {
+					 
+					 sql = operador(sql,puerta);
+					 
+					 sql+="facturas.forma='"+formaPago.toLowerCase()+"'";
+					
+					 if(!puerta) puerta=true;
+				  }
+				 
+				 else if (!formaPago.equals("TODOS") && proveedor!=-1) {
+					 
+					 sql = operador(sql,puerta);
+					 
+					 sql+="facturas.forma='"+formaPago.toLowerCase()+"'";
+					 
+					 if(!puerta) puerta=true;
+					 
+				 }
+				 
+				 //////////
+				 
+				 if(Sucursal!="*") {
+					 
+					 sql = operador(sql,puerta);
+					 
+					 sql+="usuario.id="+Integer.parseInt(Sucursal);
+					 
+					 if(!puerta) puerta=true;
+					 
+				 } else {
+					 
+                    ///continuacion
+					 
+				 }
+				 
+				 
+					 
 				
 				}
-			
-			
-			break;
-			
+		
+			return busquedaBBDD(sql, bus);
 		/// Condicion de busqueda por Tipo
 		case "TIPO":
 			
@@ -111,6 +161,15 @@ public class ModeloBusquedaPrincipal {
 		
 		
 		return null;
+	}
+	
+	public String operador(String sql, boolean e) {
+		
+		if(e) 
+		    sql+=" AND ";
+	   else sql+=" WHERE ";
+		
+		return sql;
 	}
 
 	private ObservableList<factura> busquedaBBDD(String sql, String bus) throws ClassNotFoundException, IOException, SQLException {

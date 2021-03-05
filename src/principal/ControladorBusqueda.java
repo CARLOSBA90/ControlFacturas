@@ -75,7 +75,7 @@ public class ControladorBusqueda  implements Initializable{
 		
 		@FXML private DatePicker fechaDesde, fechaHasta;
 		
-		@FXML private CheckBox impuestoTodos, impuestoIva1, impuestoIva2, impuestoIva3, impuestoIvaOtros;
+		@FXML private ToggleGroup IMPUESTOS;
 		
 		@FXML private ToggleGroup FORMAP;
 	
@@ -209,20 +209,6 @@ public class ControladorBusqueda  implements Initializable{
 	}
 	
 	
-	public void estadoImpuestos(ActionEvent event) {
-		
-		if(impuestoTodos.isSelected()) {
-			
-			impuestoIva1.setSelected(false);
-			
-			impuestoIva2.setSelected(false);
-			
-			impuestoIva3.setSelected(false);
-			
-			impuestoIvaOtros.setSelected(false);
-		}
-	}
-	
 	public void busqueda (ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
 		
 		
@@ -240,40 +226,16 @@ public class ControladorBusqueda  implements Initializable{
 	    condicional2 = (condicion2.getSelectionModel().getSelectedItem()==null)? "todos" : condicion2.getSelectionModel().getSelectedItem();
 
 	 
-	    RadioButton botonSeleccion = (RadioButton) FORMAP.getSelectedToggle();
+	    RadioButton botonSeleccionForma = (RadioButton) FORMAP.getSelectedToggle();
 	    
-	     String formaPago = botonSeleccion.getText();
+	     String formaPago = botonSeleccionForma.getText();
 	    
-	
+	     RadioButton botonSeleccionImpuestos = (RadioButton) IMPUESTOS.getSelectedToggle();
+	     
 	    
-	    String impuestos = "";
+	    String impuestos = botonSeleccionImpuestos.getText();
 	    
-	    if(impuestoTodos.isSelected()) {
-	    	impuestos = "todos";
-	    }else {
-	    	
-               boolean iva1 = impuestoIva1.isSelected();
-               
-               boolean iva2 = impuestoIva2.isSelected();
-               
-               boolean iva3 = impuestoIva3.isSelected();
-               
-               boolean ivaOtros = impuestoIvaOtros.isSelected();
-	    	   
-	    	  if(!(iva1 || iva2 || iva3 || ivaOtros))impuestos = "nada";
-              
-	    	  else {
-	    		     if(iva1) impuestos+= "iva1 ";
-	    		     
-	    		     if(iva2) impuestos+= "iva2 ";
-	    		     
-	    		     if(iva3) impuestos+= "iva3 ";
-	    		     
-	    		     if(ivaOtros) impuestos+= "ivaOtros";
-	    	  }
-	    	  
-	    	  
-	    }
+	   //////////////////////////
 	    
 	    LocalDate fecha1 = fechaDesde.getValue();
 	    
@@ -317,11 +279,6 @@ public class ControladorBusqueda  implements Initializable{
 	Total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 	
 	//continuacion
-	
-	if(lista.get(0).getConstructor()==1) {
-		
-		System.out.println("Es igual a uno");
-	}
 	
 	   
 	 tableview.getColumns().addAll(Sucursal, Fecha, Tipo, Proveedor, Prefijo, NroFactura, FormaPago, Subtotal, Total);
