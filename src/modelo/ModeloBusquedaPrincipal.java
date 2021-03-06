@@ -20,6 +20,8 @@ public class ModeloBusquedaPrincipal {
 	
 	private Conexion conectar;
 	
+	private boolean puerta = false;
+	
 	public ModeloBusquedaPrincipal() {
 		
 		conectar = new Conexion();
@@ -45,45 +47,68 @@ public class ModeloBusquedaPrincipal {
 			
 			int proveedor = Integer.parseInt(condicional);
 			
-			/*
-			 * 
-			 * SELECT usuario.usuario, facturas.*, facturas.proveedor FROM facturas INNER
-			 * JOIN sucursal_factura on sucursal_factura.idfactura = facturas.id INNER JOIN
-			 * usuario on usuario.id = sucursal_factura.id WHERE
-			 * facturas.proveedor="Aguas S.A";
-			 * 
-			 */
+			
 			/// colocar condicional2 como INT id de proveedor o prefijo
 			
 			
-			///BUSQUEDA TIPO 1 CAMPOS: (SUCURSAL, FECHA, TIPO, PREFIJO, NROFACTURA, PROVEEDOR, FORMA, SUBTOTAL, TOTAL)
+			///BUSQUEDA TIPO "BUS" 1 CAMPOS: (SUCURSAL, FECHA, TIPO, PREFIJO, NROFACTURA, PROVEEDOR, FORMA, SUBTOTAL, TOTAL)
+			
+			///BUSQUEDA TIPO "BUS" 2 CAMPOS: (SUCURSAL, FECHA, TIPO, PREFIJO, NROFACTURA, PROVEEDOR, FORMA, SUBTOTAL, IVA1, IVA2, IVA3, OTROS, TOTAL)
 			
 			
-			// CONDICIONES: ZONAS -> TODOS, SUCURSAL -> TODOS, FORMA PAGO -> TODOS, IMPUESTOS -> NADA, FECHAS -> CAMPOS VACIOS
 			// CONDICION 2: ELECCION DE PROVEEDOR BUSQUEDA TIPO 1 
 			
 			String bus ="";
 			
 			String sql ="";
 			
-			boolean puerta = false;
 			
-			if(impuestos.equals("NINGUNO") && fecha1==null && fecha2==null)
+			
+			if(fecha1==null && fecha2==null)
 				{
-				 bus = "1";
+				 
 				 sql = "SELECT usuario.usuario, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura," + 
-						"facturas.proveedor, facturas.forma, facturas.subtotal, facturas.total FROM facturas INNER JOIN sucursal_factura ON"
+						"facturas.proveedor, facturas.forma, facturas.subtotal, facturas.total";
+				 
+				 if(impuestos.equals("TODOS")) {
+					 
+					 sql += ", facturas.iva1, facturas.iva2, facturas.iva3, facturas.otro";
+					 
+					 bus = "2";
+					 
+				 } else bus = "1";
+						 
+						
+				 sql += " FROM facturas INNER JOIN sucursal_factura ON"
 						+ " sucursal_factura.idfactura = facturas.id INNER JOIN usuario ON usuario.id = sucursal_factura.idsucursal INNER JOIN factura_proveedor ON"
 						+ " factura_proveedor.idfactura = facturas.id INNER JOIN proveedores ON factura_proveedor.idproveedor = proveedores.id";
 				
+				 
+	             //////////
+				 
+				 if(Zona!="*" && Sucursal=="*") {
+					 
+					 sql+=" INNER JOIN sucursal_zona ON sucursal_zona.idsucursal = usuario.id INNER JOIN  zonas ON zonas.id = sucursal_zona.idzonas WHERE zonas.id ="+Zona;
+					 
+					 if(!puerta) puerta=true;
+					 
+				 } else if(Sucursal !="*") {
+					 
+                     sql = operador(sql,puerta);
+					 
+					 sql+="usuario.id="+Integer.parseInt(Sucursal);
+					 
+				 }
 				 
 				 //////
 				
 				 if(proveedor!=-1)
 				 { 
-				   sql+=" WHERE proveedores.id="+proveedor; 
+					 
+				   sql = operador(sql,puerta); 
+					 
+				   sql+="proveedores.id="+proveedor; 
 				   
-				   if(!puerta) puerta=true;
 				    }
 				 
 				 //////
@@ -94,8 +119,6 @@ public class ModeloBusquedaPrincipal {
 					 sql = operador(sql,puerta);
 					 
 					 sql+="facturas.forma='"+formaPago.toLowerCase()+"'";
-					
-					 if(!puerta) puerta=true;
 				  }
 				 
 				 else if (!formaPago.equals("TODOS") && proveedor!=-1) {
@@ -104,26 +127,7 @@ public class ModeloBusquedaPrincipal {
 					 
 					 sql+="facturas.forma='"+formaPago.toLowerCase()+"'";
 					 
-					 if(!puerta) puerta=true;
-					 
 				 }
-				 
-				 //////////
-				 
-				 if(Sucursal!="*") {
-					 
-					 sql = operador(sql,puerta);
-					 
-					 sql+="usuario.id="+Integer.parseInt(Sucursal);
-					 
-					 if(!puerta) puerta=true;
-					 
-				 } else {
-					 
-                    ///continuacion
-					 
-				 }
-				 
 				 
 					 
 				
@@ -168,6 +172,8 @@ public class ModeloBusquedaPrincipal {
 		if(e) 
 		    sql+=" AND ";
 	   else sql+=" WHERE ";
+		
+		if(!puerta) puerta=true;
 		
 		return sql;
 	}
@@ -215,6 +221,12 @@ public class ModeloBusquedaPrincipal {
 			           }while(miResulset.next());
 	                
 	                break;
+	                
+				 case "2":
+					 
+					 ///continuacion
+					 
+					 break;
 	                
 	                
 	             default:
