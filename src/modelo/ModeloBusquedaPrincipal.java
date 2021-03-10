@@ -1,5 +1,4 @@
 package modelo;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,29 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-
 import clases.factura;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
 
 public class ModeloBusquedaPrincipal {
-
-	
     private Connection miConexion=null;
-	
 	private Conexion conectar;
-	
 	private boolean puerta = false;
 	
 	public ModeloBusquedaPrincipal() {
-		
 		conectar = new Conexion();
 	}
 
 	public ObservableList<factura> obtenerLista(int zona, int sucursal, String condicional1, String condicional2,
 			String formaPago, String impuestos, LocalDate fecha1, LocalDate fecha2) throws ClassNotFoundException, IOException, SQLException {
-		// TODO Auto-generated method stub
 		
 		String Zona = (zona == -1)?  "*" : ""+zona;
 		
@@ -178,8 +169,7 @@ public class ModeloBusquedaPrincipal {
 		return sql;
 	}
 
-	private ObservableList<factura> busquedaBBDD(String sql, String bus) throws ClassNotFoundException, IOException, SQLException {
-		// TODO Auto-generated method stub
+	private ObservableList<factura> busquedaBBDD(String sql, String bus) throws SQLException {
 		
 		ObservableList<factura> lista = FXCollections.observableArrayList();
 	       
@@ -202,7 +192,7 @@ public class ModeloBusquedaPrincipal {
 			/// RECORRER EL RESULSET
 			
 			 if(miResulset.next() == false)
-			       lista.add(new factura("SIN DATOS",LocalDate.now(),"SIN DATOS","SIN DATOS",0,0,"SIN DATOS",0,0));
+			       lista.add(new factura("SIN DATOS",LocalDate.now(),"SIN DATOS","SIN DATOS",0,0,"SIN DATOS",0,0,0,0,0,0));
 			 else {
 				 
 				 switch (bus) {
@@ -224,7 +214,17 @@ public class ModeloBusquedaPrincipal {
 	                
 				 case "2":
 					 
-					 ///continuacion
+					 do {
+					 Date fechaSQL = miResulset.getDate(2);
+			    	   
+			    	   LocalDate fecha = fechaSQL.toLocalDate(); 
+					
+			   		lista.add(new factura(miResulset.getString(1), fecha ,miResulset.getString(3), miResulset.getString(6),
+			   				 miResulset.getInt(4),miResulset.getInt(5),miResulset.getString(7),miResulset.getDouble(8),
+			   				 miResulset.getDouble(10),miResulset.getDouble(11), miResulset.getDouble(12),
+			   				 miResulset.getDouble(13), miResulset.getDouble(9)));
+						
+					           }while(miResulset.next());
 					 
 					 break;
 	                

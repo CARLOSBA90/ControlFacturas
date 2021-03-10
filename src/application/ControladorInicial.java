@@ -28,7 +28,7 @@ public class ControladorInicial {
 	
 	ModeloLogin modelo = new ModeloLogin();
 	
-	public void Login(ActionEvent event) throws ClassNotFoundException, SQLException, IOException {
+	public void Login() throws ClassNotFoundException, SQLException, IOException {
 
 		if (txtUsuario.getText().equals("") || txtContra.getText().equals("")) {
 			status.setText("ACCESO INCORRECTO");

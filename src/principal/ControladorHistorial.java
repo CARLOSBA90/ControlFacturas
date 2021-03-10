@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import clases.factura;
 import clases.sucursal;
 import clases.zona;
@@ -22,32 +21,53 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 
-public class ControladorHistorial implements Initializable{
+public class ControladorHistorial implements Initializable {
 
 	// Variables
-	
-	    ModeloPrincipal modelo;
-	    
-	    ModeloSucursal modeloSucursal;
-	    
-	    ArrayList<zona>  zonas;
-	    
-	    ArrayList<sucursal> sucursales;
-			
-		
-		
-		// Configurar tabla de un modelo de factura
-		
-		@FXML private TableView<factura> tableview;
-		@FXML private TableColumn<factura, LocalDate> fecha;
-		@FXML private TableColumn<factura, String> tipo, proveedor, cuit;
-		@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
-		@FXML private TableColumn<factura, Double> subtotal, iva, iva2, iva3, otros, total;
-		@FXML private ComboBox<String> ListaSucursales, ListaZona;
-	
+
+	ModeloPrincipal modelo;
+
+	ModeloSucursal modeloSucursal;
+
+	ArrayList<zona> zonas;
+
+	ArrayList<sucursal> sucursales;
+
+	// Configurar tabla de un modelo de factura
+
+	@FXML
+	private TableView<factura> tableview;
+	@FXML
+	private TableColumn<factura, LocalDate> fecha;
+	@FXML
+	private TableColumn<factura, String> tipo;
+	@FXML
+	private TableColumn<factura, String> proveedor;
+	@FXML
+	private TableColumn<factura, String> cuit;
+	@FXML
+	private TableColumn<factura, Integer> prefijo;
+	@FXML
+	private TableColumn<factura, Integer> nrofactura;
+	@FXML
+	private TableColumn<factura, Double> subtotal;
+	@FXML
+	private TableColumn<factura, Double> iva;
+	@FXML
+	private TableColumn<factura, Double> iva2;
+	@FXML
+	private TableColumn<factura, Double> iva3;
+	@FXML
+	private TableColumn<factura, Double> otros;
+	@FXML
+	private TableColumn<factura, Double> total;
+	@FXML
+	private ComboBox<String> ListaSucursales;
+	@FXML
+	private ComboBox<String> ListaZona;
+
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		
+
 		fecha.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
 		tipo.setCellValueFactory(new PropertyValueFactory<factura, String>("tipo"));
 		proveedor.setCellValueFactory(new PropertyValueFactory<factura, String>("proveedor"));
@@ -61,64 +81,51 @@ public class ControladorHistorial implements Initializable{
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 		tableview.setItems(null);
-		
+
 		modelo = new ModeloPrincipal();
-		
+
 		modeloSucursal = new ModeloSucursal();
-		
-		
+
 		try {
 			ListaZona.setItems(listarZonas());
 		} catch (ClassNotFoundException | SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			/* En caso de excepciones */
 		}
-		
+
 		ListaSucursales.setItems(null);
-		
-		
+
 	}
-	
-	
-	 private ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
-		// TODO Auto-generated method stub
-			/// Listar todas las zonas
-			
-			zonas = modelo.listaZonas();
-			
-			ObservableList<String> lista = FXCollections.observableArrayList();
-			
-					/// Uso for each mejorado, expresión Lambda.
-			
-			zonas.forEach((n) -> lista.add(n.getNombre()));
-			
-			return lista;
+
+	private ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
+		/// Listar todas las zonas
+
+		zonas = modelo.listaZonas();
+
+		ObservableList<String> lista = FXCollections.observableArrayList();
+
+		/// Uso for each mejorado, expresión Lambda.
+
+		zonas.forEach((n) -> lista.add(n.getNombre()));
+
+		return lista;
 	}
 
 	public void seleccionZonas(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
-			
-		// System.out.println(""+ zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
-		
+
 		// Listar las sucursales de la zona seleccionada
-		
+
 		sucursales = modelo.listaSucursales(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
-		
 		ObservableList<String> lista = FXCollections.observableArrayList();
-		
 		sucursales.forEach((n) -> lista.add(n.getNombre()));
-		
 		ListaSucursales.setItems(lista);
-		
-		
+
 	}
-	
+
 	public void seleccionSucursal(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
-		
-		if(ListaSucursales.getSelectionModel().getSelectedIndex()>=0)
-		
-		tableview.setItems(modeloSucursal.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
-		
-		
+
+		if (ListaSucursales.getSelectionModel().getSelectedIndex() >= 0) 
+			tableview.setItems(modeloSucursal.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
+
 	}
-	
+
 }

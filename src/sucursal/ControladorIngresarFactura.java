@@ -1,4 +1,5 @@
 package sucursal;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -33,39 +34,49 @@ import clases.factura;
 import clases.proveedor;
 
 public class ControladorIngresarFactura implements Initializable {
-	
+
 	@FXML private DatePicker fecha;
-	
-	@FXML private ComboBox<String> listaDeTipos, listaProveedor, listaCuit, listaPago;
-	
-	@FXML private TextField subtotal, iva1, iva2, iva3, ivaotros, total, nrofactura, prefijo = new TextField();
-	
-   ObservableList<String> tipo = FXCollections.observableArrayList("A", "B", "C");
-   
-   ObservableList<String> pago = FXCollections.observableArrayList("corriente", "contado");
-   
-   ObservableList<String> proveedor,cuit;
-   
-   ArrayList<String> listaNombreArray, listaCuitArray;
-   
-   ControladorSucursal superior;
-   
-   ModeloSucursal modelo;
-   
-   private int id;
-   
+	@FXML private ComboBox<String> listaDeTipos;
+	@FXML private ComboBox<String> listaProveedor;
+	@FXML private ComboBox<String> listaCuit;
+	@FXML private ComboBox<String> listaPago;
+	@FXML private TextField subtotal;
+	@FXML private TextField iva1;
+	@FXML private TextField iva2;
+	@FXML private TextField iva3;
+	@FXML private TextField ivaotros;
+	@FXML private TextField total;
+	@FXML private TextField nrofactura;
+	@FXML private TextField prefijo;
+	private ObservableList<String> tipo = FXCollections.observableArrayList("A", "B", "C");
+	private ObservableList<String> pago = FXCollections.observableArrayList("corriente", "contado");
+	private ObservableList<String> proveedor;
+	private ObservableList<String> cuit;
+	private ArrayList<String> listaNombreArray;
+	private ArrayList<String> listaCuitArray;
+	private ControladorSucursal superior;
+	private ModeloSucursal modelo;
+	private int id;
+
 	// Configurar tabla de un modelo de factura
-	
+
 	@FXML private TableView<factura> tableview;
 	@FXML private TableColumn<factura, LocalDate> fechaT;
-	@FXML private TableColumn<factura, String> tipoT, proveedorT, cuitT,formaT;
-	@FXML private TableColumn<factura, Integer> prefijoT, nrofacturaT;
-	@FXML private TableColumn<factura, Double> subtotalT, ivaT, iva2T,iva3T, otrosT, totalT;
-   
-   
+	@FXML private TableColumn<factura, String> tipoT;
+	@FXML private TableColumn<factura, String> proveedorT;
+	@FXML private TableColumn<factura, String> cuitT;
+	@FXML private TableColumn<factura, String> formaT;
+	@FXML private TableColumn<factura, Integer> prefijoT;
+	@FXML private TableColumn<factura, Integer> nrofacturaT;
+	@FXML private TableColumn<factura, Double> subtotalT;
+	@FXML private TableColumn<factura, Double> ivaT;
+	@FXML private TableColumn<factura, Double> iva2T;
+	@FXML private TableColumn<factura, Double> iva3T;
+	@FXML private TableColumn<factura, Double> otrosT;
+	@FXML private TableColumn<factura, Double> totalT;
+	
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		
+
 		fechaT.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
 		tipoT.setCellValueFactory(new PropertyValueFactory<factura, String>("tipo"));
 		proveedorT.setCellValueFactory(new PropertyValueFactory<factura, String>("proveedor"));
@@ -79,354 +90,330 @@ public class ControladorIngresarFactura implements Initializable {
 		iva3T.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
 		otrosT.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		totalT.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
-		
-		
+
 		/// Carga de datos despues de generar las vista, para poder cargar el ID
-	    Platform.runLater(() -> {
-	    		    	
-	    	cargarLista(id);
+		Platform.runLater(() -> {
 
+			cargarLista(id);
 
-	    });
-		
-		
-		
+		});
+
 		/// Solicita los datos a la BBDD los nombres de proveedor y su CUIT
-		
-		ModeloSucursal modelo =	 new ModeloSucursal();
-		
+
+		ModeloSucursal modelo = new ModeloSucursal();
+
 		ArrayList<proveedor> listaProveedores = new ArrayList<proveedor>();
-		
+
 		try {
 			listaProveedores = modelo.listaProveedores();
 		} catch (ClassNotFoundException | SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			/* tratar excepcion*/
 		}
-		
-		//Genera lista en ArrayList tipo String
-		
+
+		// Genera lista en ArrayList tipo String
+
 		generarListas(listaProveedores);
-		
+
 		/// Inserta los datos en cada lista de la GUI
-		
+
 		listaProveedor.setItems(proveedor);
-		
+
 		listaCuit.setItems(cuit);
-		
+
 		listaDeTipos.setItems(tipo);
-		
+
 		listaPago.setItems(pago);
-		
-		///Desactiva el textField total
-		
+
+		/// Desactiva el textField total
+
 		total.setDisable(true);
-		
+
 		/// Oyente para colocar la fecha como tope hasta el dia actual
-		
+
 		fecha.setDayCellFactory(picker -> new DateCell() {
-	        public void updateItem(LocalDate date, boolean empty) {
-	        	
-	            super.updateItem(date, empty);
-	            
-	            LocalDate today = LocalDate.now();
-	            
-	            
-	            setDisable(empty || date.compareTo(today) > 0 );
-	        }
-	    });
-		
-		
-		
-		///Oyente solo para el prefijo y factura, solo se pueden incluir numeros en estos campos
-		
+			public void updateItem(LocalDate date, boolean empty) {
+
+				super.updateItem(date, empty);
+
+				LocalDate today = LocalDate.now();
+
+				setDisable(empty || date.compareTo(today) > 0);
+			}
+		});
+
+		/// Oyente solo para el prefijo y factura, solo se pueden incluir numeros en
+		/// estos campos
+
 		ChangeListener<String> soloNumerosFactura = (observable, valorViejo, valorNuevo) -> {
-		    if (!valorNuevo.matches("\\d*"))
-		      ((StringProperty) observable).set(valorViejo);
-		     
-		    
-		    
-		    /// Maximo digitos permitidos por cada textfield
-		      if (prefijo.getText().length() > 5) {
-		    	  
-	                String s = prefijo.getText().substring(0, 5);
-	                
-	                prefijo.setText(s);
-		      }
-		      
-		      if (nrofactura.getText().length() > 12) {
-		    	  
-	                String s = nrofactura.getText().substring(0, 12);
-	                
-	                nrofactura.setText(s);
-		      }
-		    
+			if (!valorNuevo.matches("\\d*"))
+				((StringProperty) observable).set(valorViejo);
+
+			/// Maximo digitos permitidos por cada textfield
+			if (prefijo.getText().length() > 5) {
+
+				String s = prefijo.getText().substring(0, 5);
+
+				prefijo.setText(s);
+			}
+
+			if (nrofactura.getText().length() > 12) {
+
+				String s = nrofactura.getText().substring(0, 12);
+
+				nrofactura.setText(s);
+			}
+
 		};
-		
-		
-		///Oyente para colocar solo numeros dentro de los montos subtotal, impuestos y total
+
+		/// Oyente para colocar solo numeros dentro de los montos subtotal, impuestos y
+		/// total
 		/// Tambien incluye la suma de subtotal y todos los impuestos
 		ChangeListener<String> soloNumeros = (observable, valorViejo, valorNuevo) -> {
-		    if (!valorNuevo.matches("\\d*(\\.\\d*)?"))
-		      ((StringProperty) observable).set(valorViejo);
-		    
-		    
-		    /// Maximo digitos permitidos por cada textfield
-		      if (subtotal.getText().length() > 10) {
-	                String s = subtotal.getText().substring(0, 10);
-	                subtotal.setText(s);
-		      }
-		      
-		      if (iva1.getText().length() > 10) {
-	                String s = iva1.getText().substring(0, 10);
-	                iva1.setText(s);
-		      }
-		      
-		      if (iva2.getText().length() > 10) {
-	                String s = iva2.getText().substring(0, 10);
-	                iva2.setText(s);
-		      }
-		      
-		      if (iva3.getText().length() > 10) {
-	                String s = iva3.getText().substring(0, 10);
-	                iva3.setText(s);
-		      }
-		      
-		      if (ivaotros.getText().length() > 10) {
-	                String s = ivaotros.getText().substring(0, 10);
-	                ivaotros.setText(s);
-		      }
-		   
-		    
-		    ///Suma los valores cada vez que ingresan un digito
-		    double valorSubtotal =(!subtotal.getText().trim().isEmpty())?Double.parseDouble(subtotal.getText()):0;
-	    	double valorIva1 =(!iva1.getText().trim().isEmpty())?Double.parseDouble(iva1.getText()):0;
-	    	double valorIva2 =(!iva2.getText().trim().isEmpty())?Double.parseDouble(iva2.getText()):0;
-	    	double valorIva3 =(!iva3.getText().trim().isEmpty())?Double.parseDouble(iva3.getText()):0;
-	    	double valorOtros =(!ivaotros.getText().trim().isEmpty())?Double.parseDouble(ivaotros.getText()):0;
-	    	double valor = valorSubtotal+ valorIva1 + valorIva2 + valorIva3 + valorOtros;
-	    	
-	    	/// Formato de salida a textfield texto, maximo 2 decimales
-	    	
-	    	DecimalFormat df = new DecimalFormat("####0.00");
-	    	
-	    	total.setText(""+df.format(valor));
-		    
+			if (!valorNuevo.matches("\\d*(\\.\\d*)?"))
+				((StringProperty) observable).set(valorViejo);
+
+			/// Maximo digitos permitidos por cada textfield
+			if (subtotal.getText().length() > 10) {
+				String s = subtotal.getText().substring(0, 10);
+				subtotal.setText(s);
+			}
+
+			if (iva1.getText().length() > 10) {
+				String s = iva1.getText().substring(0, 10);
+				iva1.setText(s);
+			}
+
+			if (iva2.getText().length() > 10) {
+				String s = iva2.getText().substring(0, 10);
+				iva2.setText(s);
+			}
+
+			if (iva3.getText().length() > 10) {
+				String s = iva3.getText().substring(0, 10);
+				iva3.setText(s);
+			}
+
+			if (ivaotros.getText().length() > 10) {
+				String s = ivaotros.getText().substring(0, 10);
+				ivaotros.setText(s);
+			}
+
+			/// Suma los valores cada vez que ingresan un digito
+			double valorSubtotal = (!subtotal.getText().trim().isEmpty()) ? Double.parseDouble(subtotal.getText()) : 0;
+			double valorIva1 = (!iva1.getText().trim().isEmpty()) ? Double.parseDouble(iva1.getText()) : 0;
+			double valorIva2 = (!iva2.getText().trim().isEmpty()) ? Double.parseDouble(iva2.getText()) : 0;
+			double valorIva3 = (!iva3.getText().trim().isEmpty()) ? Double.parseDouble(iva3.getText()) : 0;
+			double valorOtros = (!ivaotros.getText().trim().isEmpty()) ? Double.parseDouble(ivaotros.getText()) : 0;
+			double valor = valorSubtotal + valorIva1 + valorIva2 + valorIva3 + valorOtros;
+
+			/// Formato de salida a textfield texto, maximo 2 decimales
+
+			DecimalFormat df = new DecimalFormat("####0.00");
+
+			total.setText("" + df.format(valor));
+
 		};
-		
-		//Agrega los listener a los textfields
+
+		// Agrega los listener a los textfields
 		prefijo.textProperty().addListener(soloNumerosFactura);
-		
+
 		nrofactura.textProperty().addListener(soloNumerosFactura);
-		
+
 		subtotal.textProperty().addListener(soloNumeros);
-		
+
 		iva1.textProperty().addListener(soloNumeros);
-		
+
 		iva2.textProperty().addListener(soloNumeros);
-		
+
 		iva3.textProperty().addListener(soloNumeros);
-		
+
 		ivaotros.textProperty().addListener(soloNumeros);
 	}
-	
-
 
 	private void generarListas(ArrayList<clases.proveedor> listaProveedores) {
-		// TODO Auto-generated method stub
-		
-	     listaNombreArray = new ArrayList<String>();
-		
-		 listaCuitArray = new ArrayList<String>();
-		
-		for(proveedor temp: listaProveedores) {
-			
+
+		listaNombreArray = new ArrayList<String>();
+
+		listaCuitArray = new ArrayList<String>();
+
+		for (proveedor temp : listaProveedores) {
+
 			listaNombreArray.add(temp.getNombre());
-			
+
 			listaCuitArray.add(temp.getCuit());
 		}
-		
+
 		proveedor = FXCollections.observableArrayList(listaNombreArray);
-		
+
 		cuit = FXCollections.observableArrayList(listaCuitArray);
-		
+
 	}
 
-
-
-	@FXML 
+	@FXML
 	private void ingresarFactura(MouseEvent event) throws SQLException {
-    	
-		/// Validacion de datos entradas, verifica los campos minimos para realizar una entrada a la BBDD
-		if(
-		   (fecha.getValue()!=null)&&
-		   !listaDeTipos.getSelectionModel().isEmpty()&&
-		   !listaProveedor.getSelectionModel().isEmpty()&&
-		   !prefijo.getText().trim().isEmpty()&&
-		   !nrofactura.getText().trim().isEmpty()&&
-		   !subtotal.getText().trim().isEmpty()
-		   
-		  ) {
-			
-			/// Confirmacion de datos de entrada
-		ButtonType Si = new ButtonType("Si", ButtonData.OK_DONE);
-		
-		ButtonType Cancelar = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
-		
-		Alert alert = new Alert(AlertType.INFORMATION,"¿Deseas ingresar la factura actual?",Si,Cancelar);
-		
-		alert.setTitle("Ingreso de nuevo factura");
-		
-		alert.setHeaderText(null);
-		
-		Optional<ButtonType> resultado = alert.showAndWait();
-		
-		if (resultado.orElse(Cancelar) == Si) {
-            
-			  facturaBBDD();
-                
-		}}
-		else {
-			
-			 /// Alerta de datos faltantes para ingresar una nueva factura
-			  Alert alert = new Alert(Alert.AlertType.ERROR);
-			  
-			    alert.setHeaderText(null);
-			    
-			    alert.setTitle("Error");
-			    
-			    alert.setContentText("Faltan datos por completar");
-			    
-			    alert.showAndWait();
-		}
-		
-    } 
-	
-	private void facturaBBDD() throws SQLException {
-		// TODO Auto-generated method stub
-		
-		LocalDate datoFecha = fecha.getValue();
-		
-		String datoTipo = listaDeTipos.getValue();
-		
-		int datoPrefijo = Integer.parseInt(prefijo.getText());
-		
-		int datoNroFactura = Integer.parseInt(nrofactura.getText());
-		
-		String datoProveedor = listaProveedor.getValue();
-		
-		String datoCuit = listaCuit.getValue();
-		
-		String datoPago = listaPago.getValue();
-	
-		double datoSubtotal = Double.parseDouble(subtotal.getText());
-		
-		double datoIva1 = (!iva1.getText().trim().isEmpty())?  Double.parseDouble(iva1.getText()) : 0;
-		
-		double datoIva2 = (!iva2.getText().trim().isEmpty())?  Double.parseDouble(iva2.getText()) : 0;
-		
-		double datoIva3 = (!iva3.getText().trim().isEmpty())?  Double.parseDouble(iva3.getText()) : 0;
-		
-		double datoIvaOtros = (!ivaotros.getText().trim().isEmpty())?  Double.parseDouble(ivaotros.getText()) : 0;
-		
-		double datoTotal = (!total.getText().trim().isEmpty())?  Double.parseDouble(total.getText().replaceAll(",",".")) : 0;
-		
-		factura factura = new factura(datoFecha, datoTipo,datoProveedor,datoCuit,datoPrefijo,datoNroFactura, datoPago, datoSubtotal,
-				datoIva1,datoIva2,datoIva3,datoIvaOtros,datoTotal);
-		
-		ModeloSucursal modelo = new ModeloSucursal();
-		
-		boolean insercion = modelo.insertarFactura(factura, id);
-		
-		
-		if(insercion) {
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			  
-		    alert.setHeaderText(null);
-		    
-		    alert.setTitle("Factura insertada");
-		    
-		    alert.setContentText("Los datos han sido guardados correctamente");
-		    
-		    ButtonType boton = new ButtonType("Ok");
-		    
-            ButtonType cancelar = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 
-            alert.getButtonTypes().setAll(boton, cancelar);
-            
-            alert.getDialogPane().lookupButton(cancelar).setVisible(false);
-            
-		    alert.showAndWait();
-		    
-		    cargarLista(id);
-		    
-		    blanquear();
-		    
-			
-		}else {
-			  Alert alert = new Alert(Alert.AlertType.ERROR);
-			  
-			    alert.setHeaderText(null);
-			    
-			    alert.setTitle("Error");
-			    
-			    alert.setContentText("Intento de guardar datos: fallido!");
-			    
-			    alert.showAndWait();
+		/// Validacion de datos entradas, verifica los campos minimos para realizar una
+		/// entrada a la BBDD
+		if ((fecha.getValue() != null) && !listaDeTipos.getSelectionModel().isEmpty()
+				&& !listaProveedor.getSelectionModel().isEmpty() && !prefijo.getText().trim().isEmpty()
+				&& !nrofactura.getText().trim().isEmpty() && !subtotal.getText().trim().isEmpty()
+
+		) {
+
+			/// Confirmacion de datos de entrada
+			ButtonType Si = new ButtonType("Si", ButtonData.OK_DONE);
+
+			ButtonType Cancelar = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
+
+			Alert alert = new Alert(AlertType.INFORMATION, "¿Deseas ingresar la factura actual?", Si, Cancelar);
+
+			alert.setTitle("Ingreso de nuevo factura");
+
+			alert.setHeaderText(null);
+
+			Optional<ButtonType> resultado = alert.showAndWait();
+
+			if (resultado.orElse(Cancelar) == Si) {
+
+				facturaBBDD();
+
+			}
+		} else {
+
+			/// Alerta de datos faltantes para ingresar una nueva factura
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+
+			alert.setHeaderText(null);
+
+			alert.setTitle("Error");
+
+			alert.setContentText("Faltan datos por completar");
+
+			alert.showAndWait();
 		}
-		
-		
+
 	}
 
+	private void facturaBBDD() throws SQLException {
 
+		LocalDate datoFecha = fecha.getValue();
+
+		String datoTipo = listaDeTipos.getValue();
+
+		int datoPrefijo = Integer.parseInt(prefijo.getText());
+
+		int datoNroFactura = Integer.parseInt(nrofactura.getText());
+
+		String datoProveedor = listaProveedor.getValue();
+
+		String datoCuit = listaCuit.getValue();
+
+		String datoPago = listaPago.getValue();
+
+		double datoSubtotal = Double.parseDouble(subtotal.getText());
+
+		double datoIva1 = (!iva1.getText().trim().isEmpty()) ? Double.parseDouble(iva1.getText()) : 0;
+
+		double datoIva2 = (!iva2.getText().trim().isEmpty()) ? Double.parseDouble(iva2.getText()) : 0;
+
+		double datoIva3 = (!iva3.getText().trim().isEmpty()) ? Double.parseDouble(iva3.getText()) : 0;
+
+		double datoIvaOtros = (!ivaotros.getText().trim().isEmpty()) ? Double.parseDouble(ivaotros.getText()) : 0;
+
+		double datoTotal = (!total.getText().trim().isEmpty())
+				? Double.parseDouble(total.getText().replaceAll(",", "."))
+				: 0;
+
+		factura factura = new factura(datoFecha, datoTipo, datoProveedor, datoCuit, datoPrefijo, datoNroFactura,
+				datoPago, datoSubtotal, datoIva1, datoIva2, datoIva3, datoIvaOtros, datoTotal);
+
+		ModeloSucursal modelo = new ModeloSucursal();
+
+		boolean insercion = modelo.insertarFactura(factura, id);
+
+		if (insercion) {
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+			alert.setHeaderText(null);
+
+			alert.setTitle("Factura insertada");
+
+			alert.setContentText("Los datos han sido guardados correctamente");
+
+			ButtonType boton = new ButtonType("Ok");
+
+			ButtonType cancelar = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+			alert.getButtonTypes().setAll(boton, cancelar);
+
+			alert.getDialogPane().lookupButton(cancelar).setVisible(false);
+
+			alert.showAndWait();
+
+			cargarLista(id);
+
+			blanquear();
+
+		} else {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+
+			alert.setHeaderText(null);
+
+			alert.setTitle("Error");
+
+			alert.setContentText("Intento de guardar datos: fallido!");
+
+			alert.showAndWait();
+		}
+
+	}
 
 	@FXML
 	private void seleccionPro(ActionEvent e) {
-		
-		String texto =  listaProveedor.getValue();
-		
-		int c =0;
-		
-		for(int i=0;i<listaNombreArray.size();i++) {
-			
-			if(texto==listaNombreArray.get(i))
-				{c=i;break;}
-			
+
+		String texto = listaProveedor.getValue();
+
+		int c = 0;
+
+		for (int i = 0; i < listaNombreArray.size(); i++) {
+
+			if (texto == listaNombreArray.get(i)) {
+				c = i;
+				break;
+			}
+
 		}
-		
+
 		listaCuit.getSelectionModel().select(c);
-		
+
 	}
-	
+
 	@FXML
 	private void seleccionCuit(ActionEvent e) {
-		
-		String texto =  listaCuit.getValue();
-		
-		int c =0;
-		
-		for(int i=0;i<listaCuitArray.size();i++) {
-			
-			if(texto==listaCuitArray.get(i))
-				{c=i;break;}
-			
+
+		String texto = listaCuit.getValue();
+
+		int c = 0;
+
+		for (int i = 0; i < listaCuitArray.size(); i++) {
+
+			if (texto == listaCuitArray.get(i)) {
+				c = i;
+				break;
+			}
+
 		}
-		
+
 		listaProveedor.getSelectionModel().select(c);
-		
+
 	}
-	
+
 	public void setUsuario(int id) {
-		// TODO Auto-generated method stub
-		
 		this.id = id;
-		
 		modelo = new ModeloSucursal();
-		
 	}
-	
+
 	public void blanquear() {
-		
 		fecha.setValue(null);
 		listaDeTipos.setValue(null);
 		listaProveedor.setValue(null);
@@ -440,40 +427,28 @@ public class ControladorIngresarFactura implements Initializable {
 		iva3.clear();
 		ivaotros.clear();
 		total.clear();
-		
 	}
-	
+
 	public void cargarLista(int id) {
-		
-		if(id!=0) {
+		if (id != 0) {
 			tableview.getItems().clear();
-			
 			try {
 				tableview.setItems(modelo.cargarData(id));
-				
 			} catch (ClassNotFoundException | IOException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				/* tratar excepcion  */
 			}
-			
-	    	}else {
-	    		
-	    		/// Tablas de ejemplo
-	    		tableview.setItems(null);
-	    		
-	    		
-	    	}
-		
-		
+
+		} else {
+
+			/// Tablas de ejemplo
+			tableview.setItems(null);
+
+		}
+
 	}
-
-
-
 
 	public void setClase(ControladorSucursal controladorSucursal) {
-		// TODO Auto-generated method stub
 		superior = controladorSucursal;
 	}
-	
 
 }

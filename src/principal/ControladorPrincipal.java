@@ -1,4 +1,5 @@
 package principal;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -8,12 +9,10 @@ import java.util.ResourceBundle;
 import clases.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -28,46 +27,48 @@ import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 
-
 public class ControladorPrincipal implements Initializable {
-	
-	// Variables
-	
-	@FXML private AnchorPane pane;
-	
-	@FXML private Pane central,centralInferior,cabecera, menu;
-	
-    Label labelZona = new Label("ZONA");
-	
-	Label labelSucursal = new Label("SUCURSAL");
 
-    Label tituloCabecera = new Label(" "); 
-    
-    ModeloPrincipal modelo;
-    
-    ModeloSucursal modeloSucursal;
-    
-    ArrayList<zona>  zonas;
-    
-    ArrayList<sucursal> sucursales;
-		
-	
-	
+	// Variables
+	@FXML private AnchorPane pane;
+	@FXML private Pane central;
+	@FXML private Pane centralInferior;
+	@FXML private Pane cabecera;
+	@FXML private Pane menu;
+	@SuppressWarnings("unused")
+	private Label labelZona = new Label("ZONA");
+	@SuppressWarnings("unused")
+	private Label labelSucursal = new Label("SUCURSAL");
+	private Label tituloCabecera = new Label(" ");
+	private ModeloPrincipal modelo;
+	private ModeloSucursal modeloSucursal;
+	private ArrayList<zona> zonas;
+	private ArrayList<sucursal> sucursales;
+
 	// Configurar tabla de un modelo de factura
-	
+
 	@FXML private TableView<factura> tableview;
 	@FXML private TableColumn<factura, LocalDate> fecha;
-	@FXML private TableColumn<factura, String> tipo, proveedor, cuit, forma;
-	@FXML private TableColumn<factura, Integer> prefijo, nrofactura;
-	@FXML private TableColumn<factura, Double> subtotal, iva, iva2, iva3, otros, total;
-	@FXML private ComboBox<String> ListaSucursales, ListaZona;
-	
-	
-	
-	 //// Inicializa la vista con las propiedades y atributos de la tabla de un modelo de factura
-	
+	@FXML private TableColumn<factura, String> tipo;
+	@FXML private TableColumn<factura, String> proveedor;
+	@FXML private TableColumn<factura, String> cuit;
+	@FXML private TableColumn<factura, String> forma;
+	@FXML private TableColumn<factura, Integer> prefijo;
+	@FXML private TableColumn<factura, Integer> nrofactura;
+	@FXML private TableColumn<factura, Double> subtotal;
+	@FXML private TableColumn<factura, Double> iva;
+	@FXML private TableColumn<factura, Double> iva2;
+	@FXML private TableColumn<factura, Double> iva3;
+	@FXML private TableColumn<factura, Double> otros;
+	@FXML private TableColumn<factura, Double> total;
+	@FXML private ComboBox<String> ListaSucursales; 
+	@FXML private ComboBox<String> ListaZona;
+
+	//// Inicializa la vista con las propiedades y atributos de la tabla de un
+	//// modelo de factura
+
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 		fecha.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
 		tipo.setCellValueFactory(new PropertyValueFactory<factura, String>("tipo"));
 		proveedor.setCellValueFactory(new PropertyValueFactory<factura, String>("proveedor"));
@@ -82,336 +83,279 @@ public class ControladorPrincipal implements Initializable {
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 		tableview.setItems(null);
-		
 		modelo = new ModeloPrincipal();
-		
 		modeloSucursal = new ModeloSucursal();
-		
+
 		try {
 			ListaZona.setItems(listarZonas());
 		} catch (ClassNotFoundException | SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			/* controlar excepcion */
 		}
-		
+
 		ListaSucursales.setItems(null);
-		
-		
-		
-	
+
 	}
-	
 
 	public ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
-		// TODO Auto-generated method stub
-		
+
 		/// Listar todas las zonas
-		
+
 		zonas = modelo.listaZonas();
-		
+
 		ObservableList<String> lista = FXCollections.observableArrayList();
-		
-				/// Uso for each mejorado, expresión Lambda.
-		
-		zonas.forEach((n) -> lista.add(n.getNombre()));
-		
+
+		/// Uso for each mejorado, expresión Lambda.
+
+		zonas.forEach(n -> lista.add(n.getNombre()));
+
 		return lista;
-		
-		
+
 	}
 
+	public void seleccionZonas() throws ClassNotFoundException, IOException, SQLException {
 
-	 public void seleccionZonas(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
-		
-		// System.out.println(""+ zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
-		
-		// Listar las sucursales de la zona seleccionada
-		
 		sucursales = modelo.listaSucursales(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
-		
+
 		ObservableList<String> lista = FXCollections.observableArrayList();
-		
-		sucursales.forEach((n) -> lista.add(n.getNombre()));
-		
+
+		sucursales.forEach(n -> lista.add(n.getNombre()));
+
 		ListaSucursales.setItems(lista);
-		
-		
+
 	}
-	
-	public void seleccionSucursal(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
-		
-		if(ListaSucursales.getSelectionModel().getSelectedIndex()>=0)
-		
-		tableview.setItems(modeloSucursal.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
-		
-		
+
+	public void seleccionSucursal() throws ClassNotFoundException, IOException, SQLException {
+
+		if (ListaSucursales.getSelectionModel().getSelectedIndex() >= 0)
+
+			tableview.setItems(modeloSucursal
+					.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
+
 	}
-	
-	
-	
-	/// Metodo de salida del programa	
-	
-	@FXML 
+
+	/// Metodo de salida del programa
+
+	@FXML
 	private void salir(MouseEvent event) {
-		
+
 		Stage stage = (Stage) pane.getScene().getWindow();
 		stage.close();
-		
+
 	}
-	
-	@FXML 
-	private void historial(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
-	
+
+	@FXML
+	private void historial(MouseEvent event) throws IOException {
+
 		cargarUI("historial");
 	}
-	
-	
-	@FXML 
-	private void busqueda(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
-	
+
+	@FXML
+	private void busqueda(MouseEvent event) throws IOException {
+
 		cargarUI("busqueda");
 	}
-	
-	@FXML 
-	private void resumen(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
-	
+
+	@FXML
+	private void resumen(MouseEvent event) throws IOException {
+
 		cargarUI("resumen");
 	}
-	
-	@FXML 
-	private void exportar(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
-	
+
+	@FXML
+	private void exportar(MouseEvent event) throws IOException {
+
 		cargarUI("exportar");
 	}
-	@FXML 
-	private void proveedores(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
-	
+
+	@FXML
+	private void proveedores(MouseEvent event) throws IOException {
+
 		cargarUI("proveedores");
 	}
-	
-	@FXML 
-	private void zonas(MouseEvent event) throws IOException, ClassNotFoundException, SQLException {
-	
+
+	@FXML
+	private void zonas(MouseEvent event) throws IOException{
+
 		cargarUI("zonas");
 	}
-	
-	
-	
-	
-	
-	/// Metodo para cargar diferentes vistas, mediante la estructura de control SWITCH
+
+	/// Metodo para cargar diferentes vistas, mediante la estructura de control
+	/// SWITCH
 	// Se compara con el string en el argumento para generar la determinada vista
-	
-    private void cargarUI(String ui) throws IOException, ClassNotFoundException, SQLException {
-		
-    	 blanquear();
-    	
-	  	Parent root = null;
-	
-	     root = FXMLLoader.load(getClass().getResource(ui+".fxml"));
-		 
-	     
-	       //// Seleccion de vista segun argumento
-	     
-	     switch(ui) {
-	     
-	     case "historial":
-	    	 
-	    	 blanquear();
-	 		
-			 cabecera.setPrefHeight(70);
-			 
-			 tituloCabecera = new Label ("Historial de facturas");
 
-			 tituloCabecera.setFont(new Font("Calibri", 34));
+	private void cargarUI(String ui) throws IOException {
 
-			 tituloCabecera.setTextFill(Color.web("#868686"));
+		blanquear();
 
-			 tituloCabecera.setTranslateX(23.0);
+		Parent root = null;
 
-			 tituloCabecera.setTranslateY(24.0);	
+		root = FXMLLoader.load(getClass().getResource(ui + ".fxml"));
 
-			 cabecera.setStyle("-fx-background-color: #F8F8FF;");
-			 
-			 cabecera.getChildren().add(tituloCabecera);
-			 
-			 central.getChildren().add(root);
-	    	 
-	    	 
-	    	 
-	    	 break;
-	    	 
-	    	 
-	     
-	     case "busqueda":
-	    	 
-	    	 cabecera.setPrefHeight(75);
+		//// Seleccion de vista segun argumento
 
-	    	 tituloCabecera.setText("Busqueda Avanzada");
+		switch (ui) {
 
-	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+		case "historial":
 
-	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+			blanquear();
 
-	    	 tituloCabecera.setTranslateX(23.0);
+			cabecera.setPrefHeight(70);
 
-	    	 tituloCabecera.setTranslateY(24.0);
+			tituloCabecera = new Label("Historial de facturas");
 
-	    	 cabecera.getChildren().add(tituloCabecera);
+			tituloCabecera.setFont(new Font("Calibri", 34));
 
-	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+			tituloCabecera.setTextFill(Color.web("#868686"));
 
-	    	 central.setPrefHeight(120);
+			tituloCabecera.setTranslateX(23.0);
 
-	    	 central.getChildren().add(root);
+			tituloCabecera.setTranslateY(24.0);
 
-	    	/* tableview.setPrefHeight(405);
+			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 
-	    	 tableview.setItems(null);
+			cabecera.getChildren().add(tituloCabecera);
 
-	    	 centralInferior.getChildren().add(tableview);*/
-	    	 
+			central.getChildren().add(root);
 
-	    	 break;
-	    	 
-	     case "resumen":
-	    	 
-	    	 cabecera.setPrefHeight(75);
+			break;
 
-	    	 tituloCabecera.setText("Resumen de Cuentas");
+		case "busqueda":
 
-	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+			cabecera.setPrefHeight(75);
 
-	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+			tituloCabecera.setText("Busqueda Avanzada");
 
-	    	 tituloCabecera.setTranslateX(23.0);
+			tituloCabecera.setFont(new Font("Calibri", 34));
 
-	    	 tituloCabecera.setTranslateY(24.0);	
+			tituloCabecera.setTextFill(Color.web("#868686"));
 
-	    	 cabecera.getChildren().add(tituloCabecera);
+			tituloCabecera.setTranslateX(23.0);
 
-	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+			tituloCabecera.setTranslateY(24.0);
 
-	    	 central.setPrefHeight(90);
+			cabecera.getChildren().add(tituloCabecera);
 
-	    	 central.getChildren().add(root);
+			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 
-	  //  	 tableview.setPrefHeight(440);
+			central.setPrefHeight(120);
 
-	    //	 tableview.setItems(null);
+			central.getChildren().add(root);
 
-	    //	 centralInferior.getChildren().add(tableview);
-	    	 
-	    	 
-	    	 
-	    	 break;
-	    	 
-	     case "exportar":
-	    	 
-	    	 cabecera.setPrefHeight(75);
+			break;
 
-	    	 tituloCabecera.setText("Exportar Facturas");
+		case "resumen":
 
-	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+			cabecera.setPrefHeight(75);
 
-	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+			tituloCabecera.setText("Resumen de Cuentas");
 
-	    	 tituloCabecera.setTranslateX(23.0);
+			tituloCabecera.setFont(new Font("Calibri", 34));
 
-	    	 tituloCabecera.setTranslateY(24.0);	
+			tituloCabecera.setTextFill(Color.web("#868686"));
 
-	    	 cabecera.getChildren().add(tituloCabecera);
+			tituloCabecera.setTranslateX(23.0);
 
-	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+			tituloCabecera.setTranslateY(24.0);
 
-	    	 central.setPrefHeight(600);
+			cabecera.getChildren().add(tituloCabecera);
 
-	    	 central.getChildren().add(root);
+			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 
-	    
-	    	 
-	    	 break;
-	    	 
-         case "proveedores":
-	    	 
-	    	 cabecera.setPrefHeight(75);
+			central.setPrefHeight(90);
 
-	    	 tituloCabecera.setText("Proveedores");
+			central.getChildren().add(root);
 
-	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+			break;
 
-	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+		case "exportar":
 
-	    	 tituloCabecera.setTranslateX(23.0);
+			cabecera.setPrefHeight(75);
 
-	    	 tituloCabecera.setTranslateY(24.0);	
+			tituloCabecera.setText("Exportar Facturas");
 
-	    	 cabecera.getChildren().add(tituloCabecera);
+			tituloCabecera.setFont(new Font("Calibri", 34));
 
-	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+			tituloCabecera.setTextFill(Color.web("#868686"));
 
-	    	 central.setPrefHeight(600);
+			tituloCabecera.setTranslateX(23.0);
 
-	    	 central.getChildren().add(root);
+			tituloCabecera.setTranslateY(24.0);
 
-	    
-	    	 
-	    	 break;
-	    	 
-           case "zonas":
-	    	 
-	    	 cabecera.setPrefHeight(75);
+			cabecera.getChildren().add(tituloCabecera);
 
-	    	 tituloCabecera.setText("Zonas");
+			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 
-	    	 tituloCabecera.setFont(new Font("Calibri", 34));
+			central.setPrefHeight(600);
 
-	    	 tituloCabecera.setTextFill(Color.web("#868686"));
+			central.getChildren().add(root);
 
-	    	 tituloCabecera.setTranslateX(23.0);
+			break;
 
-	    	 tituloCabecera.setTranslateY(24.0);	
+		case "proveedores":
 
-	    	 cabecera.getChildren().add(tituloCabecera);
+			cabecera.setPrefHeight(75);
 
-	    	 cabecera.setStyle("-fx-background-color: #F8F8FF;");
+			tituloCabecera.setText("Proveedores");
 
-	    	 central.setPrefHeight(600);
+			tituloCabecera.setFont(new Font("Calibri", 34));
 
-	    	 central.getChildren().add(root);
+			tituloCabecera.setTextFill(Color.web("#868686"));
 
-	    
-	    	 
-	    	 break;
-		
+			tituloCabecera.setTranslateX(23.0);
+
+			tituloCabecera.setTranslateY(24.0);
+
+			cabecera.getChildren().add(tituloCabecera);
+
+			cabecera.setStyle("-fx-background-color: #F8F8FF;");
+
+			central.setPrefHeight(600);
+
+			central.getChildren().add(root);
+
+			break;
+
+		case "zonas":
+
+			cabecera.setPrefHeight(75);
+
+			tituloCabecera.setText("Zonas");
+
+			tituloCabecera.setFont(new Font("Calibri", 34));
+
+			tituloCabecera.setTextFill(Color.web("#868686"));
+
+			tituloCabecera.setTranslateX(23.0);
+
+			tituloCabecera.setTranslateY(24.0);
+
+			cabecera.getChildren().add(tituloCabecera);
+
+			cabecera.setStyle("-fx-background-color: #F8F8FF;");
+
+			central.setPrefHeight(600);
+
+			central.getChildren().add(root);
+
+			break;
+
 		default:
-			
-	     }
-		
-		
-	}
-    
-  /// Meotdo para limpiar el sector derecho de la vista para generar una nueva vista
-    
-    public void blanquear() {
-    	
-		menu.getChildren().clear();
-	
-		cabecera.getChildren().clear();
-		
-		central.getChildren().clear();
-		
-		//centralInferior.getChildren().clear();
-    	
-    }
-    
-    public void evento(MouseEvent event) {
-    	
-    	System.out.println("TEST");
-    }
-    
-   
-    
 
-	
+		}
+
+	}
+
+	/// Meotdo para limpiar el sector derecho de la vista para generar una nueva
+	/// vista
+
+	public void blanquear() {
+
+		menu.getChildren().clear();
+
+		cabecera.getChildren().clear();
+
+		central.getChildren().clear();
+
+	}
+
 }
