@@ -94,6 +94,10 @@ public class factura {
 		this.forma = new SimpleStringProperty(forma);
 		this.subtotal = new SimpleDoubleProperty(subtotal);
 		this.total = new SimpleDoubleProperty(total);
+		this.iva = new SimpleDoubleProperty(0);
+		this.iva2 = new SimpleDoubleProperty(0);
+		this.iva3 = new SimpleDoubleProperty(0);
+		this.otros = new SimpleDoubleProperty(0);
 	}
 
 	public factura(String sucursal, LocalDate fecha, String tipo, String proveedor, int prefijo, int nrofactura,

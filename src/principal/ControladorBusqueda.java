@@ -218,17 +218,16 @@ public class ControladorBusqueda implements Initializable {
 			tableview.getItems().clear();
 
 		}
-		// FIXME 
-
-		TableColumn<factura, String> Sucursal = new TableColumn<factura, String>("Sucursal");
-		TableColumn<factura, LocalDate> Fecha = new TableColumn<factura, LocalDate>("Fecha");
-		TableColumn<factura, String> Tipo = new TableColumn<factura, String>("Tipo");
-		TableColumn<factura, String> Proveedor = new TableColumn<factura, String>("Proveedor");
-		TableColumn<factura, Integer> Prefijo = new TableColumn<factura, Integer>("Prefijo");
-		TableColumn<factura, Integer> NroFactura = new TableColumn<factura, Integer>("NroFactura");
-		TableColumn<factura, String> FormaPago = new TableColumn<factura, String>("FormaPago");
-		TableColumn<factura, Double> Subtotal = new TableColumn<factura, Double>("Subtotal");
-		TableColumn<factura, Double> Total = new TableColumn<factura, Double>("Total");
+		
+		TableColumn<factura, String> Sucursal = new TableColumn<factura, String>("SUCURSAL");
+		TableColumn<factura, LocalDate> Fecha = new TableColumn<factura, LocalDate>("FECHA");
+		TableColumn<factura, String> Tipo = new TableColumn<factura, String>("TIPO");
+		TableColumn<factura, String> Proveedor = new TableColumn<factura, String>("PROVEEDOR");
+		TableColumn<factura, Integer> Prefijo = new TableColumn<factura, Integer>("PREF");
+		TableColumn<factura, Integer> NroFactura = new TableColumn<factura, Integer>("FACTURA");
+		TableColumn<factura, String> FormaPago = new TableColumn<factura, String>("PAGO");
+		TableColumn<factura, Double> Subtotal = new TableColumn<factura, Double>("SUBTOTAL");
+		TableColumn<factura, Double> Total = new TableColumn<factura, Double>("TOTAL");
 		Sucursal.setCellValueFactory(new PropertyValueFactory<factura, String>("sucursal"));
 		Fecha.setCellValueFactory(new PropertyValueFactory<factura, LocalDate>("fecha"));
 		Tipo.setCellValueFactory(new PropertyValueFactory<factura, String>("tipo"));
@@ -241,10 +240,10 @@ public class ControladorBusqueda implements Initializable {
 
 		if (lista.get(0).atributosCompletos()) {
 
-			TableColumn<factura, Double> Iva = new TableColumn<factura, Double>("Iva");
-			TableColumn<factura, Double> Iva2 = new TableColumn<factura, Double>("Iva 2");
-			TableColumn<factura, Double> Iva3 = new TableColumn<factura, Double>("Iva 3");
-			TableColumn<factura, Double> Otros = new TableColumn<factura, Double>("Otros");
+			TableColumn<factura, Double> Iva = new TableColumn<factura, Double>("IVA");
+			TableColumn<factura, Double> Iva2 = new TableColumn<factura, Double>("IVA2");
+			TableColumn<factura, Double> Iva3 = new TableColumn<factura, Double>("IVA3");
+			TableColumn<factura, Double> Otros = new TableColumn<factura, Double>("OTROS");
 			Iva.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva"));
 			Iva2.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva2"));
 			Iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
