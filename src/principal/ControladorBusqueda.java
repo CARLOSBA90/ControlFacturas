@@ -1,5 +1,4 @@
 package principal;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -57,35 +56,25 @@ public class ControladorBusqueda implements Initializable {
 	@FXML private ToggleGroup FORMAP;
 
 	public void initialize(URL location, ResourceBundle resources) {
-
 		condicion1.setItems(listaCondicion1);
-
 		modelo = new ModeloPrincipal();
-
 		modeloSucursal = new ModeloSucursal();
-
 		modeloBusqueda = new ModeloBusquedaPrincipal();
 
 		/// Oyente para colocar la fecha como tope hasta el dia actual
 
 		fechaDesde.setDayCellFactory(picker -> new DateCell() {
 			public void updateItem(LocalDate date, boolean empty) {
-
 				super.updateItem(date, empty);
-
 				LocalDate today = LocalDate.now();
-
 				setDisable(empty || date.compareTo(today) > 0);
 			}
 		});
 
 		fechaHasta.setDayCellFactory(picker -> new DateCell() {
 			public void updateItem(LocalDate date, boolean empty) {
-
 				super.updateItem(date, empty);
-
 				LocalDate today = LocalDate.now();
-
 				setDisable(empty || date.compareTo(today) > 0);
 			}
 		});
@@ -102,29 +91,18 @@ public class ControladorBusqueda implements Initializable {
 
 	private ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
 		/// Listar todas las zonas
-
 		zonas = modelo.listaZonas();
-
 		ObservableList<String> lista = FXCollections.observableArrayList();
-
 		/// Uso for each mejorado, expresión Lambda.
-
 		zonas.forEach(n -> lista.add(n.getNombre()));
-
 		return lista;
 	}
 
 	public void seleccionZonas() throws ClassNotFoundException, IOException, SQLException {
-
-
 		// Listar las sucursales de la zona seleccionada
-
 		sucursales = modelo.listaSucursales(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
-
 		ObservableList<String> lista = FXCollections.observableArrayList();
-
 		sucursales.forEach(n -> lista.add(n.getNombre()));
-
 		ListaSucursales.setItems(lista);
 
 	}
@@ -136,11 +114,8 @@ public class ControladorBusqueda implements Initializable {
 		case "PROVEEDOR":
 
 			proveedores = modelo.cargarListaProve();
-
 			ObservableList<String> lista = FXCollections.observableArrayList();
-
 			proveedores.forEach(n -> lista.add(n.getNombre()));
-
 			condicion2.setItems(lista);
 
 			break;
@@ -160,9 +135,7 @@ public class ControladorBusqueda implements Initializable {
 		case "FECHA":
 
 			condicion2.setItems(listaFecha);
-
 			fechaDesde.getEditor().setDisable(true);
-
 			fechaHasta.getEditor().setDisable(true);
 
 			break;
@@ -195,31 +168,23 @@ public class ControladorBusqueda implements Initializable {
 					: condicion2.getSelectionModel().getSelectedItem();
 
 		RadioButton botonSeleccionForma = (RadioButton) FORMAP.getSelectedToggle();
-
 		String formaPago = botonSeleccionForma.getText();
-
 		RadioButton botonSeleccionImpuestos = (RadioButton) IMPUESTOS.getSelectedToggle();
-
 		String impuestos = botonSeleccionImpuestos.getText();
-
 		LocalDate fecha1 = fechaDesde.getValue();
-
 		LocalDate fecha2 = fechaHasta.getValue();
-
 		lista = modeloBusqueda.obtenerLista(zona, sucursal, condicional1, condicional2, formaPago, impuestos, fecha1,
 				fecha2);
 
 		if (Bindings.isEmpty(tableview.getItems()).get()) {
 			// EMPTY
-
 		} else {
 			// FILLED
 			tableview.getColumns().clear();
 			tableview.getItems().clear();
 
 		}
-		// FIXME 
-
+		
 		TableColumn<factura, String> Sucursal = new TableColumn<factura, String>("Sucursal");
 		TableColumn<factura, LocalDate> Fecha = new TableColumn<factura, LocalDate>("Fecha");
 		TableColumn<factura, String> Tipo = new TableColumn<factura, String>("Tipo");
@@ -239,8 +204,7 @@ public class ControladorBusqueda implements Initializable {
 		Subtotal.setCellValueFactory(new PropertyValueFactory<factura, Double>("subtotal"));
 		Total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 
-		if (lista.get(0).atributosCompletos()) {
-
+		if (lista.get(0).isImpuestos()) {
 			TableColumn<factura, Double> Iva = new TableColumn<factura, Double>("Iva");
 			TableColumn<factura, Double> Iva2 = new TableColumn<factura, Double>("Iva 2");
 			TableColumn<factura, Double> Iva3 = new TableColumn<factura, Double>("Iva 3");
@@ -251,9 +215,7 @@ public class ControladorBusqueda implements Initializable {
 			Otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 			tableview.getColumns().addAll(Sucursal, Fecha, Tipo, Proveedor, Prefijo, NroFactura, FormaPago, Subtotal,
 					Iva, Iva2, Iva3, Otros, Total);
-
 		} else {
-
 			tableview.getColumns().addAll(Sucursal, Fecha, Tipo, Proveedor, Prefijo, NroFactura, FormaPago, Subtotal,
 					Total);
 		}

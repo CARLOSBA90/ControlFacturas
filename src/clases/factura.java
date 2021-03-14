@@ -21,6 +21,7 @@ public class factura {
 	private SimpleDoubleProperty iva3; 
 	private SimpleDoubleProperty otros;
 	private SimpleDoubleProperty total;
+	private boolean impuestos;
 	
 
 	public factura(LocalDate fecha, String tipo, String proveedor, String cuit, int prefijo, int nrofactura,
@@ -39,6 +40,7 @@ public class factura {
 		this.iva3 = new SimpleDoubleProperty(iva3);
 		this.otros = new SimpleDoubleProperty(otros);
 		this.total = new SimpleDoubleProperty(total);
+		this.impuestos = true;
 	}
 
 	public factura(LocalDate fecha, String tipo, String proveedor, String cuit, int prefijo, int nrofactura,
@@ -58,6 +60,7 @@ public class factura {
 		this.iva3 = new SimpleDoubleProperty(iva3);
 		this.otros = new SimpleDoubleProperty(otros);
 		this.total = new SimpleDoubleProperty(total);
+		this.impuestos = true;
 	}
 
 	public factura(String sucursal, LocalDate fecha, String tipo, String proveedor, String cuit, int prefijo,
@@ -79,6 +82,7 @@ public class factura {
 		this.iva3 = new SimpleDoubleProperty(iva3);
 		this.otros = new SimpleDoubleProperty(otros);
 		this.total = new SimpleDoubleProperty(total);
+		this.impuestos = true;
 	}
 
 	public factura(String sucursal, LocalDate fecha, String tipo, String proveedor, int prefijo, int nrofactura,
@@ -94,6 +98,7 @@ public class factura {
 		this.forma = new SimpleStringProperty(forma);
 		this.subtotal = new SimpleDoubleProperty(subtotal);
 		this.total = new SimpleDoubleProperty(total);
+		this.impuestos = false;
 	}
 
 	public factura(String sucursal, LocalDate fecha, String tipo, String proveedor, int prefijo, int nrofactura,
@@ -113,6 +118,7 @@ public class factura {
 		this.otros = new SimpleDoubleProperty(otros);
 		this.subtotal = new SimpleDoubleProperty(subtotal);
 		this.total = new SimpleDoubleProperty(total);
+		this.impuestos = true;
 	}
 
 	public LocalDate getFecha() {
@@ -227,8 +233,12 @@ public class factura {
 		this.total = total;
 	}
 
-	public boolean atributosCompletos() {
-		return (getSubtotal() + getIva() + getIva2() + getIva3() + getOtros() == getTotal()) ? true : false;
+	public boolean isImpuestos() {
+		return impuestos;
+	}
+
+	public void setImpuestos(boolean impuestos) {
+		this.impuestos = impuestos;
 	}
 
 	@Override
