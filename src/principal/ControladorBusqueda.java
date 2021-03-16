@@ -29,19 +29,20 @@ import modelo.ModeloSucursal;
 public class ControladorBusqueda implements Initializable {
 	
 	// Variables
-	ModeloPrincipal modelo;
-	ModeloSucursal modeloSucursal;
-	ModeloBusquedaPrincipal modeloBusqueda;
-	ArrayList<zona> zonas;
-	ArrayList<sucursal> sucursales;
-	ObservableList<String> listaCondicion1 = FXCollections.observableArrayList("PROVEEDOR", "TIPO", "PREFIJO", "FECHA");
-	ObservableList<String> listaFecha = FXCollections.observableArrayList("ULTIMO DIA", "ULTIMA SEMANA", "ULTIMO MES",
+	private ModeloPrincipal modelo;
+	private ModeloSucursal modeloSucursal;
+	private ModeloBusquedaPrincipal modeloBusqueda;
+	private ArrayList<zona> zonas;
+	private ArrayList<sucursal> sucursales;
+	private ObservableList<String> listaCondicion1 = FXCollections.observableArrayList("PROVEEDOR", "TIPO", "PREFIJO", "FECHA");
+	private ObservableList<String> listaFecha = FXCollections.observableArrayList("ULTIMO DIA", "ULTIMA SEMANA", "ULTIMO MES",
 			                                                              "ULTIMO AÑO");
-	ObservableList<String> listaTipo = FXCollections.observableArrayList("A", "B", "C");
-	ObservableList<String> listaProve;
-	ObservableList<String> listaPrefijo;
-	ArrayList<proveedor> proveedores;
-	ObservableList<factura> lista = FXCollections.observableArrayList();
+	private ObservableList<String> listaTipo = FXCollections.observableArrayList("A", "B", "C");
+	private ObservableList<String> listaProve;
+	private ObservableList<String> listaPrefijo;
+	private ArrayList<proveedor> proveedores;
+	private ObservableList<factura> lista = FXCollections.observableArrayList();
+	private boolean fechaBloqueada = false;
 
 	// Configurar tabla de un modelo de factura
 	@FXML private TableView<factura> tableview;
@@ -112,37 +113,39 @@ public class ControladorBusqueda implements Initializable {
 		switch (condicion1.getSelectionModel().getSelectedItem()) {
 
 		case "PROVEEDOR":
-
 			proveedores = modelo.cargarListaProve();
 			ObservableList<String> lista = FXCollections.observableArrayList();
 			proveedores.forEach(n -> lista.add(n.getNombre()));
 			condicion2.setItems(lista);
-
+			if(fechaBloqueada) DesbloquearFecha();
 			break;
 
 		case "TIPO":
-
 			condicion2.setItems(listaTipo);
-
+			if(fechaBloqueada) DesbloquearFecha();
 			break;
 
 		case "PREFIJO":
-
 			condicion2.setItems(modelo.cargarListaPre());
-
+            if(fechaBloqueada) DesbloquearFecha();
 			break;
 
 		case "FECHA":
-
 			condicion2.setItems(listaFecha);
 			fechaDesde.getEditor().setDisable(true);
 			fechaHasta.getEditor().setDisable(true);
-
+            fechaBloqueada=true;
 			break;
 
 		default:
 
 		}
+	}
+
+	private void DesbloquearFecha() {
+		fechaDesde.getEditor().setDisable(false);
+		fechaHasta.getEditor().setDisable(false);
+		fechaBloqueada=false;
 	}
 
 	@SuppressWarnings("unchecked")
