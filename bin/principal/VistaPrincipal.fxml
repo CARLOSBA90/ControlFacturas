@@ -79,7 +79,7 @@
             </HBox>
             <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" layoutX="10.0" layoutY="147.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#resumen" prefHeight="40.0" prefWidth="200.0" scaleShape="false" styleClass="btns">
                <children>
-                  <Label text="Resumen de cuentas" textFill="WHITE">
+                  <Label text="Resumen de cuentas(X)" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -103,7 +103,7 @@
             </HBox>
             <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#exportar" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
                <children>
-                  <Label text="Exportar facturas" textFill="WHITE">
+                  <Label text="Exportar facturas(X)" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -127,7 +127,7 @@
             </HBox>
             <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#proveedores" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
                <children>
-                  <Label text="Proveedores" textFill="WHITE">
+                  <Label text="Proveedores(X)" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>

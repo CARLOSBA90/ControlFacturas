@@ -129,7 +129,6 @@ public class ModeloBusquedaPrincipal {
 			if (prefijo != -1) {
 				sql = operador(sql, puerta);
 				sql += "facturas.prefijo=" + prefijo;
-
 			} else {
 				sql += " ORDER BY facturas.prefijo ASC";
 			}
@@ -138,14 +137,24 @@ public class ModeloBusquedaPrincipal {
 		/// Condicion de busqueda por FECHA
 		case "FECHA":
 			
-			switch(condicional2) {
+			switch (condicional2) {
 			case "ULTIMO DIA":
+				sql = operador(sql, puerta);
+				sql += "facturas.fecha='"+ LocalDate.now()+"'";
 				break;
 			case "ULTIMA SEMANA":
+				sql = rangoFecha(sql,7);
 				break;
 			case "ULTIMO MES":
+				sql = rangoFecha(sql,30);
 				break;
 			case "ULTIMO AÑO":
+				sql = rangoFecha(sql,365);
+				break;
+			case "todos":
+				sql += " ORDER BY facturas.fecha DESC";
+				break;
+			default:
 				break;
 
 			}
@@ -156,6 +165,15 @@ public class ModeloBusquedaPrincipal {
 		}
 		return null;
 	}
+
+	private String rangoFecha(String sql, int i) {
+		LocalDate ultimoDia = LocalDate.now();
+		LocalDate primerDia = ultimoDia.minusDays(i);
+		sql = operador(sql, puerta);
+		sql += "fecha BETWEEN '" + primerDia + "' AND '" + ultimoDia + "'";
+		return sql;
+	}
+
 
 	public String operador(String sql, boolean e) {
 		/*

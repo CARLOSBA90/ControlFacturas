@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -55,6 +56,9 @@ public class ControladorBusqueda implements Initializable {
 	@FXML private DatePicker fechaHasta;
 	@FXML private ToggleGroup IMPUESTOS;
 	@FXML private ToggleGroup FORMAP;
+	@FXML private Label labelNroFactura;
+	@FXML private Label labelSubtotalAcumu;
+	@FXML private Label labelTotalAcumu;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		condicion1.setItems(listaCondicion1);
@@ -223,6 +227,16 @@ public class ControladorBusqueda implements Initializable {
 					Total);
 		}
 		tableview.setItems(lista);
+		
+		double tempSub=0;
+		double tempTotal=0;
+		for(factura n: lista) {
+		   tempSub+=n.getSubtotal();
+		   tempTotal+=n.getTotal();
+		}
+		labelNroFactura.setText("Número de facturas: "+lista.size());
+		labelSubtotalAcumu.setText("Subtotal acumulado: "+tempSub);
+		labelTotalAcumu.setText("Total acumulado: "+tempTotal);
 
 	}
 
