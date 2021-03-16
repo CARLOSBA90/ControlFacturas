@@ -12,50 +12,50 @@
    <left>
       <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="530.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="239.0" layoutY="35.0" prefHeight="35.0" prefWidth="106.0" text="ZONA">
+            <Label layoutX="239.0" layoutY="1.0" prefHeight="69.0" prefWidth="214.0" text="ZONA">
                <font>
                   <Font name="Calibri Bold" size="30.0" />
                </font>
             </Label>
-            <Button fx:id="botonEditarZ" layoutX="18.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#evento" prefHeight="31.0" prefWidth="184.0" text="EDITAR ZONA">
+            <Button fx:id="botonEditarZ" layoutX="18.0" layoutY="283.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="184.0" text="EDITAR ZONA">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <Label layoutX="471.0" layoutY="35.0" prefHeight="35.0" prefWidth="169.0" text="SUCURSAL">
+            <Label layoutX="471.0" prefHeight="70.0" prefWidth="215.0" text="SUCURSAL">
                <font>
                   <Font name="Calibri Bold" size="30.0" />
                </font>
             </Label>
             <Line endX="743.0" layoutX="107.0" layoutY="77.0" startX="-107.0" />
-            <Button fx:id="botonNuevoZ" layoutX="17.0" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#evento" prefHeight="31.0" prefWidth="183.0" text="NUEVA ZONA">
+            <Button fx:id="botonNuevoZ" layoutX="17.0" layoutY="329.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="183.0" text="NUEVA ZONA">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="botonEliminarZ" layoutX="17.0" layoutY="374.0" mnemonicParsing="false" onMouseClicked="#evento" prefHeight="31.0" prefWidth="183.0" text="ELIMINAR ZONA">
+            <Button fx:id="botonEliminarZ" layoutX="17.0" layoutY="374.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="183.0" text="ELIMINAR ZONA">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <ListView layoutX="239.0" layoutY="85.0" prefHeight="426.0" prefWidth="216.0" />
-            <ListView layoutX="471.0" layoutY="85.0" prefHeight="426.0" prefWidth="216.0" />
+            <ListView fx:id="zona" layoutX="239.0" layoutY="85.0" onMouseClicked="#seleccionZonas" prefHeight="426.0" prefWidth="216.0" />
+            <ListView fx:id="sucursal" layoutX="471.0" layoutY="85.0" prefHeight="426.0" prefWidth="216.0" />
             <Label layoutX="55.0" layoutY="94.0" prefHeight="35.0" prefWidth="106.0" text="OPCIONES">
                <font>
                   <Font name="Calibri Bold" size="22.0" />
                </font>
             </Label>
-            <Button fx:id="botonEditarS" layoutX="18.0" layoutY="148.0" mnemonicParsing="false" onMouseClicked="#evento" prefHeight="31.0" prefWidth="184.0" text="EDITAR SUCURSAL">
+            <Button fx:id="botonEditarS" layoutX="18.0" layoutY="148.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="184.0" text="EDITAR SUCURSAL">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="botonNuevaS" layoutX="18.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#evento" prefHeight="31.0" prefWidth="184.0" text="NUEVA SUCURSAL">
+            <Button fx:id="botonNuevaS" layoutX="18.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#agregarSucursal" prefHeight="31.0" prefWidth="184.0" text="NUEVA SUCURSAL">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="botonEliminarS" layoutX="18.0" layoutY="234.0" mnemonicParsing="false" onMouseClicked="#evento" prefHeight="31.0" prefWidth="184.0" text="ELIMINAR SUCURSAL">
+            <Button fx:id="botonEliminarS" layoutX="18.0" layoutY="234.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="184.0" text="ELIMINAR SUCURSAL">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>

@@ -33,35 +33,25 @@ public class ModeloPrincipal {
 	public ArrayList<zona> listaZonas() throws SQLException, ClassNotFoundException, IOException {
 		// TODO Auto-generated method stub
 		// ObservableList<String> listaZo = FXCollections.observableArrayList("Zona Norte", "Zona Sur");
-		
 		ArrayList<zona> listaZo = new ArrayList<zona>();
-
 		Statement miStatement = null;
-
 		ResultSet miResulset = null;
 
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
-
 			miConexion = conectar.conectar();
-
 			String instruccion = "SELECT * FROM zonas";//
-
 			miStatement = miConexion.createStatement();
 
 			/// EJECUTAR SQL
-
 			miResulset = miStatement.executeQuery(instruccion);
 
 			/// RECORRER EL RESULSET
-
 			if (miResulset.next() == false)
 				listaZo.add(new zona(0, "Sin datos"));
 			else {
 				do {
-
 					listaZo.add(new zona(miResulset.getInt(1), miResulset.getString(2)));
-
 				} while (miResulset.next());
 			}
 		} catch (SQLException e) {
@@ -77,43 +67,31 @@ public class ModeloPrincipal {
 
 
 
-	public ArrayList<sucursal> listaSucursales(int i) throws ClassNotFoundException, IOException, SQLException {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<sucursal> listaSucursales(int i) throws ClassNotFoundException, IOException, SQLException {	
 		ArrayList<sucursal> lista = new ArrayList<>();
-		
 		Statement miStatement = null;
-
 		ResultSet miResulset = null;
 
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
-
 			miConexion = conectar.conectar();
-
 			String instruccion = "SELECT usuario.id, usuario.usuario from usuario inner join sucursal_zona where "
 					+ "usuario.id=sucursal_zona.idsucursal and sucursal_zona.idzonas="+i;//
-
 			miStatement = miConexion.createStatement();
 
 			/// EJECUTAR SQL
-
 			miResulset = miStatement.executeQuery(instruccion);
 
 			/// RECORRER EL RESULSET
-
 			if (miResulset.next() == false)
 				lista.add(new sucursal(0, "Sin datos"));
 			else {
 				do {
-
 					lista.add(new sucursal(miResulset.getInt(1), miResulset.getString(2)));
-
 				} while (miResulset.next());
 			}
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			/* GENERAR EXCEPCION CONTROLADA */
 		} finally {
 			miStatement.close();
 			miConexion.close();
@@ -125,42 +103,31 @@ public class ModeloPrincipal {
 
 
 	public ArrayList<proveedor> cargarListaProve() throws ClassNotFoundException, IOException, SQLException {
-		// TODO Auto-generated method stub
 		
 		ArrayList<proveedor> lista = new ArrayList<>();
-		
 		Statement miStatement = null;
-
 		ResultSet miResulset = null;
-		
 
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
-
 			miConexion = conectar.conectar();
-
 			String instruccion = "SELECT * FROM proveedores";//
-
 			miStatement = miConexion.createStatement();
 
 			/// EJECUTAR SQL
-
 			miResulset = miStatement.executeQuery(instruccion);
 
 			/// RECORRER EL RESULSET
-
 			if (miResulset.next() == false)
 				return null;
 			else {
 				do {
-
 					lista.add(new proveedor(miResulset.getInt(1), miResulset.getString(2)));
 
 				} while (miResulset.next());
 			}
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+               /* GENERAR EXCEPCION CONTROLADA*/
 		} finally {
 			miStatement.close();
 			miConexion.close();
@@ -176,23 +143,16 @@ public class ModeloPrincipal {
 		// TODO Auto-generated method stub
 		
 		ObservableList<String> lista = FXCollections.observableArrayList();
-		
 		Statement miStatement = null;
-
 		ResultSet miResulset = null;
-		
 
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
-
 			miConexion = conectar.conectar();
-
 			String instruccion = "SELECT DISTINCT prefijo FROM facturas";//
-
 			miStatement = miConexion.createStatement();
 
 			/// EJECUTAR SQL
-
 			miResulset = miStatement.executeQuery(instruccion);
 
 			/// RECORRER EL RESULSET
@@ -201,14 +161,12 @@ public class ModeloPrincipal {
 				return null;
 			else {
 				do {
-
 					lista.add(miResulset.getString(1));
 
 				} while (miResulset.next());
 			}
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+          /* GENERAR EXCEPCION CONTROLADA*/
 		} finally {
 			miStatement.close();
 			miConexion.close();

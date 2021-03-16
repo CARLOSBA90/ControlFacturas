@@ -99,11 +99,8 @@ public class ControladorIngresarFactura implements Initializable {
 		});
 
 		/// Solicita los datos a la BBDD los nombres de proveedor y su CUIT
-
 		ModeloSucursal modelo = new ModeloSucursal();
-
 		ArrayList<proveedor> listaProveedores = new ArrayList<proveedor>();
-
 		try {
 			listaProveedores = modelo.listaProveedores();
 		} catch (ClassNotFoundException | SQLException | IOException e) {
@@ -111,32 +108,23 @@ public class ControladorIngresarFactura implements Initializable {
 		}
 
 		// Genera lista en ArrayList tipo String
-
 		generarListas(listaProveedores);
 
 		/// Inserta los datos en cada lista de la GUI
-
 		listaProveedor.setItems(proveedor);
-
 		listaCuit.setItems(cuit);
-
 		listaDeTipos.setItems(tipo);
-
 		listaPago.setItems(pago);
 
 		/// Desactiva el textField total
-
 		total.setDisable(true);
 
 		/// Oyente para colocar la fecha como tope hasta el dia actual
 
 		fecha.setDayCellFactory(picker -> new DateCell() {
 			public void updateItem(LocalDate date, boolean empty) {
-
 				super.updateItem(date, empty);
-
 				LocalDate today = LocalDate.now();
-
 				setDisable(empty || date.compareTo(today) > 0);
 			}
 		});
@@ -147,19 +135,15 @@ public class ControladorIngresarFactura implements Initializable {
 		ChangeListener<String> soloNumerosFactura = (observable, valorViejo, valorNuevo) -> {
 			if (!valorNuevo.matches("\\d*"))
 				((StringProperty) observable).set(valorViejo);
-
+			
 			/// Maximo digitos permitidos por cada textfield
 			if (prefijo.getText().length() > 5) {
-
 				String s = prefijo.getText().substring(0, 5);
-
 				prefijo.setText(s);
 			}
 
 			if (nrofactura.getText().length() > 12) {
-
 				String s = nrofactura.getText().substring(0, 12);
-
 				nrofactura.setText(s);
 			}
 
@@ -216,35 +200,24 @@ public class ControladorIngresarFactura implements Initializable {
 
 		// Agrega los listener a los textfields
 		prefijo.textProperty().addListener(soloNumerosFactura);
-
 		nrofactura.textProperty().addListener(soloNumerosFactura);
-
 		subtotal.textProperty().addListener(soloNumeros);
-
 		iva1.textProperty().addListener(soloNumeros);
-
 		iva2.textProperty().addListener(soloNumeros);
-
 		iva3.textProperty().addListener(soloNumeros);
-
 		ivaotros.textProperty().addListener(soloNumeros);
 	}
 
 	private void generarListas(ArrayList<clases.proveedor> listaProveedores) {
-
 		listaNombreArray = new ArrayList<String>();
-
 		listaCuitArray = new ArrayList<String>();
-
+		
 		for (proveedor temp : listaProveedores) {
-
 			listaNombreArray.add(temp.getNombre());
-
 			listaCuitArray.add(temp.getCuit());
 		}
 
 		proveedor = FXCollections.observableArrayList(listaNombreArray);
-
 		cuit = FXCollections.observableArrayList(listaCuitArray);
 
 	}
@@ -262,33 +235,22 @@ public class ControladorIngresarFactura implements Initializable {
 
 			/// Confirmacion de datos de entrada
 			ButtonType Si = new ButtonType("Si", ButtonData.OK_DONE);
-
 			ButtonType Cancelar = new ButtonType("Cancelar", ButtonData.CANCEL_CLOSE);
-
 			Alert alert = new Alert(AlertType.INFORMATION, "¿Deseas ingresar la factura actual?", Si, Cancelar);
-
 			alert.setTitle("Ingreso de nuevo factura");
-
 			alert.setHeaderText(null);
-
 			Optional<ButtonType> resultado = alert.showAndWait();
-
+			
 			if (resultado.orElse(Cancelar) == Si) {
-
 				facturaBBDD();
-
 			}
 		} else {
 
 			/// Alerta de datos faltantes para ingresar una nueva factura
 			Alert alert = new Alert(Alert.AlertType.ERROR);
-
 			alert.setHeaderText(null);
-
 			alert.setTitle("Error");
-
 			alert.setContentText("Faltan datos por completar");
-
 			alert.showAndWait();
 		}
 
@@ -297,72 +259,44 @@ public class ControladorIngresarFactura implements Initializable {
 	private void facturaBBDD() throws SQLException {
 
 		LocalDate datoFecha = fecha.getValue();
-
 		String datoTipo = listaDeTipos.getValue();
-
 		int datoPrefijo = Integer.parseInt(prefijo.getText());
-
 		int datoNroFactura = Integer.parseInt(nrofactura.getText());
-
 		String datoProveedor = listaProveedor.getValue();
-
 		String datoCuit = listaCuit.getValue();
-
 		String datoPago = listaPago.getValue();
-
 		double datoSubtotal = Double.parseDouble(subtotal.getText());
-
 		double datoIva1 = (!iva1.getText().trim().isEmpty()) ? Double.parseDouble(iva1.getText()) : 0;
-
 		double datoIva2 = (!iva2.getText().trim().isEmpty()) ? Double.parseDouble(iva2.getText()) : 0;
-
 		double datoIva3 = (!iva3.getText().trim().isEmpty()) ? Double.parseDouble(iva3.getText()) : 0;
-
 		double datoIvaOtros = (!ivaotros.getText().trim().isEmpty()) ? Double.parseDouble(ivaotros.getText()) : 0;
-
 		double datoTotal = (!total.getText().trim().isEmpty())
 				? Double.parseDouble(total.getText().replaceAll(",", "."))
 				: 0;
 
 		factura factura = new factura(datoFecha, datoTipo, datoProveedor, datoCuit, datoPrefijo, datoNroFactura,
 				datoPago, datoSubtotal, datoIva1, datoIva2, datoIva3, datoIvaOtros, datoTotal);
-
 		ModeloSucursal modelo = new ModeloSucursal();
-
 		boolean insercion = modelo.insertarFactura(factura, id);
 
 		if (insercion) {
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
 			alert.setHeaderText(null);
-
 			alert.setTitle("Factura insertada");
-
 			alert.setContentText("Los datos han sido guardados correctamente");
-
 			ButtonType boton = new ButtonType("Ok");
-
 			ButtonType cancelar = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-
 			alert.getButtonTypes().setAll(boton, cancelar);
-
 			alert.getDialogPane().lookupButton(cancelar).setVisible(false);
-
 			alert.showAndWait();
-
 			cargarLista(id);
-
 			blanquear();
 
 		} else {
 			Alert alert = new Alert(Alert.AlertType.ERROR);
-
 			alert.setHeaderText(null);
-
 			alert.setTitle("Error");
-
 			alert.setContentText("Intento de guardar datos: fallido!");
-
 			alert.showAndWait();
 		}
 
@@ -370,9 +304,7 @@ public class ControladorIngresarFactura implements Initializable {
 
 	@FXML
 	private void seleccionPro(ActionEvent e) {
-
 		String texto = listaProveedor.getValue();
-
 		int c = 0;
 
 		for (int i = 0; i < listaNombreArray.size(); i++) {
@@ -381,7 +313,6 @@ public class ControladorIngresarFactura implements Initializable {
 				c = i;
 				break;
 			}
-
 		}
 
 		listaCuit.getSelectionModel().select(c);
@@ -390,9 +321,7 @@ public class ControladorIngresarFactura implements Initializable {
 
 	@FXML
 	private void seleccionCuit(ActionEvent e) {
-
 		String texto = listaCuit.getValue();
-
 		int c = 0;
 
 		for (int i = 0; i < listaCuitArray.size(); i++) {
@@ -439,7 +368,6 @@ public class ControladorIngresarFactura implements Initializable {
 			}
 
 		} else {
-
 			/// Tablas de ejemplo
 			tableview.setItems(null);
 

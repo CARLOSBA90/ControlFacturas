@@ -97,29 +97,20 @@ public class ControladorPrincipal implements Initializable {
 	}
 
 	public ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
-
 		/// Listar todas las zonas
-
 		zonas = modelo.listaZonas();
-
 		ObservableList<String> lista = FXCollections.observableArrayList();
 
 		/// Uso for each mejorado, expresión Lambda.
-
 		zonas.forEach(n -> lista.add(n.getNombre()));
-
 		return lista;
 
 	}
 
 	public void seleccionZonas() throws ClassNotFoundException, IOException, SQLException {
-
 		sucursales = modelo.listaSucursales(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
-
 		ObservableList<String> lista = FXCollections.observableArrayList();
-
 		sucursales.forEach(n -> lista.add(n.getNombre()));
-
 		ListaSucursales.setItems(lista);
 
 	}
@@ -137,27 +128,22 @@ public class ControladorPrincipal implements Initializable {
 
 	@FXML
 	private void salir(MouseEvent event) {
-
 		Stage stage = (Stage) pane.getScene().getWindow();
 		stage.close();
-
 	}
 
 	@FXML
 	private void historial(MouseEvent event) throws IOException {
-
 		cargarUI("historial");
 	}
 
 	@FXML
 	private void busqueda(MouseEvent event) throws IOException {
-
 		cargarUI("busqueda");
 	}
 
 	@FXML
 	private void resumen(MouseEvent event) throws IOException {
-
 		cargarUI("resumen");
 	}
 
@@ -169,13 +155,11 @@ public class ControladorPrincipal implements Initializable {
 
 	@FXML
 	private void proveedores(MouseEvent event) throws IOException {
-
 		cargarUI("proveedores");
 	}
 
 	@FXML
 	private void zonas(MouseEvent event) throws IOException{
-
 		cargarUI("zonas");
 	}
 
