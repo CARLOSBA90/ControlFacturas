@@ -39,7 +39,7 @@ public class ModeloSucursal {
 
 			/// RECORRER EL RESULSET
 			if (miResulset.next() == false)
-				lista.add(new factura(LocalDate.now(), "-", "SIN DATOS", "SIN DATOS", 0, 0, 0, 0, 0, 0, 0, 0));
+				lista.add(new factura(LocalDate.now(), "-", "SIN DATOS", "SIN DATOS", 0, 0, "SIN DATOS",0, 0, 0, 0, 0, 0));
 			else {
 				do {
 					Date fechaSQL = miResulset.getDate(2);

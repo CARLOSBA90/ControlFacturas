@@ -44,6 +44,7 @@ public class ControladorPrincipal implements Initializable {
 	private ModeloSucursal modeloSucursal;
 	private ArrayList<zona> zonas;
 	private ArrayList<sucursal> sucursales;
+	private boolean puerta=false;
 
 	// Configurar tabla de un modelo de factura
 
@@ -112,16 +113,20 @@ public class ControladorPrincipal implements Initializable {
 		ObservableList<String> lista = FXCollections.observableArrayList();
 		sucursales.forEach(n -> lista.add(n.getNombre()));
 		ListaSucursales.setItems(lista);
-
+		ListaSucursales.getSelectionModel().selectFirst();	
 	}
 
 	public void seleccionSucursal() throws ClassNotFoundException, IOException, SQLException {
-
-		if (ListaSucursales.getSelectionModel().getSelectedIndex() >= 0)
-
-			tableview.setItems(modeloSucursal
-					.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
-
+			try {
+				if (!ListaSucursales.getSelectionModel().getSelectedItem().equals("Sin datos")) 
+					tableview.setItems(modeloSucursal
+							.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
+			}catch(Exception e) {
+				//FIXME
+				/*TRATAR EXCEPCION*/
+			}
+		    
+		 
 	}
 
 	/// Metodo de salida del programa
@@ -149,7 +154,6 @@ public class ControladorPrincipal implements Initializable {
 
 	@FXML
 	private void exportar(MouseEvent event) throws IOException {
-
 		cargarUI("exportar");
 	}
 
@@ -180,97 +184,58 @@ public class ControladorPrincipal implements Initializable {
 		switch (ui) {
 
 		case "historial":
-
+			
 			blanquear();
-
 			cabecera.setPrefHeight(70);
-
 			tituloCabecera = new Label("Historial de facturas");
-
 			tituloCabecera.setFont(new Font("Calibri", 34));
-
 			tituloCabecera.setTextFill(Color.web("#868686"));
-
 			tituloCabecera.setTranslateX(23.0);
-
 			tituloCabecera.setTranslateY(24.0);
-
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
-
 			cabecera.getChildren().add(tituloCabecera);
-
 			central.getChildren().add(root);
-
 			break;
 
 		case "busqueda":
 
 			cabecera.setPrefHeight(75);
-
 			tituloCabecera.setText("Busqueda Avanzada");
-
 			tituloCabecera.setFont(new Font("Calibri", 34));
-
 			tituloCabecera.setTextFill(Color.web("#868686"));
-
 			tituloCabecera.setTranslateX(23.0);
-
 			tituloCabecera.setTranslateY(24.0);
-
 			cabecera.getChildren().add(tituloCabecera);
-
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
-
 			central.setPrefHeight(120);
-
 			central.getChildren().add(root);
-
 			break;
 
 		case "resumen":
 
 			cabecera.setPrefHeight(75);
-
 			tituloCabecera.setText("Resumen de Cuentas");
-
 			tituloCabecera.setFont(new Font("Calibri", 34));
-
 			tituloCabecera.setTextFill(Color.web("#868686"));
-
 			tituloCabecera.setTranslateX(23.0);
-
 			tituloCabecera.setTranslateY(24.0);
-
 			cabecera.getChildren().add(tituloCabecera);
-
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
-
 			central.setPrefHeight(90);
-
 			central.getChildren().add(root);
-
 			break;
 
 		case "exportar":
 
 			cabecera.setPrefHeight(75);
-
 			tituloCabecera.setText("Exportar Facturas");
-
 			tituloCabecera.setFont(new Font("Calibri", 34));
-
 			tituloCabecera.setTextFill(Color.web("#868686"));
-
 			tituloCabecera.setTranslateX(23.0);
-
 			tituloCabecera.setTranslateY(24.0);
-
 			cabecera.getChildren().add(tituloCabecera);
-
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
-
 			central.setPrefHeight(600);
-
 			central.getChildren().add(root);
 
 			break;
@@ -278,23 +243,14 @@ public class ControladorPrincipal implements Initializable {
 		case "proveedores":
 
 			cabecera.setPrefHeight(75);
-
 			tituloCabecera.setText("Proveedores");
-
 			tituloCabecera.setFont(new Font("Calibri", 34));
-
 			tituloCabecera.setTextFill(Color.web("#868686"));
-
 			tituloCabecera.setTranslateX(23.0);
-
 			tituloCabecera.setTranslateY(24.0);
-
 			cabecera.getChildren().add(tituloCabecera);
-
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
-
 			central.setPrefHeight(600);
-
 			central.getChildren().add(root);
 
 			break;
@@ -302,23 +258,14 @@ public class ControladorPrincipal implements Initializable {
 		case "zonas":
 
 			cabecera.setPrefHeight(75);
-
 			tituloCabecera.setText("Zonas");
-
 			tituloCabecera.setFont(new Font("Calibri", 34));
-
 			tituloCabecera.setTextFill(Color.web("#868686"));
-
 			tituloCabecera.setTranslateX(23.0);
-
 			tituloCabecera.setTranslateY(24.0);
-
 			cabecera.getChildren().add(tituloCabecera);
-
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
-
 			central.setPrefHeight(600);
-
 			central.getChildren().add(root);
 
 			break;
@@ -333,13 +280,9 @@ public class ControladorPrincipal implements Initializable {
 	/// vista
 
 	public void blanquear() {
-
 		menu.getChildren().clear();
-
 		cabecera.getChildren().clear();
-
 		central.getChildren().clear();
-
 	}
 
 }

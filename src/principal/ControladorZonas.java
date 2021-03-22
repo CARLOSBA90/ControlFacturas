@@ -10,10 +10,14 @@ import clases.zona;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 
@@ -60,11 +64,18 @@ public class ControladorZonas implements Initializable{
 	
 	
     public void agregarSucursal(MouseEvent event) {
-    	Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setHeaderText(null);
-		alert.setTitle("Nueva sucursal");
-		alert.setContentText("Agregar nueva sucursal");
-		alert.showAndWait();
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("nuevaSucursal.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Nueva Sucursal");
+            stage.setScene(new Scene(root, 300, 300));
+            stage.setResizable(false);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     	
     }
 

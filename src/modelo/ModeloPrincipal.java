@@ -17,14 +17,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class ModeloPrincipal {
-	
-	
     private Connection miConexion=null;
-	
 	private Conexion conectar;
 	
 	public ModeloPrincipal() {
-		
 		conectar = new Conexion();
 	}
 
@@ -140,8 +136,6 @@ public class ModeloPrincipal {
 
 
 	public ObservableList<String> cargarListaPre() throws ClassNotFoundException, IOException, SQLException {
-		// TODO Auto-generated method stub
-		
 		ObservableList<String> lista = FXCollections.observableArrayList();
 		Statement miStatement = null;
 		ResultSet miResulset = null;
@@ -151,7 +145,7 @@ public class ModeloPrincipal {
 			miConexion = conectar.conectar();
 			String instruccion = "SELECT DISTINCT prefijo FROM facturas";//
 			miStatement = miConexion.createStatement();
-
+			
 			/// EJECUTAR SQL
 			miResulset = miStatement.executeQuery(instruccion);
 
@@ -162,7 +156,6 @@ public class ModeloPrincipal {
 			else {
 				do {
 					lista.add(miResulset.getString(1));
-
 				} while (miResulset.next());
 			}
 		} catch (SQLException e) {
