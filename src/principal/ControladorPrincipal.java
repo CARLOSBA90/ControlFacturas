@@ -7,8 +7,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import clases.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +26,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 
@@ -44,7 +47,6 @@ public class ControladorPrincipal implements Initializable {
 	private ModeloSucursal modeloSucursal;
 	private ArrayList<zona> zonas;
 	private ArrayList<sucursal> sucursales;
-	private boolean puerta=false;
 
 	// Configurar tabla de un modelo de factura
 
@@ -64,9 +66,14 @@ public class ControladorPrincipal implements Initializable {
 	@FXML private TableColumn<factura, Double> total;
 	@FXML private ComboBox<String> ListaSucursales; 
 	@FXML private ComboBox<String> ListaZona;
+	private Stage stage;
 
 	//// Inicializa la vista con las propiedades y atributos de la tabla de un
 	//// modelo de factura
+	
+	public ControladorPrincipal() {
+		
+	}
 
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -94,6 +101,22 @@ public class ControladorPrincipal implements Initializable {
 		}
 
 		ListaSucursales.setItems(null);
+		/// Finalizacion total del sistema
+		Platform.runLater(() -> {
+		stage.setOnHiding(new EventHandler<WindowEvent>() {
+
+	         @Override
+	         public void handle(WindowEvent event) {
+	             Platform.runLater(new Runnable() {
+	                 @Override
+	                 public void run() {
+	                     //System.out.println("Application Closed by click to Close Button(X)");
+	                     System.exit(0);
+	                 }
+	             });
+	         }
+	     });
+		});
 
 	}
 
@@ -117,6 +140,7 @@ public class ControladorPrincipal implements Initializable {
 	}
 
 	public void seleccionSucursal() throws ClassNotFoundException, IOException, SQLException {
+		///FIXME, MAL RENDIMIENTO, CONTINUO LANZAMIENTO DE EXCEPCIONES
 			try {
 				if (!ListaSucursales.getSelectionModel().getSelectedItem().equals("Sin datos")) 
 					tableview.setItems(modeloSucursal
@@ -283,6 +307,10 @@ public class ControladorPrincipal implements Initializable {
 		menu.getChildren().clear();
 		cabecera.getChildren().clear();
 		central.getChildren().clear();
+	}
+
+	public void setStage(Stage primaryStage) {
+		stage=primaryStage;
 	}
 
 }

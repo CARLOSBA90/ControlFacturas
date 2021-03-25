@@ -2,7 +2,6 @@ package application;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import modelo.ModeloLogin;
+import principal.ControladorPrincipal;
 import sucursal.ControladorSucursal;
 
 public class ControladorInicial {
@@ -53,19 +53,15 @@ public class ControladorInicial {
 	public void OfPrincipal(ActionEvent event) throws IOException {
 		
 		Stage primaryStage = new Stage();
-		
-		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/principal/VistaPrincipal.fxml"));
-		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/principal/VistaPrincipal.fxml"));
+		Parent root = (Parent)loader.load();
 		Scene scene = new Scene(root);
-		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
 		primaryStage.setScene(scene);
-		
 		primaryStage.setResizable(false);
-		
+		ControladorPrincipal controlador = loader.getController();
+		controlador.setStage(primaryStage);
 		primaryStage.show();
-		
 		status.getScene().getWindow().hide();
 		
 	}
@@ -77,27 +73,15 @@ public class ControladorInicial {
 	public void Sucursal(int id) throws IOException {
 		
 		Stage primaryStage = new Stage();
-		
-	//	Parent root = FXMLLoader.load(getClass().getResource("/sucursal/VistaSucursal.fxml"));
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucursal/VistaSucursal.fxml"));
-		
-		Parent root = (Parent) loader.load();
-		
+		Parent root = (Parent)loader.load();
         ControladorSucursal controlador = loader.getController();
-        
 		controlador.setUsuario(id);
-		
 		Scene scene = new Scene(root);
-		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
 		primaryStage.setScene(scene);
-		
 		primaryStage.setResizable(false);
-		
 		primaryStage.show();
-		
 		status.getScene().getWindow().hide();
 		
 	}
@@ -105,21 +89,16 @@ public class ControladorInicial {
 	public void OfPrincipal(int id) throws IOException {
 		
 		Stage primaryStage = new Stage();
-		
-		Parent root = (AnchorPane)FXMLLoader.load(getClass().getResource("/principal/VistaPrincipal.fxml"));
-		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/principal/VistaPrincipal.fxml"));
+		Parent root = (Parent)loader.load();
 		Scene scene = new Scene(root);
-		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
 		primaryStage.setScene(scene);
-		
 		primaryStage.setResizable(false);
-		
+		ControladorPrincipal controlador = loader.getController();
+		controlador.setStage(primaryStage);
 		primaryStage.show();
-		
 		status.getScene().getWindow().hide();
-		
 	}
 	
 	public void accesoSucursal() throws IOException {

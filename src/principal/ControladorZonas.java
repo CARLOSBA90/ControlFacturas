@@ -4,7 +4,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import clases.sucursal;
 import clases.zona;
 import javafx.collections.FXCollections;
@@ -14,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -30,7 +28,6 @@ public class ControladorZonas implements Initializable{
 	private ArrayList<zona> zonasArray;
 	private ArrayList<sucursal> sucursalArray;
 	
-	@SuppressWarnings("unchecked")
 	public void initialize(URL location, ResourceBundle resources) {
 		modelo = new ModeloPrincipal();
 		modeloSucursal = new ModeloSucursal();
@@ -78,5 +75,6 @@ public class ControladorZonas implements Initializable{
         }
     	
     }
+    
 
 }

@@ -161,9 +161,9 @@ public class ModeloBusquedaPrincipal {
 			return busquedaBBDD(sql, bus);
 
 		default:
-			System.out.println("ENTRADA METODO DEFAULT, CLASE ModeloBusquedaPrincipal");
+			return busquedaBBDD(sql, bus);
 		}
-		return null;
+		
 	}
 
 	private String rangoFecha(String sql, int i) {
