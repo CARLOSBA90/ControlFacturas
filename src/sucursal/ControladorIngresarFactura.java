@@ -34,7 +34,6 @@ import clases.factura;
 import clases.proveedor;
 
 public class ControladorIngresarFactura implements Initializable {
-
 	@FXML private DatePicker fecha;
 	@FXML private ComboBox<String> listaDeTipos;
 	@FXML private ComboBox<String> listaProveedor;
@@ -191,11 +190,8 @@ public class ControladorIngresarFactura implements Initializable {
 			double valor = valorSubtotal + valorIva1 + valorIva2 + valorIva3 + valorOtros;
 
 			/// Formato de salida a textfield texto, maximo 2 decimales
-
 			DecimalFormat df = new DecimalFormat("####0.00");
-
 			total.setText("" + df.format(valor));
-
 		};
 
 		// Agrega los listener a los textfields

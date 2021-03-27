@@ -1,32 +1,49 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
+
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import modelo.ModeloLogin;
 import principal.ControladorPrincipal;
 import sucursal.ControladorSucursal;
 
-public class ControladorInicial {
-
-	@FXML
-	private Label status;
-	
-	@FXML
-	private TextField txtUsuario;
-	
-	@FXML
-	private TextField txtContra;
-	
+public class ControladorInicial implements Initializable{
+	@FXML private Label status;
+	@FXML private TextField txtUsuario;
+	@FXML private TextField txtContra;
 	ModeloLogin modelo = new ModeloLogin();
+	
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		ChangeListener<String> formato = (observable, valorViejo, valorNuevo) -> {
+			/// Maximo digitos permitidos por cada textfield
+			if (txtUsuario.getText().length() > 20) {
+				String s = txtUsuario.getText().substring(0, 20);
+				txtUsuario.setText(s);
+			}
+			if (txtContra.getText().length() > 20) {
+				String s = txtContra.getText().substring(0, 20);
+				txtContra.setText(s);
+			}
+
+		};
+		
+		txtUsuario.textProperty().addListener(formato);
+		txtContra.textProperty().addListener(formato);
+		
+	}
 	
 	public void Login() throws ClassNotFoundException, SQLException, IOException {
 
@@ -38,14 +55,10 @@ public class ControladorInicial {
 			if (id != 0) {
 				if (id == 1)
 					OfPrincipal(id);
-
 				else
 					Sucursal(id);
-
 			}
-			
 		else status.setText("DENEGADO!");
-	
 		}
 		
 	}

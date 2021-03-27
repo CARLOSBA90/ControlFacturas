@@ -98,7 +98,6 @@ public class ModeloSucursal {
 			miConexion.setAutoCommit(false);
 
 			/// ------------------------------------------------------------------------------------------------
-
 			/// OBTENER EL PROXIMO AUTO-INCREMENT DE LA TABLA PEDIDOS PARA UTILIZARLO EN LA
 			/// TABLA PEDIDO_PRODUCTO
 			Statement statementAU = null;
@@ -195,5 +194,46 @@ public class ModeloSucursal {
 		}
 		return insercion;
 	}
+
+	public int nuevaSucursal(int idZona, String user, String pass) throws SQLException {
+		int insercion = -1;
+		try {
+			//Continuacion
+			Statement statementVerifica=null;
+			ResultSet rsVerifica=null;
+			/// Transaccion!
+			miConexion = conectar.conectar();
+			miConexion.setAutoCommit(false);
+			/// ------------------------------------------------------------------------------------------------
+			/// OBTENER EL PROXIMO AUTO-INCREMENT DE LA TABLA PEDIDOS PARA UTILIZARLO EN LA
+			/// TABLA PEDIDO_PRODUCTO
+			Statement statementAU = null;
+			ResultSet rs_AU = null;
+			int proximo = 0;
+			String sqlAU = "SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'controlfacturas' "
+					+ "AND   TABLE_NAME   = 'usuario'";
+			statementAU = miConexion.createStatement();
+			rs_AU = statementAU.executeQuery(sqlAU);
+			if (rs_AU.next()) {
+				proximo = rs_AU.getInt(1);
+			}
+			rs_AU.close();
+			
+			insercion = 0;
+		} catch (Exception e) {
+			miConexion.rollback();
+			insercion = 2;
+		} finally {
+			try {
+				miConexion.close();
+			} catch (Exception e) {
+				/* GENERAR EXCEPCION CONTROLADA*/
+			}
+		}
+		
+		return insercion;
+	}
+
+
 
 }

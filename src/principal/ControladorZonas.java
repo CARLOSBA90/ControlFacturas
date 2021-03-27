@@ -6,14 +6,19 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import clases.sucursal;
 import clases.zona;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
@@ -25,6 +30,10 @@ public class ControladorZonas implements Initializable{
 	private ModeloSucursal modeloSucursal;
 	@FXML ListView zona;
 	@FXML ListView sucursal;
+	@FXML TextField user = new TextField();
+	@FXML TextField pass = new TextField();
+	@FXML TextField rpass = new TextField();
+	@FXML Label mensaje;
 	private ArrayList<zona> zonasArray;
 	private ArrayList<sucursal> sucursalArray;
 	
@@ -37,6 +46,48 @@ public class ControladorZonas implements Initializable{
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 			/*GENERAR EXCEPCION CONTROLADA */
 		}
+		
+		
+		/// Algoritmo que solo permite caracteres alfabeticos en el Textfield user
+		/*user.textProperty().addListener((observable, oldValue, newValue) -> {
+	        if (!newValue.matches("\\sa-zA-Z*")) {
+	        	user.setText(newValue.replaceAll("[^\\sa-zA-Z]", ""));
+	        }
+	    });*/
+		
+		Platform.runLater(() -> {
+
+		});
+		
+		ChangeListener<String> soloLetras = (observable, valorViejo, valorNuevo) -> {
+			 if (!valorNuevo.matches("\\sa-zA-Z*")) {
+		            user.setText(valorNuevo.replaceAll("[^\\sa-zA-Z]", ""));
+			 }
+			/// Maximo digitos permitidos por cada textfield
+			if (user.getText().length() > 15) {
+				String s = user.getText().substring(0, 15);
+				user.setText(s);
+			}
+
+		};
+		
+		ChangeListener<String> formatopass = (observable, valorViejo, valorNuevo) -> {
+			/// Maximo digitos permitidos por cada textfield
+			if (pass.getText().length() > 15) {
+				String s = pass.getText().substring(0, 15);
+				pass.setText(s);
+			}
+			
+			if (rpass.getText().length() > 15) {
+				String s = rpass.getText().substring(0, 15);
+				rpass.setText(s);
+			}
+
+		};
+		
+		user.textProperty().addListener(soloLetras);
+	    pass.textProperty().addListener(formatopass);
+	    rpass.textProperty().addListener(formatopass);
 
 	}
 	
@@ -75,6 +126,22 @@ public class ControladorZonas implements Initializable{
         }
     	
     }
+    
+    public void salir(ActionEvent event) {
+        System.exit(0);
+    }
+    
+	public void ingresarSucursal() {
+		if (zona.getSelectionModel().getSelectedItem() != null && !user.getText().equals("")
+				&& !pass.getText().equals("") && !rpass.getText().equals("")) {
+			if (pass.getText().contentEquals(rpass.getText())) {
+				modeloSucursal.nuevaSucursal(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),user.getText(),pass.getText());
+			} else
+				mensaje.setText("Las contraseñas deben coincidir");
+		} else {
+			mensaje.setText("Faltan campos por completar");
+		}
+	}
     
 
 }
