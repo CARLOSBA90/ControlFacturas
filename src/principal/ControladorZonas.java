@@ -131,13 +131,34 @@ public class ControladorZonas implements Initializable{
         System.exit(0);
     }
     
-	public void ingresarSucursal() {
+	public void ingresarSucursal() throws SQLException {
 		if (zona.getSelectionModel().getSelectedItem() != null && !user.getText().equals("")
 				&& !pass.getText().equals("") && !rpass.getText().equals("")) {
-			if (pass.getText().contentEquals(rpass.getText())) {
-				modeloSucursal.nuevaSucursal(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),user.getText(),pass.getText());
-			} else
-				mensaje.setText("Las contraseñas deben coincidir");
+			try {
+				if (pass.getText().contentEquals(rpass.getText())) {
+					int insercion = modeloSucursal.nuevaSucursal(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),user.getText(),pass.getText());
+					switch(insercion) {
+			          
+					case 0:
+						   mensaje.setText("Registrado con exito!");
+						   user.clear();
+						   pass.clear();
+						   rpass.clear();
+						   zona.getSelectionModel().select(0);
+					
+					break;
+					
+					case 1: mensaje.setText("Nombre duplicado, registre otro!"); break;
+					
+					case 2: mensaje.setText("Error en base datos, transaccion fallida!"); break;
+			
+					}
+				} else
+					mensaje.setText("Las contraseñas deben coincidir");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else {
 			mensaje.setText("Faltan campos por completar");
 		}

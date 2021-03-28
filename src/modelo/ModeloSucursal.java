@@ -198,15 +198,22 @@ public class ModeloSucursal {
 	public int nuevaSucursal(int idZona, String user, String pass) throws SQLException {
 		int insercion = -1;
 		try {
-			//Continuacion
-			Statement statementVerifica=null;
-			ResultSet rsVerifica=null;
-			/// Transaccion!
 			miConexion = conectar.conectar();
+            /// Chequeo de usuario existente
+			PreparedStatement statement=null;
+			String sql = "SELECT usuario.id from usuario WHERE usuario.usuario=?";
+			statement = miConexion.prepareStatement(sql);
+			statement.setString(1,user);
+			ResultSet rs = statement.executeQuery();
+			if(rs.next()) return 1;
+			rs.close();
+			statement.close();
+			
+			/// Transaccion!
 			miConexion.setAutoCommit(false);
 			/// ------------------------------------------------------------------------------------------------
 			/// OBTENER EL PROXIMO AUTO-INCREMENT DE LA TABLA PEDIDOS PARA UTILIZARLO EN LA
-			/// TABLA PEDIDO_PRODUCTO
+			///  TABLA SUCURSAL
 			Statement statementAU = null;
 			ResultSet rs_AU = null;
 			int proximo = 0;
@@ -214,11 +221,27 @@ public class ModeloSucursal {
 					+ "AND   TABLE_NAME   = 'usuario'";
 			statementAU = miConexion.createStatement();
 			rs_AU = statementAU.executeQuery(sqlAU);
-			if (rs_AU.next()) {
-				proximo = rs_AU.getInt(1);
-			}
+			if (rs_AU.next())  proximo = rs_AU.getInt(1);
 			rs_AU.close();
 			
+			/// TABLA ZONA SUCURSAL
+			 sql = "INSERT INTO sucursal_zona(idsucursal,idzonas) values(?,?)";
+			 statement = null;
+			 statement = miConexion.prepareStatement(sql);
+			 statement.setInt(1, proximo);
+			 statement.setInt(2, idZona);
+			 statement.execute();
+			 statement.close();
+			 System.out.println("here");
+			 ///TABLA SUCURSAL
+			 sql = "INSERT INTO usuario(id,usuario,contrasena,nivel) values(?,?,?,2)";
+			 statement = null;
+			 statement = miConexion.prepareStatement(sql);
+			 statement.setInt(1, proximo);
+			 statement.setString(2, user);
+			 statement.setString(3, pass);
+			 statement.execute();
+			miConexion.commit();
 			insercion = 0;
 		} catch (Exception e) {
 			miConexion.rollback();
