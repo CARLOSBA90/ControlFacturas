@@ -224,6 +224,15 @@ public class ModeloSucursal {
 			if (rs_AU.next())  proximo = rs_AU.getInt(1);
 			rs_AU.close();
 			
+			///TABLA SUCURSAL
+			 sql = "INSERT INTO usuario(id,usuario,contrasena,nivel) values(?,?,?,2)";
+			 statement = null;
+			 statement = miConexion.prepareStatement(sql);
+			 statement.setInt(1, proximo);
+			 statement.setString(2, user);
+			 statement.setString(3, pass);
+			 statement.execute();
+			
 			/// TABLA ZONA SUCURSAL
 			 sql = "INSERT INTO sucursal_zona(idsucursal,idzonas) values(?,?)";
 			 statement = null;
@@ -232,15 +241,8 @@ public class ModeloSucursal {
 			 statement.setInt(2, idZona);
 			 statement.execute();
 			 statement.close();
-			 System.out.println("here");
-			 ///TABLA SUCURSAL
-			 sql = "INSERT INTO usuario(id,usuario,contrasena,nivel) values(?,?,?,2)";
-			 statement = null;
-			 statement = miConexion.prepareStatement(sql);
-			 statement.setInt(1, proximo);
-			 statement.setString(2, user);
-			 statement.setString(3, pass);
-			 statement.execute();
+			
+			 
 			miConexion.commit();
 			insercion = 0;
 		} catch (Exception e) {

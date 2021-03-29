@@ -55,7 +55,7 @@
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="botonEliminarS" layoutX="18.0" layoutY="234.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="184.0" text="ELIMINAR SUCURSAL">
+            <Button fx:id="botonEliminarS" layoutX="18.0" layoutY="234.0" mnemonicParsing="false" onMouseClicked="#eliminarSucursal" prefHeight="31.0" prefWidth="184.0" text="ELIMINAR SUCURSAL">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>

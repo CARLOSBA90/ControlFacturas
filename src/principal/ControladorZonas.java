@@ -163,6 +163,23 @@ public class ControladorZonas implements Initializable{
 			mensaje.setText("Faltan campos por completar");
 		}
 	}
+	
+	public void eliminarSucursal() throws SQLException {
+		
+	    Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("eliminarSucursal.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Eliminar");
+            stage.setScene(new Scene(root, 300, 200));
+            stage.setResizable(false);
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+	}
     
 
 }
