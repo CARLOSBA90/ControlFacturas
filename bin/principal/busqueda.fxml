@@ -91,8 +91,8 @@
       <Pane prefHeight="24.0" prefWidth="850.0">
          <children>
             <Label fx:id="labelNroFactura" layoutX="15.0" layoutY="4.0" prefHeight="17.0" prefWidth="177.0" text="Número de facturas:" />
-            <Label fx:id="labelSubtotalAcumu" layoutX="342.0" layoutY="4.0" prefHeight="17.0" prefWidth="187.0" text="Subtotal acumulado:" />
-            <Label fx:id="labelTotalAcumu" layoutX="661.0" layoutY="4.0" prefHeight="17.0" prefWidth="187.0" text="Total acumulado:" />
+            <Label fx:id="labelSubtotalAcumu" layoutX="293.0" layoutY="4.0" prefHeight="17.0" prefWidth="279.0" text="Subtotal acumulado:" />
+            <Label fx:id="labelTotalAcumu" layoutX="589.0" layoutY="4.0" prefHeight="17.0" prefWidth="259.0" text="Total acumulado:" />
          </children>
       </Pane>
    </children>

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="300.0" maxWidth="300.0" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorZonas">
+<VBox maxHeight="300.0" maxWidth="300.0" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorAgregarSucursal">
    <children>
       <Label text="NUEVA SUCURSAL" textAlignment="CENTER">
          <font>
@@ -50,7 +50,7 @@
                   <Insets left="50.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#salir" text="CANCELAR" GridPane.rowIndex="4">
+            <Button fx:id="botonSalir" mnemonicParsing="false" onAction="#salir" text="CANCELAR" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="30.0" />
                </GridPane.margin>

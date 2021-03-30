@@ -1,5 +1,6 @@
 package modelo;
 
+import clases.acceso;
 import clases.usuario;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,45 +14,37 @@ import java.util.List;
 public class ModeloLogin {
 	
 	private Connection miConexion=null;
-	
 	private Conexion conectar;
-	
 	public ModeloLogin() {
 		
 		conectar = new Conexion();
 		
 	}
 	
-	public int autenticacion(String usuario, String contrasena) throws SQLException, ClassNotFoundException, IOException {
+	public acceso autenticacion(String usuario, String contrasena) throws SQLException, ClassNotFoundException, IOException {
 		
-		int acceso = 0;
-		
+	//	int acceso = 0;
 		List<usuario> usuarios = new ArrayList<>();
-
 		Statement miStatement=null;
-
 		ResultSet miResulset=null;
+		acceso access=null;
 		
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
 
 			miConexion = conectar.conectar();
-
 			String instruccion="SELECT * FROM usuario";
-
 			miStatement=miConexion.createStatement();
 
 			/// EJECUTAR SQL
-
 			miResulset=miStatement.executeQuery(instruccion);
 
 
 			/// RECORRER EL RESULSET
 
 			while(miResulset.next()) {
-				
 				if(usuario.toLowerCase().equals(miResulset.getString(2)) && contrasena.equals(miResulset.getString(3)))
-				acceso=miResulset.getInt(1);
+				access = new acceso(miResulset.getInt(1),miResulset.getString(2),miResulset.getInt(4)); 
 
 			}}catch(SQLException e) {
 
@@ -62,7 +55,7 @@ public class ModeloLogin {
 			}
 		
 		
-		return acceso;
+		return access;
 	}
 
 }

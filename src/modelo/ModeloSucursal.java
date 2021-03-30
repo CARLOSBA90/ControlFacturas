@@ -229,7 +229,7 @@ public class ModeloSucursal {
 			 statement = null;
 			 statement = miConexion.prepareStatement(sql);
 			 statement.setInt(1, proximo);
-			 statement.setString(2, user);
+			 statement.setString(2, user.toLowerCase());
 			 statement.setString(3, pass);
 			 statement.execute();
 			
@@ -257,6 +257,12 @@ public class ModeloSucursal {
 		}
 		
 		return insercion;
+	}
+
+	public void eliminarSucursal(int id, String text) {
+		boolean validacion = false;
+		
+		
 	}
 
 

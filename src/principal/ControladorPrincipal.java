@@ -67,6 +67,7 @@ public class ControladorPrincipal implements Initializable {
 	@FXML private ComboBox<String> ListaSucursales; 
 	@FXML private ComboBox<String> ListaZona;
 	private Stage stage;
+	private acceso access;
 
 	//// Inicializa la vista con las propiedades y atributos de la tabla de un
 	//// modelo de factura
@@ -311,6 +312,10 @@ public class ControladorPrincipal implements Initializable {
 
 	public void setStage(Stage primaryStage) {
 		stage=primaryStage;
+	}
+
+	public void setAcc(acceso acc) {
+	 this.access=acc;	
 	}
 
 }

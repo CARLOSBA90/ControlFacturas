@@ -235,8 +235,8 @@ public class ControladorBusqueda implements Initializable {
 		   tempTotal+=n.getTotal();
 		}
 		labelNroFactura.setText("Número de facturas: "+lista.size());
-		labelSubtotalAcumu.setText("Subtotal acumulado: "+tempSub);
-		labelTotalAcumu.setText("Total acumulado: "+tempTotal);
+		labelSubtotalAcumu.setText("Subtotal acumulado: "+String.format("%.0f", tempSub));
+		labelTotalAcumu.setText("Total acumulado: "+String.format("%.0f", tempTotal));
 
 	}
 

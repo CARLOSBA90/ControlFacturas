@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="200.0" maxWidth="300.0" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="200.0" maxWidth="300.0" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorEliminarSucursal">
    <children>
       <GridPane prefHeight="197.0" prefWidth="300.0">
         <columnConstraints>
@@ -18,33 +18,42 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="¿DESEA ELIMINAR ESTA SUCURSAL?">
+            <Label fx:id="nombre" textFill="RED" GridPane.rowIndex="1">
                <font>
-                  <Font name="System Bold" size="17.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="5.0" />
+                  <Insets left="90.0" />
                </GridPane.margin>
             </Label>
-            <Label text="INGRESE CONTRASEÑA DE USUARIO" GridPane.rowIndex="1">
+            <Label text="¿DESEAS ELIMINAR ESTA SUCURSAL?">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="18.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="msjpass" text="INGRESE CONTRASEÑA DE ADMINISTRADOR" GridPane.rowIndex="2">
                <font>
                   <Font size="13.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="37.0" />
+                  <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="botonEliminarSu" mnemonicParsing="false" text="ELIMINAR" GridPane.rowIndex="3">
+            <Button fx:id="botonEliminarSu" mnemonicParsing="false" onMouseClicked="#eliminar" text="ELIMINAR" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="110.0" />
                </GridPane.margin>
             </Button>
-            <PasswordField fx:id="passEliminarSu" maxWidth="180.0" GridPane.rowIndex="2">
+            <PasswordField fx:id="pass" maxWidth="180.0" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="60.0" />
                </GridPane.margin>

@@ -30,6 +30,7 @@ public class ControladorSucursal implements Initializable {
 	@FXML private Pane central, cabecera;
 	@FXML private Label idLabel;
 	private int id;
+	private String nombre;
 
 	// Configurar tabla de un modelo de factura
 	@FXML private TableView<factura> tableview;
@@ -123,15 +124,16 @@ public class ControladorSucursal implements Initializable {
 	}
 
 	// Codigo para identificar de que sucursal se carga el ID
-	public void setUsuario(int id) {
-		this.id = id;
+	public void setUsuario(int i, String string) {
+		this.id = i;
 		modelo = new ModeloSucursal();
+		nombre = string;
 	}
 
 	/// Carga la listview desde la BBDD
 	public void cargarLista(int id) {
 		if (id != 0) {
-			idLabel.setText("Sucursal " + id);
+			idLabel.setText("Sucursal : " + nombre);
 			tableview.getItems().clear();
 			try {
 				tableview.setItems(modelo.cargarData(id));
@@ -148,5 +150,6 @@ public class ControladorSucursal implements Initializable {
 	public void refrescarLista() {
 		cargarLista(id);
 	}
+
 
 }
