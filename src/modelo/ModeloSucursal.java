@@ -259,10 +259,33 @@ public class ModeloSucursal {
 		return insercion;
 	}
 
-	public void eliminarSucursal(int id, String text) {
+	public boolean eliminarSucursal(int id, int idAdmin, String pass) throws SQLException {
 		boolean validacion = false;
+		boolean eliminado = false;
+		miConexion = conectar.conectar();
+        /// Validacion administrador y contraseña
+		PreparedStatement statement=null;
+		String sql = "SELECT usuario.id from usuario WHERE usuario.id=? and usuario.contrasena=?";
+		statement = miConexion.prepareStatement(sql);
+		statement.setInt(1,idAdmin);
+		statement.setString(2,pass);
+		ResultSet rs = statement.executeQuery();
+		if(rs.next()) validacion = true;
+		rs.close();
+		statement.close();
+		
+		if(validacion) {
+			 sql = "DELETE FROM usuario WHERE usuario.id=?";
+			 statement = null;
+			 statement = miConexion.prepareStatement(sql);
+			 statement.setInt(1, id);
+			 statement.execute();
+			 statement.close();
+			 eliminado=true;
+		}
 		
 		
+		return eliminado;
 	}
 
 

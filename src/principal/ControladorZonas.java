@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import clases.acceso;
 import clases.sucursal;
 import clases.zona;
 import javafx.application.Platform;
@@ -33,6 +35,7 @@ public class ControladorZonas implements Initializable{
 	@FXML ListView sucursal;
 	private ArrayList<zona> zonasArray;
 	private ArrayList<sucursal> sucursalArray;
+	private acceso access;
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		modelo = new ModeloPrincipal();
@@ -88,10 +91,10 @@ public class ControladorZonas implements Initializable{
 				Stage stage = new Stage();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("eliminarSucursal.fxml"));
 				Parent root = (Parent) loader.load();
-				stage.setScene(new Scene(root, 300, 200));
+				stage.setScene(new Scene(root, 300, 240));
 				stage.setResizable(false);
 				ControladorEliminarSucursal controlador = loader.getController();
-				controlador.objetos((String)sucursal.getSelectionModel().getSelectedItem(),sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId());
+				controlador.objetos((String)sucursal.getSelectionModel().getSelectedItem(),sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(),access);
 				stage.show();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -104,6 +107,34 @@ public class ControladorZonas implements Initializable{
 			alert.showAndWait();
 		}
 		
+	}
+	
+	public void editarSucursal() throws SQLException {
+		
+		if (sucursal.getSelectionModel().getSelectedIndex() != -1 && !sucursal.getSelectionModel().getSelectedItem().equals("Sin datos")) {
+			try {
+				Stage stage = new Stage();
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("editarSucursal.fxml"));
+				Parent root = (Parent) loader.load();
+				stage.setScene(new Scene(root, 300, 300));
+				stage.setResizable(false);
+				ControladorEditarSucursal controlador = loader.getController();
+				controlador.objetos((String)sucursal.getSelectionModel().getSelectedItem(),sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(),access);
+				stage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Debes seleccionar una Sucursal!");
+			alert.showAndWait();
+		}
+	}
+
+	public void setAcc(acceso access) {
+		this.access = access;
 	}
     
 

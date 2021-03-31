@@ -31,6 +31,12 @@ public class acceso {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
+	@Override
+	public String toString() {
+		return "acceso [nivel=" + nivel + ", id=" + id + ", nombre=" + nombre + "]";
+	}
 	
 	
 

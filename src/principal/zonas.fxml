@@ -45,7 +45,7 @@
                   <Font name="Calibri Bold" size="22.0" />
                </font>
             </Label>
-            <Button fx:id="botonEditarS" layoutX="18.0" layoutY="148.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="184.0" text="EDITAR SUCURSAL">
+            <Button fx:id="botonEditarS" layoutX="18.0" layoutY="148.0" mnemonicParsing="false" onAction="#editarSucursal" prefHeight="31.0" prefWidth="184.0" text="EDITAR SUCURSAL">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>

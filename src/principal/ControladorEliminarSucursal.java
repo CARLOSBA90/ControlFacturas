@@ -1,8 +1,10 @@
 package principal;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import clases.acceso;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ public class ControladorEliminarSucursal implements Initializable{
 	private String sucursal;
 	private int id;
 	private ModeloSucursal modelo;
+	private acceso access;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		modelo = new ModeloSucursal();
@@ -38,17 +41,29 @@ public class ControladorEliminarSucursal implements Initializable{
 		
 	}
 
-	public void objetos(String string, int i) {
+	public void objetos(String string, int i, acceso access) {
 		this.sucursal = string;
 		this.id = i;
+		this.access=access;
 	}
 	
-	public void eliminar() {
-		if(!pass.getText().equals("")) {
-		     modelo.eliminarSucursal(id, pass.getText());
-		}
-		else { msjpass.setText(" CAMPO VACIO, INGRESE CONTRASEÑA");
+	public void eliminar() throws SQLException {
+
+		try {
+			if(!pass.getText().equals("")) {
+			   boolean query = modelo.eliminarSucursal(id, access.getId(), pass.getText());
+			   if(query) {
+			       nombre.setText("Eliminado con exito");
+			       msjpass.setText("");
+			       pass.clear();  
+			   }
 			
+			}
+			else { msjpass.setText(" CAMPO VACIO, INGRESE CONTRASEÑA");
+				
+			}
+		} catch (SQLException e) {
+			// TODO controlar excepcion
 		}
 	}
 	

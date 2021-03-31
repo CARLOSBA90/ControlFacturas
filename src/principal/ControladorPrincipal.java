@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
+import sucursal.ControladorSucursal;
 
 public class ControladorPrincipal implements Initializable {
 
@@ -200,9 +201,8 @@ public class ControladorPrincipal implements Initializable {
 
 		blanquear();
 
-		Parent root = null;
-
-		root = FXMLLoader.load(getClass().getResource(ui + ".fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(ui + ".fxml"));
+		Parent root = (Parent)loader.load();
 
 		//// Seleccion de vista segun argumento
 
@@ -291,6 +291,8 @@ public class ControladorPrincipal implements Initializable {
 			cabecera.getChildren().add(tituloCabecera);
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 			central.setPrefHeight(600);
+			ControladorZonas controlador = loader.getController();
+			controlador.setAcc(access);
 			central.getChildren().add(root);
 
 			break;
