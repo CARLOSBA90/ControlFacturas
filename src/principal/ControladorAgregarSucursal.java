@@ -116,7 +116,6 @@ public class ControladorAgregarSucursal implements Initializable {
 		lista = FXCollections.observableArrayList();
 		/// Uso for each mejorado, expresión Lambda.
 		zonasArray.forEach(n -> lista.add(n.getNombre()));
-		
 	}
 	
 	

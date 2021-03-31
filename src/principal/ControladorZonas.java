@@ -119,7 +119,9 @@ public class ControladorZonas implements Initializable{
 				stage.setScene(new Scene(root, 300, 300));
 				stage.setResizable(false);
 				ControladorEditarSucursal controlador = loader.getController();
-				controlador.objetos((String)sucursal.getSelectionModel().getSelectedItem(),sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(),access);
+				controlador.objetos(zonasArray,(String)sucursal.getSelectionModel().getSelectedItem(),
+						sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(), zona.getSelectionModel().getSelectedIndex(),
+						zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId());
 				stage.show();
 			} catch (IOException e) {
 				e.printStackTrace();

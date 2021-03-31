@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -9,14 +15,56 @@
    <children>
       <GridPane prefHeight="300.0" prefWidth="300.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="139.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="187.0" minWidth="10.0" prefWidth="161.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="165.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="168.0" minHeight="10.0" prefHeight="118.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="168.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <PasswordField fx:id="pass" maxHeight="20.0" maxWidth="155.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label prefHeight="17.0" prefWidth="66.0" text="NOMBRE" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="40.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="17.0" prefWidth="83.0" text="CONTRASEÑA" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </Label>
+            <Label prefHeight="17.0" prefWidth="43.0" text="ZONA" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="47.0" />
+               </GridPane.margin>
+            </Label>
+            <ListView fx:id="zona" maxHeight="110.0" maxWidth="155.0" prefHeight="108.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="EDITAR SUCURSAL">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="nombre" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="25.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="user" maxHeight="20.0" maxWidth="155.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="botonCambiar" mnemonicParsing="false" text="CAMBIAR" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="botonSalir" mnemonicParsing="false" onAction="#salir" text="CANCELAR" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
       </GridPane>
    </children>
 </VBox>
