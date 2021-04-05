@@ -288,6 +288,12 @@ public class ModeloSucursal {
 		return eliminado;
 	}
 
+	public int editarSucursal(int idSucursal,int idZona, String user, String pass) {
+		System.out.println("ID: " + idSucursal + " - idZona: " + idZona + " - Usuario" + user + " Contraseña " + pass);
+
+		return 0;
+	}
+
 
 
 }

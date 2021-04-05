@@ -87,8 +87,14 @@ public class ControladorEditarSucursal implements Initializable{
 	}
 	
 	public void cambiar() {
-           
-		//modelo.editarSucursal()
+		// FIXME
+		if (!zona.getSelectionModel().isEmpty()) {
+			int edicion = modeloSucursal.editarSucursal(idSucursal,
+					(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId() == idZona) ? null
+							: zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),
+					(nombreSucursal.equals(user.getText())) ? null : user.getText(),
+					(pass.getText().equals("") ? null : pass.getText()));
+		}
 	}
 
 }
