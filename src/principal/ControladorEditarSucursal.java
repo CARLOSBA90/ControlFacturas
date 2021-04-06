@@ -1,5 +1,6 @@
 package principal;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -37,7 +38,7 @@ public class ControladorEditarSucursal implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		modelo = new ModeloPrincipal();
 		modeloSucursal = new ModeloSucursal();
-
+		
 		
 		Platform.runLater(() -> {
 			zona.setItems(lista);
@@ -86,14 +87,16 @@ public class ControladorEditarSucursal implements Initializable{
 		this.idZona = idZona;
 	}
 	
-	public void cambiar() {
-		// FIXME
+	public void cambiar() throws SQLException {
 		if (!zona.getSelectionModel().isEmpty()) {
 			int edicion = modeloSucursal.editarSucursal(idSucursal,
-					(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId() == idZona) ? null
+					(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId() == idZona) ? -2
 							: zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),
 					(nombreSucursal.equals(user.getText())) ? null : user.getText(),
 					(pass.getText().equals("") ? null : pass.getText()));
+			if(edicion==1) {
+				nombre.setText("EDICIÓN EXITOSA");
+			}else nombre.setText("EDICIÓN FALLIDA");
 		}
 	}
 

@@ -288,12 +288,68 @@ public class ModeloSucursal {
 		return eliminado;
 	}
 
-	public int editarSucursal(int idSucursal,int idZona, String user, String pass) {
-		System.out.println("ID: " + idSucursal + " - idZona: " + idZona + " - Usuario" + user + " Contraseña " + pass);
+	public int editarSucursal(int idSucursal,int idZona, String user, String pass) throws SQLException {
+	    ///FIXME traer valor de id zona anterior, arreglar problemas en edicion de user y pass
+		int insercion = 0;
+		try {
+			/// Transaccion!
+			miConexion = conectar.conectar();
+			miConexion.setAutoCommit(false);
+			/// Actualizacion de dos tablas de ser necesario,tablas: sucursal y sucursal_zona
+			/// tabla sucursal
+			// ENSAMBLE
+			
+			if (user !=null || pass != null) {
+				String sql = "UPDATE usuario SET";
+				sql += (user == null) ? "" : " usuario.usuario=?";
+				sql += (user == null && pass == null) ? "" : ",";
+				sql += (pass == null) ? "" : " usuario.contrasena=?";
+				sql += " WHERE id.usuario=?";
+				PreparedStatement statement = null;
+				statement = miConexion.prepareStatement(sql);
 
-		return 0;
+				if (user != null && pass != null) {
+					statement.setString(1, user);
+					statement.setString(2, pass);
+					statement.setInt(3, idSucursal);
+
+				} else if (user != null && pass == null) {
+					statement.setString(1, user);
+					statement.setInt(2, idSucursal);
+
+				} else {
+					statement.setString(1, pass);
+					statement.setInt(2, idSucursal);
+				}
+				statement.execute();
+				statement.close();
+			}
+            System.out.println("aqui");
+			/// tabla sucursal_zona
+			if (idZona != -2) {
+				String sql = "UPDATE sucursal_zona SET idzonas=? WHERE idsucursal=? AND idzonas=?";
+				PreparedStatement statement = null;
+				statement = miConexion.prepareStatement(sql);
+				statement.setInt(1, idZona);
+				statement.setInt(2, idSucursal);
+				statement.setInt(3, idZona); /// ese valor no es
+				statement.execute();
+				statement.close();
+			}
+			miConexion.commit();
+			insercion = 1;
+		} catch (Exception e) {
+			miConexion.rollback();
+		} finally {
+			try {
+				miConexion.close();
+			} catch (Exception e) {
+				/* GENERAR EXCEPCION CONTROLADA */
+			}
+		}
+
+		return insercion;
 	}
-
 
 
 }
