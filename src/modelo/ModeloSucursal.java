@@ -288,7 +288,7 @@ public class ModeloSucursal {
 		return eliminado;
 	}
 
-	public int editarSucursal(int idSucursal,int idZona, String user, String pass) throws SQLException {
+	public int editarSucursal(int idSucursal,int idZona, String user, String pass, int idZonaAnterior) throws SQLException {
 	    ///FIXME traer valor de id zona anterior, arreglar problemas en edicion de user y pass
 		int insercion = 0;
 		try {
@@ -298,20 +298,19 @@ public class ModeloSucursal {
 			/// Actualizacion de dos tablas de ser necesario,tablas: sucursal y sucursal_zona
 			/// tabla sucursal
 			// ENSAMBLE
-			
-			if (user !=null || pass != null) {
+			if (user!=null || pass!=null) {
 				String sql = "UPDATE usuario SET";
 				sql += (user == null) ? "" : " usuario.usuario=?";
-				sql += (user == null && pass == null) ? "" : ",";
+				sql += (user != null && pass != null) ? "," : "";
 				sql += (pass == null) ? "" : " usuario.contrasena=?";
-				sql += " WHERE id.usuario=?";
+				sql += " WHERE usuario.id=?";
 				PreparedStatement statement = null;
 				statement = miConexion.prepareStatement(sql);
-
 				if (user != null && pass != null) {
 					statement.setString(1, user);
 					statement.setString(2, pass);
 					statement.setInt(3, idSucursal);
+					
 
 				} else if (user != null && pass == null) {
 					statement.setString(1, user);
@@ -324,7 +323,7 @@ public class ModeloSucursal {
 				statement.execute();
 				statement.close();
 			}
-            System.out.println("aqui");
+			
 			/// tabla sucursal_zona
 			if (idZona != -2) {
 				String sql = "UPDATE sucursal_zona SET idzonas=? WHERE idsucursal=? AND idzonas=?";
@@ -332,7 +331,7 @@ public class ModeloSucursal {
 				statement = miConexion.prepareStatement(sql);
 				statement.setInt(1, idZona);
 				statement.setInt(2, idSucursal);
-				statement.setInt(3, idZona); /// ese valor no es
+				statement.setInt(3, idZonaAnterior); 
 				statement.execute();
 				statement.close();
 			}

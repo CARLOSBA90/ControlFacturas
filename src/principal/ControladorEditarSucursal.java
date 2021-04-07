@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -24,10 +25,9 @@ public class ControladorEditarSucursal implements Initializable{
 	@FXML Label nombre;
 	@FXML TextField user;
 	@FXML TextField pass;
-	@FXML ListView zona;
+	@FXML ListView<String> zona;
 	@FXML private javafx.scene.control.Button botonSalir;
 	private ObservableList<String> lista;
-	private ModeloPrincipal modelo;
 	private ModeloSucursal modeloSucursal;
 	private ArrayList<zona> zonasArray;
 	private int idSucursal;
@@ -36,10 +36,7 @@ public class ControladorEditarSucursal implements Initializable{
 	private int idZona;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		modelo = new ModeloPrincipal();
 		modeloSucursal = new ModeloSucursal();
-		
-		
 		Platform.runLater(() -> {
 			zona.setItems(lista);
 			nombre.setText(nombreSucursal);
@@ -88,15 +85,36 @@ public class ControladorEditarSucursal implements Initializable{
 	}
 	
 	public void cambiar() throws SQLException {
+		
+		/* Envio de metodos al metodo editar Sucursal: 
+		 * - id sucursal
+		 * - seleccion de lista zona, si este no cambia se deja el ultimo,
+		 * - nombre sucursal(campo usuario.usuario de tabla), si no se cambia, el parametro sera null
+		 * - contraseña(campo usuario.contrasena de tabla), si no se cambia, el parametro sera null
+		 * - id zona anterior, este valor se envia para el query de actualizacion de zona
+		 */
 		if (!zona.getSelectionModel().isEmpty()) {
 			int edicion = modeloSucursal.editarSucursal(idSucursal,
 					(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId() == idZona) ? -2
 							: zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),
 					(nombreSucursal.equals(user.getText())) ? null : user.getText(),
-					(pass.getText().equals("") ? null : pass.getText()));
+					(pass.getText().equals("") ? null : pass.getText()),
+					idZona);
 			if(edicion==1) {
-				nombre.setText("EDICIÓN EXITOSA");
-			}else nombre.setText("EDICIÓN FALLIDA");
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setHeaderText(null);
+				alert.setTitle("Edicion Exitosa");
+				alert.setContentText("Los datos han sido correctamente actualizado!");
+				alert.showAndWait();
+				//FIXME ARREGLAR PROBLEMA DE DATOS ANTERIORES EN LA VISTA CONTROLADOR ZONA
+				this.salir(null); 
+			}else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setHeaderText(null);
+				alert.setTitle("Error");
+				alert.setContentText("Intento de actualizar datos: fallido!");
+				alert.showAndWait();
+			}
 		}
 	}
 
