@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import clases.factura;
 import clases.proveedor;
 import clases.sucursal;
@@ -167,6 +166,17 @@ public class ModeloPrincipal {
 
 		
 		return lista;
+	}
+
+
+
+	public int nuevaZona(String nombre) throws SQLException {
+		String sql = "INSERT INTO zonas (nombre) VALUES (?)";
+		miConexion = conectar.conectar();
+		java.sql.PreparedStatement statement = miConexion.prepareStatement(sql);
+		statement.setString(1, nombre);
+		statement.execute();
+		return 1;
 	}
 
 }

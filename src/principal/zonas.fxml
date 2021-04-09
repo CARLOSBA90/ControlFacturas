@@ -17,7 +17,7 @@
                   <Font name="Calibri Bold" size="30.0" />
                </font>
             </Label>
-            <Button fx:id="botonEditarZ" layoutX="18.0" layoutY="283.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="184.0" text="EDITAR ZONA">
+            <Button fx:id="botonEditarZ" layoutX="18.0" layoutY="283.0" mnemonicParsing="false" onAction="#editarZona" prefHeight="31.0" prefWidth="184.0" text="EDITAR ZONA">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
@@ -28,12 +28,12 @@
                </font>
             </Label>
             <Line endX="743.0" layoutX="107.0" layoutY="77.0" startX="-107.0" />
-            <Button fx:id="botonNuevoZ" layoutX="17.0" layoutY="329.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="183.0" text="NUEVA ZONA">
+            <Button fx:id="botonNuevoZ" layoutX="17.0" layoutY="329.0" mnemonicParsing="false" onAction="#agregarZona" prefHeight="31.0" prefWidth="183.0" text="NUEVA ZONA">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="botonEliminarZ" layoutX="17.0" layoutY="374.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="183.0" text="ELIMINAR ZONA">
+            <Button fx:id="botonEliminarZ" layoutX="17.0" layoutY="374.0" mnemonicParsing="false" onAction="#eliminarZona" prefHeight="31.0" prefWidth="183.0" text="ELIMINAR ZONA">
                <font>
                   <Font name="Calibri Bold" size="16.0" />
                </font>

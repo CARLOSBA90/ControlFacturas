@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import clases.acceso;
@@ -10,6 +11,7 @@ import clases.sucursal;
 import clases.zona;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
@@ -109,7 +112,7 @@ public class ControladorZonas implements Initializable{
 		
 	}
 	
-	public void editarSucursal() throws SQLException {
+	public void editarSucursal() throws SQLException, ClassNotFoundException {
 		
 		if (sucursal.getSelectionModel().getSelectedIndex() != -1 && !sucursal.getSelectionModel().getSelectedItem().equals("Sin datos")) {
 			try {
@@ -123,6 +126,8 @@ public class ControladorZonas implements Initializable{
 						sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(), zona.getSelectionModel().getSelectedIndex(),
 						zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId());
 				stage.show();
+				zona.setItems(listarZonas());
+				sucursal.getItems().clear();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -133,6 +138,33 @@ public class ControladorZonas implements Initializable{
 			alert.setContentText("Debes seleccionar una Sucursal!");
 			alert.showAndWait();
 		}
+	}
+	
+	public void agregarZona() throws IOException, ClassNotFoundException, SQLException {
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("nuevaZona.fxml"));
+		Parent root = (Parent) loader.load();
+		stage.setScene(new Scene(root));
+		stage.setResizable(false);
+		ControladorNuevaZona controlador = loader.getController();
+		controlador.setClaseZona(this);
+		stage.show();
+		
+		
+
+	}
+	
+	public void actualizarZona() throws ClassNotFoundException, SQLException, IOException {
+		zona.setItems(listarZonas());
+		sucursal.getItems().clear();
+	};
+	
+	public void editarZona() {
+		System.out.println("editar zona");
+	}
+	
+	public void eliminarZona() {
+		System.out.println("eliminar zona");
 	}
 
 	public void setAcc(acceso access) {
