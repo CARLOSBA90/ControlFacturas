@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -31,8 +32,10 @@ public class ControladorAgregarSucursal implements Initializable {
 	@FXML Label mensaje;
 	@FXML private javafx.scene.control.Button botonSalir;
 	private ObservableList<String> lista;
+	private ControladorZonas controlador;
 	
 	public void initialize(URL location, ResourceBundle resources) {
+		controlador = new ControladorZonas();
 		modelo = new ModeloPrincipal();
 		modeloSucursal = new ModeloSucursal();
 
@@ -73,7 +76,7 @@ public class ControladorAgregarSucursal implements Initializable {
 		
 	}
 
-	public void ingresarSucursal() throws SQLException {
+	public void ingresarSucursal() throws SQLException, ClassNotFoundException, IOException {
 		if (zona.getSelectionModel().getSelectedItem() != null && !user.getText().equals("")
 				&& !pass.getText().equals("") && !rpass.getText().equals("")) {
 			try {
@@ -82,11 +85,13 @@ public class ControladorAgregarSucursal implements Initializable {
 					switch(insercion) {
 			          
 					case 0:
-						   mensaje.setText("Registrado con exito!");
-						   user.clear();
-						   pass.clear();
-						   rpass.clear();
-						   zona.getSelectionModel().select(0);
+						this.salir(null);
+						controlador.actualizarZona();
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setHeaderText(null);
+						alert.setTitle("Información");
+						alert.setContentText("Registrado con exitol!");
+						alert.showAndWait();
 					
 					break;
 					
@@ -111,11 +116,13 @@ public class ControladorAgregarSucursal implements Initializable {
     	  stage.close();
     }
 
-	public void objetos(ArrayList<clases.zona> zonasArray2) {
+	public void objetos(ArrayList<clases.zona> zonasArray2, ControladorZonas controladorZonas) {
 		zonasArray = zonasArray2;
 		lista = FXCollections.observableArrayList();
 		/// Uso for each mejorado, expresión Lambda.
 		zonasArray.forEach(n -> lista.add(n.getNombre()));
+		controlador= controladorZonas;
+		
 	}
 	
 	

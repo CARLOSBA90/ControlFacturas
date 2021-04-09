@@ -1,4 +1,5 @@
 package principal;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,8 +35,10 @@ public class ControladorEditarSucursal implements Initializable{
 	private String nombreSucursal;
 	private int index;
 	private int idZona;
+	private ControladorZonas controlador;
 
 	public void initialize(URL location, ResourceBundle resources) {
+		controlador = new ControladorZonas();
 		modeloSucursal = new ModeloSucursal();
 		Platform.runLater(() -> {
 			zona.setItems(lista);
@@ -73,7 +76,7 @@ public class ControladorEditarSucursal implements Initializable{
   	  stage.close();
   }
 
-	public void objetos(ArrayList<clases.zona> zonasArray, String nombre, int id, int index, int idZona) {
+	public void objetos(ArrayList<clases.zona> zonasArray, String nombre, int id, int index, int idZona, ControladorZonas controladorZonas) {
 		this.zonasArray = zonasArray;
 		lista = FXCollections.observableArrayList();
 		/// Uso for each mejorado, expresión Lambda.
@@ -82,9 +85,10 @@ public class ControladorEditarSucursal implements Initializable{
 		this.nombreSucursal = nombre;
 		this.index = index;
 		this.idZona = idZona;
+		this.controlador = controladorZonas;
 	}
 	
-	public void cambiar() throws SQLException {
+	public void cambiar() throws SQLException, ClassNotFoundException, IOException {
 		
 		/* Envio de metodos al metodo editar Sucursal: 
 		 * - id sucursal
@@ -106,7 +110,7 @@ public class ControladorEditarSucursal implements Initializable{
 				alert.setTitle("Edicion Exitosa");
 				alert.setContentText("Los datos han sido correctamente actualizado!");
 				alert.showAndWait();
-				//FIXME ARREGLAR PROBLEMA DE DATOS ANTERIORES EN LA VISTA CONTROLADOR ZONA
+				controlador.actualizarZona();
 				this.salir(null); 
 			}else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);

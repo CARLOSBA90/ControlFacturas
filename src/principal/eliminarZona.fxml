@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="240.0" maxWidth="300.0" prefHeight="240.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorEliminarSucursal">
+<VBox maxHeight="240.0" maxWidth="300.0" prefHeight="240.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorEliminarZona">
    <children>
       <GridPane prefHeight="244.0" prefWidth="300.0">
         <columnConstraints>
@@ -32,12 +32,12 @@
                   <Insets left="75.0" />
                </GridPane.margin>
             </Label>
-            <Label text="¿DESEAS ELIMINAR ESTA SUCURSAL?">
+            <Label text="¿DESEAS ELIMINAR ESTA ZONA?">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="18.0" />
+                  <Insets left="33.0" />
                </GridPane.margin>
             </Label>
             <Label fx:id="msjpass" text="INGRESE CONTRASEÑA DE ADMINISTRADOR" GridPane.rowIndex="2">
@@ -48,7 +48,7 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="botonEliminarSu" mnemonicParsing="false" onMouseClicked="#eliminar" text="ELIMINAR" GridPane.rowIndex="4">
+            <Button fx:id="botonEliminarSu" mnemonicParsing="false" onAction="#eliminar" onMouseClicked="#eliminar" text="ELIMINAR" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="110.0" />
                </GridPane.margin>

@@ -26,10 +26,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
-
+//FIXME OPTIMIZACION DE CODIGO, RENDIMIENTO?
 
 public class ControladorZonas implements Initializable{
 	private ModeloPrincipal modelo;
@@ -78,7 +79,8 @@ public class ControladorZonas implements Initializable{
     		stage.setScene(new Scene(root, 300, 300));
     		stage.setResizable(false);
             ControladorAgregarSucursal controlador = loader.getController();
-            controlador.objetos(zonasArray);
+            controlador.objetos(zonasArray,this);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         }
         catch (IOException e) {
@@ -97,7 +99,8 @@ public class ControladorZonas implements Initializable{
 				stage.setScene(new Scene(root, 300, 240));
 				stage.setResizable(false);
 				ControladorEliminarSucursal controlador = loader.getController();
-				controlador.objetos((String)sucursal.getSelectionModel().getSelectedItem(),sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(),access);
+				controlador.objetos((String)sucursal.getSelectionModel().getSelectedItem(),sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(),access,this);
+				stage.initModality(Modality.APPLICATION_MODAL);
 				stage.show();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -124,10 +127,9 @@ public class ControladorZonas implements Initializable{
 				ControladorEditarSucursal controlador = loader.getController();
 				controlador.objetos(zonasArray,(String)sucursal.getSelectionModel().getSelectedItem(),
 						sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(), zona.getSelectionModel().getSelectedIndex(),
-						zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId());
+						zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),this);
+				stage.initModality(Modality.APPLICATION_MODAL);
 				stage.show();
-				zona.setItems(listarZonas());
-				sucursal.getItems().clear();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -148,28 +150,46 @@ public class ControladorZonas implements Initializable{
 		stage.setResizable(false);
 		ControladorNuevaZona controlador = loader.getController();
 		controlador.setClaseZona(this);
+		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.show();
-		
-		
+	}
+	
 
+	
+	public void editarZona() throws IOException {
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("editarZona.fxml"));
+		Parent root = (Parent) loader.load();
+		stage.setScene(new Scene(root));
+		stage.setResizable(false);
+		ControladorEditarZona controlador = loader.getController();
+		controlador.objetos((String) zona.getSelectionModel().getSelectedItem(),
+				zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),this);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.show();
 	}
 	
-	public void actualizarZona() throws ClassNotFoundException, SQLException, IOException {
-		zona.setItems(listarZonas());
-		sucursal.getItems().clear();
-	};
-	
-	public void editarZona() {
-		System.out.println("editar zona");
-	}
-	
-	public void eliminarZona() {
-		System.out.println("eliminar zona");
+	public void eliminarZona() throws IOException {
+		Stage stage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("eliminarZona.fxml"));
+		Parent root = (Parent) loader.load();
+		stage.setScene(new Scene(root));
+		stage.setResizable(false);
+		ControladorEliminarZona controlador = loader.getController();
+		controlador.objetos((String) zona.getSelectionModel().getSelectedItem(),
+				zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),access,this);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.show();
 	}
 
 	public void setAcc(acceso access) {
 		this.access = access;
 	}
     
+	@SuppressWarnings("unchecked")
+	public void actualizarZona() throws ClassNotFoundException, SQLException, IOException {
+		zona.setItems(listarZonas());
+		sucursal.getItems().clear();
+	};
 
 }

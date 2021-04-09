@@ -3,6 +3,7 @@ package modelo;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -177,6 +178,64 @@ public class ModeloPrincipal {
 		statement.setString(1, nombre);
 		statement.execute();
 		return 1;
+	}
+
+
+
+	public boolean eliminarZona(int id, int idAdmin, String pass) throws SQLException {
+		boolean validacion = false;
+		boolean eliminado = false;
+		miConexion = conectar.conectar();
+        /// Validacion administrador y contraseña
+		PreparedStatement statement=null;
+		String sql = "SELECT usuario.id from usuario WHERE usuario.id=? and usuario.contrasena=?";
+		statement = miConexion.prepareStatement(sql);
+		statement.setInt(1,idAdmin);
+		statement.setString(2,pass);
+		ResultSet rs = statement.executeQuery();
+		if(rs.next()) validacion = true;
+		rs.close();
+		statement.close();
+		
+		if(validacion) {
+			 sql = "DELETE FROM zonas WHERE zonas.id=?";
+			 statement = null;
+			 statement = miConexion.prepareStatement(sql);
+			 statement.setInt(1, id);
+			 statement.execute();
+			 statement.close();
+			 eliminado=true;
+		}
+		
+		
+		return eliminado;
+	}
+
+
+
+	public boolean editarZona(int id, String nombre) {
+		boolean query = false;
+			try {
+				miConexion = conectar.conectar();
+				String sql = "UPDATE zonas SET zonas.nombre=? WHERE zonas.id=?";
+				PreparedStatement statement = null;
+				statement = miConexion.prepareStatement(sql);
+				statement.setString(1, nombre);
+				statement.setInt(2, id);
+				statement.execute();
+				statement.close();
+				query=true;
+			} catch (Exception e) {
+				/* GENERAR EXCEPCION CONTROLADA */
+				query=false;
+			} finally {
+				try {
+					miConexion.close();
+				} catch (Exception e) {
+					/* GENERAR EXCEPCION CONTROLADA */
+				}
+			}
+		return query;
 	}
 
 }
