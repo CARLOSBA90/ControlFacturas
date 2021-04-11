@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import clases.acceso;
 import clases.sucursal;
+import clases.ventana;
 import clases.zona;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -73,15 +73,10 @@ public class ControladorZonas implements Initializable{
 	
     public void agregarSucursal(MouseEvent event) {
         try {
-        	Stage stage = new Stage();
-    		FXMLLoader loader = new FXMLLoader(getClass().getResource("nuevaSucursal.fxml"));
-    		Parent root = (Parent)loader.load();
-    		stage.setScene(new Scene(root, 300, 300));
-    		stage.setResizable(false);
-            ControladorAgregarSucursal controlador = loader.getController();
+        	ventana ventana = new ventana("/principal/nuevaSucursal.fxml");
+            ControladorAgregarSucursal controlador = ventana.getLoader().getController();
             controlador.objetos(zonasArray,this);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
+            ventana.getStage().show();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -93,15 +88,10 @@ public class ControladorZonas implements Initializable{
 
 		if (sucursal.getSelectionModel().getSelectedIndex() != -1 && !sucursal.getSelectionModel().getSelectedItem().equals("Sin datos")) {
 			try {
-				Stage stage = new Stage();
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("eliminarSucursal.fxml"));
-				Parent root = (Parent) loader.load();
-				stage.setScene(new Scene(root, 300, 240));
-				stage.setResizable(false);
-				ControladorEliminarSucursal controlador = loader.getController();
+				ventana ventana = new ventana("/principal/eliminarSucursal.fxml");
+				ControladorEliminarSucursal controlador = ventana.getLoader().getController();
 				controlador.objetos((String)sucursal.getSelectionModel().getSelectedItem(),sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(),access,this);
-				stage.initModality(Modality.APPLICATION_MODAL);
-				stage.show();
+				ventana.getStage().show();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -119,17 +109,12 @@ public class ControladorZonas implements Initializable{
 		
 		if (sucursal.getSelectionModel().getSelectedIndex() != -1 && !sucursal.getSelectionModel().getSelectedItem().equals("Sin datos")) {
 			try {
-				Stage stage = new Stage();
-				FXMLLoader loader = new FXMLLoader(getClass().getResource("editarSucursal.fxml"));
-				Parent root = (Parent) loader.load();
-				stage.setScene(new Scene(root, 300, 300));
-				stage.setResizable(false);
-				ControladorEditarSucursal controlador = loader.getController();
+				ventana ventana = new ventana("/principal/editarSucursal.fxml");
+				ControladorEditarSucursal controlador = ventana.getLoader().getController();
 				controlador.objetos(zonasArray,(String)sucursal.getSelectionModel().getSelectedItem(),
 						sucursalArray.get(sucursal.getSelectionModel().getSelectedIndex()).getId(), zona.getSelectionModel().getSelectedIndex(),
 						zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),this);
-				stage.initModality(Modality.APPLICATION_MODAL);
-				stage.show();
+				ventana.getStage().show();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -143,43 +128,28 @@ public class ControladorZonas implements Initializable{
 	}
 	
 	public void agregarZona() throws IOException, ClassNotFoundException, SQLException {
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("nuevaZona.fxml"));
-		Parent root = (Parent) loader.load();
-		stage.setScene(new Scene(root));
-		stage.setResizable(false);
-		ControladorNuevaZona controlador = loader.getController();
+		ventana ventana = new ventana("/principal/nuevaZona.fxml");
+		ControladorNuevaZona controlador = ventana.getLoader().getController();
 		controlador.setClaseZona(this);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.show();
+		ventana.getStage().show();
 	}
 	
 
 	
 	public void editarZona() throws IOException {
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("editarZona.fxml"));
-		Parent root = (Parent) loader.load();
-		stage.setScene(new Scene(root));
-		stage.setResizable(false);
-		ControladorEditarZona controlador = loader.getController();
+		ventana ventana = new ventana("/principal/editarZona.fxml");
+		ControladorEditarZona controlador = ventana.getLoader().getController();
 		controlador.objetos((String) zona.getSelectionModel().getSelectedItem(),
 				zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),this);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.show();
+		ventana.getStage().show();
 	}
 	
 	public void eliminarZona() throws IOException {
-		Stage stage = new Stage();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("eliminarZona.fxml"));
-		Parent root = (Parent) loader.load();
-		stage.setScene(new Scene(root));
-		stage.setResizable(false);
-		ControladorEliminarZona controlador = loader.getController();
+		ventana ventana = new ventana("/principal/eliminarZona.fxml");
+		ControladorEliminarZona controlador = ventana.getLoader().getController();
 		controlador.objetos((String) zona.getSelectionModel().getSelectedItem(),
 				zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),access,this);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.show();
+		ventana.getStage().show();
 	}
 
 	public void setAcc(acceso access) {
@@ -191,5 +161,6 @@ public class ControladorZonas implements Initializable{
 		zona.setItems(listarZonas());
 		sucursal.getItems().clear();
 	};
+	
 
 }
