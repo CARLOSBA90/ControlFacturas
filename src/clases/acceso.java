@@ -1,5 +1,8 @@
 package clases;
-
+/*
+ * Clase para confirmación de acciones importantes
+ * Ejemplo: eliminación de sucursal o zona
+ */
 public class acceso {
 	private int nivel;
 	private int id;
@@ -9,8 +12,6 @@ public class acceso {
 		this.nombre= nombre;
 		this.nivel = nivel;
 	}
-
-
 	public String getNombre() {
 		return nombre;
 	}

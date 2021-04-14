@@ -1,12 +1,15 @@
 package clases;
-
 import java.time.LocalDate;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+/*
+ * Clase para el modelo de una factura, describe los atributos
+ * que lo componen, el tipo de datos implementado se ajusta a 
+ * las propiedades del nodo tableview de JavaFX
+ */
 
 public class factura {
-	
 	private LocalDate fecha;
 	private SimpleStringProperty tipo;
 	private SimpleStringProperty proveedor; 

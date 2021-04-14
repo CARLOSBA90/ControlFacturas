@@ -4,9 +4,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class zona {
+	/*
+	 * Define los atributos de una zona
+	 */
 
 	public zona(int id, String nombre) {
-		super();
 		this.nombre = new SimpleStringProperty(nombre);
 		this.id = new SimpleIntegerProperty(id);
 	}

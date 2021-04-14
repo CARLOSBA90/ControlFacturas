@@ -3,9 +3,14 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class usuario {
+	/*
+	 *  Describe los atributos comunes del usuario de la aplicación
+	 *  permite la validación y acceso, el nivel asignado, existen 
+	 *  dos tipos de usuario: los de oficina principal(usuario de primer nivel)
+	 *  y los de sucursales(usuarios de segundo nivel)
+	 */
 	
 	public usuario(int id, String usuario, String contrasena, int nivel) {
-		super();
 		this.id = new SimpleIntegerProperty(id);
 		this.usuario = new SimpleStringProperty(usuario);
 		this.contrasena = new SimpleStringProperty(contrasena);

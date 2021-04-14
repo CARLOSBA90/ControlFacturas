@@ -1,30 +1,23 @@
 package clases;
-
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+/*
+ * Clase que describe los atributos comunes de un Proveedor
+ */
+
 public class proveedor {
-	
-	
 	public proveedor(int id, String nombre, String cuit) {
-		super();
 		this.id = new SimpleIntegerProperty(id);
 		this.nombre =  new SimpleStringProperty(nombre);
-		this.cuit =  new SimpleStringProperty(cuit);
-		
+		this.cuit =  new SimpleStringProperty(cuit);		
 	}
-	
-	
-	
 	public proveedor(int id, String nombre) {
 		super();
 		this.id = new SimpleIntegerProperty(id);
 		this.nombre =  new SimpleStringProperty(nombre);
 	}
-
-
-
-
+	
 	public String getNombre() {
 		return nombre.get();
 	}
