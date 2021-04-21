@@ -259,7 +259,7 @@ public class ModeloSucursal {
 		return insercion;
 	}
 
-	public boolean eliminarSucursal(int id, int idAdmin, String pass) throws SQLException {
+	public boolean eliminarSucursal(int id, int idAdmin, String pass) throws SQLException, ClassNotFoundException, IOException {
 		boolean validacion = false;
 		boolean eliminado = false;
 		miConexion = conectar.conectar();

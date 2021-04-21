@@ -171,7 +171,7 @@ public class ModeloPrincipal {
 
 
 
-	public int nuevaZona(String nombre) throws SQLException {
+	public int nuevaZona(String nombre) throws SQLException, ClassNotFoundException, IOException {
 		String sql = "INSERT INTO zonas (nombre) VALUES (?)";
 		miConexion = conectar.conectar();
 		java.sql.PreparedStatement statement = miConexion.prepareStatement(sql);
@@ -182,7 +182,7 @@ public class ModeloPrincipal {
 
 
 
-	public boolean eliminarZona(int id, int idAdmin, String pass) throws SQLException {
+	public boolean eliminarZona(int id, int idAdmin, String pass) throws SQLException, ClassNotFoundException, IOException {
 		boolean validacion = false;
 		boolean eliminado = false;
 		miConexion = conectar.conectar();

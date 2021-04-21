@@ -189,7 +189,7 @@ public class ModeloBusquedaPrincipal {
 		return sql;
 	}
 
-	private ObservableList<factura> busquedaBBDD(String sql, String bus) throws SQLException {
+	private ObservableList<factura> busquedaBBDD(String sql, String bus) throws SQLException, ClassNotFoundException, IOException {
 		ObservableList<factura> lista = FXCollections.observableArrayList();
 		Statement miStatement = null;
 		ResultSet miResulset = null;
