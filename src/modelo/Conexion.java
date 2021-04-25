@@ -30,7 +30,7 @@ public class Conexion {
    	 
 		try {
 			Properties prop = new Properties();
-			String propFileName = "conexion.properties";
+			String propFileName ="resources/conexion.properties";
 			Class currentClass = new Object() { }.getClass().getEnclosingClass();
  
 			inputStream = currentClass.getClassLoader().getResourceAsStream(propFileName);
