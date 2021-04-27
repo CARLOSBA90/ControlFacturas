@@ -103,7 +103,7 @@ public class ModeloSucursal {
 			Statement statementAU = null;
 			ResultSet rs_AU = null;
 			int proximo = 0;
-			String sqlAU = "SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'controlfacturas' "
+			String sqlAU = "SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'heroku_52d8d334e25a240' "
 					+ "AND   TABLE_NAME   = 'facturas'";
 			statementAU = miConexion.createStatement();
 			rs_AU = statementAU.executeQuery(sqlAU);
@@ -201,7 +201,7 @@ public class ModeloSucursal {
 			miConexion = conectar.conectar();
             /// Chequeo de usuario existente
 			PreparedStatement statement=null;
-			String sql = "SELECT usuario.id from usuario WHERE usuario.usuario=?";
+			String sql = "SELECT id from usuario WHERE usuario=?";
 			statement = miConexion.prepareStatement(sql);
 			statement.setString(1,user);
 			ResultSet rs = statement.executeQuery();
@@ -217,7 +217,7 @@ public class ModeloSucursal {
 			Statement statementAU = null;
 			ResultSet rs_AU = null;
 			int proximo = 0;
-			String sqlAU = "SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'controlfacturas' "
+			String sqlAU = "SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'heroku_52d8d334e25a240' "
 					+ "AND   TABLE_NAME   = 'usuario'";
 			statementAU = miConexion.createStatement();
 			rs_AU = statementAU.executeQuery(sqlAU);
@@ -232,7 +232,7 @@ public class ModeloSucursal {
 			 statement.setString(2, user.toLowerCase());
 			 statement.setString(3, pass);
 			 statement.execute();
-			
+			 
 			/// TABLA ZONA SUCURSAL
 			 sql = "INSERT INTO sucursal_zona(idsucursal,idzonas) values(?,?)";
 			 statement = null;
@@ -241,8 +241,6 @@ public class ModeloSucursal {
 			 statement.setInt(2, idZona);
 			 statement.execute();
 			 statement.close();
-			
-			 
 			miConexion.commit();
 			insercion = 0;
 		} catch (Exception e) {

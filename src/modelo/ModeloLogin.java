@@ -5,6 +5,7 @@ import clases.usuario;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,38 +23,29 @@ public class ModeloLogin {
 	}
 	
 	public acceso autenticacion(String usuario, String contrasena) throws SQLException, ClassNotFoundException, IOException {
-		
-	//	int acceso = 0;
-		List<usuario> usuarios = new ArrayList<>();
-		Statement miStatement=null;
 		ResultSet miResulset=null;
 		acceso access=null;
+		PreparedStatement statement=null;
 		
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
 
 			miConexion = conectar.conectar();
-			String instruccion="SELECT * FROM usuario";
-			miStatement=miConexion.createStatement();
-
+			String instruccion="SELECT id,nivel FROM usuario WHERE usuario=? AND contrasena=?";
+			statement=miConexion.prepareStatement(instruccion);
+			statement.setString(1, usuario);
+			statement.setString(2, contrasena);
 			/// EJECUTAR SQL
-			miResulset=miStatement.executeQuery(instruccion);
-
-
-			/// RECORRER EL RESULSET
-
-			while(miResulset.next()) {
-				if(usuario.toLowerCase().equals(miResulset.getString(2)) && contrasena.equals(miResulset.getString(3)))
-				access = new acceso(miResulset.getInt(1),miResulset.getString(2),miResulset.getInt(4)); 
-
+			miResulset= statement.executeQuery();	
+			if(miResulset.next()) {
+				access = new acceso(miResulset.getInt(1),usuario,miResulset.getInt(2)); 
 			}}catch(SQLException e) {
-
 				e.printStackTrace();
 			}finally {
-				miStatement.close();
+				miResulset.close();
+				statement.close();
 				miConexion.close();
 			}
-		
 		
 		return access;
 	}
