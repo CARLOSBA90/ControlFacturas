@@ -114,7 +114,7 @@ public class ControladorInicial implements Initializable{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
         ControladorSucursal controlador = loader.getController();
-		controlador.setUsuario(acc.getId(),acc.getNombre());
+		controlador.setUsuario(acc.getId(),acc.getNombre(),acc.getCargarData());
 		primaryStage.show();
 		status.getScene().getWindow().hide();
 		

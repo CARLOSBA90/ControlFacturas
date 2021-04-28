@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import clases.*;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,6 +32,7 @@ public class ControladorSucursal implements Initializable {
 	@FXML private Label idLabel;
 	private int id;
 	private String nombre;
+	private ObservableList<factura> cargarData;
 
 	// Configurar tabla de un modelo de factura
 	@FXML private TableView<factura> tableview;
@@ -124,10 +126,11 @@ public class ControladorSucursal implements Initializable {
 	}
 
 	// Codigo para identificar de que sucursal se carga el ID
-	public void setUsuario(int i, String string) {
+	public void setUsuario(int i, String string, ObservableList<factura> observableList) {
 		this.id = i;
 		modelo = new ModeloSucursal();
 		nombre = string;
+		cargarData=observableList;
 	}
 
 	/// Carga la listview desde la BBDD
@@ -136,7 +139,11 @@ public class ControladorSucursal implements Initializable {
 			idLabel.setText("Sucursal : " + nombre);
 			tableview.getItems().clear();
 			try {
-				tableview.setItems(modelo.cargarData(id));
+				if (cargarData != null)
+					tableview.setItems(cargarData);
+				else {
+					tableview.setItems(modelo.cargarData(id));
+				}
 			} catch (ClassNotFoundException | IOException | SQLException e) {
 				/* GENERAR EXCEPCION CONTROLADA */
 			}
@@ -149,6 +156,12 @@ public class ControladorSucursal implements Initializable {
 	/// Refresca la vista despues de insertar una nueva factura, desde el controlador Ingresar Factura
 	public void refrescarLista() {
 		cargarLista(id);
+	}
+
+	public void setUsuario(int i, String string) {
+		this.id = i;
+		modelo = new ModeloSucursal();
+		nombre = string;
 	}
 
 
