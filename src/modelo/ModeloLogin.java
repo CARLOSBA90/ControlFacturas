@@ -15,8 +15,6 @@ public class ModeloLogin {
 	
 	private Connection miConexion=null;
 	private Conexion conectar;
-	private ModeloSucursal modeloSucursal;
-	private ModeloPrincipal modeloPrincipal;
 	public ModeloLogin() {
 		
 		conectar = new Conexion();
@@ -42,18 +40,18 @@ public class ModeloLogin {
 			if(miResulset.next()) {
 				int id = miResulset.getInt(1);
 				int nivel = miResulset.getInt(2);
-				if(nivel==2) {
-					modeloSucursal = new ModeloSucursal();
+				if (nivel == 2) {
 					ObservableList<factura> lista = FXCollections.observableArrayList();
 					instruccion = "SELECT facturas.id, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura, facturas.proveedor,"
 							+ " facturas.cuit, facturas.subtotal, facturas.iva1, facturas.iva2, facturas.iva3, "
 							+ " facturas.otro, facturas.total, facturas.forma from facturas INNER JOIN sucursal_factura on"
 							+ " facturas.id=sucursal_factura.idfactura where sucursal_factura.idsucursal=?";
-					statement=miConexion.prepareStatement(instruccion);
+					statement = miConexion.prepareStatement(instruccion);
 					statement.setInt(1, miResulset.getInt(1));
-					miResulset= statement.executeQuery();
+					miResulset = statement.executeQuery();
 					if (miResulset.next() == false)
-						lista.add(new factura(LocalDate.now(), "-", "SIN DATOS", "SIN DATOS", 0, 0, "SIN DATOS",0, 0, 0, 0, 0, 0));
+						lista.add(new factura(LocalDate.now(), "-", "SIN DATOS", "SIN DATOS", 0, 0, "SIN DATOS", 0, 0,
+								0, 0, 0, 0));
 					else {
 						do {
 							Date fechaSQL = miResulset.getDate(2);
@@ -65,10 +63,12 @@ public class ModeloLogin {
 									miResulset.getDouble(13)));
 						} while (miResulset.next());
 					}
+
+					access = new acceso(id, usuario, nivel, lista);
+				} else if (nivel == 1) {
 					
-					access = new acceso(id,usuario,nivel,lista);
-				}else
-				access = new acceso(id,usuario,nivel); 
+					access = new acceso(id, usuario, nivel);
+				}
 			}}catch(SQLException e) {
 				e.printStackTrace();
 			}finally {

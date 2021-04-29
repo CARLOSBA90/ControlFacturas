@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import clases.acceso;
 import javafx.beans.value.ChangeListener;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,7 @@ public class ControladorInicial implements Initializable{
 	@FXML private TextField txtUsuario;
 	@FXML private TextField txtContra;
 	ModeloLogin modelo = new ModeloLogin();
+	private Task tarea;
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		/*Oyente para controlar la cantidad de caracteres permitidos en los Textfield
@@ -58,7 +60,12 @@ public class ControladorInicial implements Initializable{
 		if (txtUsuario.getText().equals("") || txtContra.getText().equals("")) {
 			status.setText("ACCESO INCORRECTO");
 		} else {
+			tarea = esperar();
+			Thread momento = new Thread(esperar());
+			momento.start();
 			acc = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
+			momento.interrupt();
+			
 			if (acc != null) {
 				if (acc.getNivel() == 1)
 					OfPrincipal(acc);
@@ -71,6 +78,23 @@ public class ControladorInicial implements Initializable{
 	}
 	
 	
+	public Task esperar() {
+		return new Task(){
+			protected Object call() throws Exception {
+				//status.setText("");
+				String cadena= "";
+				for(int i=0; i<=4;i++){
+					Thread.sleep(500);
+					cadena+=".";
+					System.out.println(cadena);
+					if (i==4) {i=0; cadena="";};
+				}
+				return true;
+			}
+			
+		};
+	}
+
 	/// Acceso mediante atajos de boton, fines demostrativos
 	public void OfPrincipal(ActionEvent event) throws IOException {
 		Stage primaryStage = new Stage();

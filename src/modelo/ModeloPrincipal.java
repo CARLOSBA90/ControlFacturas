@@ -27,7 +27,6 @@ public class ModeloPrincipal {
 	
 
 	public ArrayList<zona> listaZonas() throws SQLException, ClassNotFoundException, IOException {
-		// TODO Auto-generated method stub
 		// ObservableList<String> listaZo = FXCollections.observableArrayList("Zona Norte", "Zona Sur");
 		ArrayList<zona> listaZo = new ArrayList<zona>();
 		Statement miStatement = null;
