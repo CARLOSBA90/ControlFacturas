@@ -3,13 +3,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: #f8f8f8;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ControladorInicial">
    <children>
-      <Button layoutX="115.0" layoutY="163.0" mnemonicParsing="false" onAction="#Login" text="Entrar">
+      <Button fx:id="botonLogin" layoutX="115.0" layoutY="163.0" mnemonicParsing="false" text="Entrar">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -29,7 +31,7 @@
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <Button layoutX="59.0" layoutY="222.0" mnemonicParsing="false" onAction="#OfPrincipal" text="Acceso: Oficina Principal">
+      <Button fx:id="boton1" layoutX="59.0" layoutY="222.0" mnemonicParsing="false" onAction="#OfPrincipal" text="Acceso: Oficina Principal">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
@@ -39,10 +41,12 @@
             <Font name="Calibri" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="60.0" layoutY="258.0" mnemonicParsing="false" onAction="#accesoSucursal" prefHeight="28.0" prefWidth="169.0" text="Acceso: Sucursal 2">
+      <Button fx:id="boton2" layoutX="60.0" layoutY="258.0" mnemonicParsing="false" onAction="#accesoSucursal" prefHeight="28.0" prefWidth="169.0" text="Acceso: Sucursal 2">
          <font>
             <Font name="Calibri" size="15.0" />
          </font>
       </Button>
+      <HBox fx:id="celdaBarra" layoutX="49.0" layoutY="34.0" prefHeight="39.0" prefWidth="197.0" />
+      <ProgressIndicator fx:id="databaseActivityIndicator" layoutX="130.0" layoutY="191.0" progress="0.0" />
    </children>
 </AnchorPane>

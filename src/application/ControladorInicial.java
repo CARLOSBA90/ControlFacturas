@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.logging.Logger;
+
 import clases.acceso;
 import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Task;
@@ -13,8 +18,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import modelo.ModeloLogin;
 import principal.ControladorPrincipal;
@@ -31,12 +40,19 @@ public class ControladorInicial implements Initializable{
 	@FXML private Label status;
 	@FXML private TextField txtUsuario;
 	@FXML private TextField txtContra;
-	ModeloLogin modelo = new ModeloLogin();
-	private Task tarea;
+	@FXML private Button botonLogin;
+	@FXML private Button boton1;
+	@FXML private Button boton2;
+	@FXML ProgressIndicator databaseActivityIndicator;
+	acceso acc = null;
+	private ExecutorService databaseExecutor;
+	private Future          databaseSetupFuture;
+	private static final Logger logger = Logger.getLogger(ControladorInicial.class.getName());
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		/*Oyente para controlar la cantidad de caracteres permitidos en los Textfield
 		** En este caso, maximo 20 caracteres*/
+		databaseActivityIndicator.setVisible(false);
 		ChangeListener<String> formato = (observable, valorViejo, valorNuevo) -> {
 			/// Maximo digitos permitidos por cada textfield
 			if (txtUsuario.getText().length() > 20) {
@@ -52,48 +68,78 @@ public class ControladorInicial implements Initializable{
 		txtUsuario.textProperty().addListener(formato);
 		txtContra.textProperty().addListener(formato);
 		
-	}
-	
+		botonLogin.setOnAction(event -> {
+			try {
+				Login();
+			} catch (ClassNotFoundException | SQLException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+		databaseExecutor = Executors.newFixedThreadPool(1, new DatabaseThreadFactory()); 
+		
+		botonLogin.setOnAction(event -> {
+			try {
+				Login();
+			} catch (ClassNotFoundException | SQLException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	    }
+		
 	public void Login() throws ClassNotFoundException, SQLException, IOException {
 		/// Validación, si los campos estan vacios no se permite comprobar el acceso
-		acceso acc = null;
+		
 		if (txtUsuario.getText().equals("") || txtContra.getText().equals("")) {
 			status.setText("ACCESO INCORRECTO");
 		} else {
-			tarea = esperar();
-			Thread momento = new Thread(esperar());
-			momento.start();
-			acc = modelo.autenticacion(txtUsuario.getText(), txtContra.getText());
-			momento.interrupt();
 			
-			if (acc != null) {
-				if (acc.getNivel() == 1)
-					OfPrincipal(acc);
-				else if (acc.getNivel() == 2)
-					Sucursal(acc);
-			} else
-				status.setText("DENEGADO!");
+			final ModeloLogin modelo = new ModeloLogin(txtUsuario.getText(), txtContra.getText());
+			//botonLogin.disabledProperty().bind(modelo.runningProperty());
+			botonLogin.setVisible(false);
+			boton1.setVisible(false);
+			boton2.setVisible(false);
+			databaseActivityIndicator.visibleProperty().bind(
+		            modelo.runningProperty()
+				    );
+			databaseActivityIndicator.progressProperty().bind(
+		            modelo.progressProperty()
+		    );
+
+			modelo.setOnSucceeded(e ->{
+				acc = modelo.getValue();
+				if (acc != null) {
+					if (acc.getNivel() == 1)
+						try {
+							OfPrincipal(acc);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					else if (acc.getNivel() == 2)
+						try {
+							Sucursal(acc);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+				} else
+					status.setText("DENEGADO!");
+				    botonLogin.setVisible(true);
+				    boton1.setVisible(true);
+				    boton2.setVisible(true);  
+			   }
+			      
+					);
+			
+			 databaseExecutor.submit(modelo);
+			
 		}
 
 	}
 	
-	
-	public Task esperar() {
-		return new Task(){
-			protected Object call() throws Exception {
-				//status.setText("");
-				String cadena= "";
-				for(int i=0; i<=4;i++){
-					Thread.sleep(500);
-					cadena+=".";
-					System.out.println(cadena);
-					if (i==4) {i=0; cadena="";};
-				}
-				return true;
-			}
-			
-		};
-	}
 
 	/// Acceso mediante atajos de boton, fines demostrativos
 	public void OfPrincipal(ActionEvent event) throws IOException {
@@ -165,3 +211,5 @@ public class ControladorInicial implements Initializable{
 	
 
 }
+
+

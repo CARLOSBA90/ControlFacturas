@@ -139,8 +139,9 @@ public class ControladorSucursal implements Initializable {
 			idLabel.setText("Sucursal : " + nombre);
 			tableview.getItems().clear();
 			try {
-				if (cargarData != null)
+				if (cargarData != null) {
 					tableview.setItems(cargarData);
+				System.out.println(cargarData);}
 				else {
 					tableview.setItems(modelo.cargarData(id));
 				}

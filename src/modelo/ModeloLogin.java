@@ -3,6 +3,8 @@ import clases.acceso;
 import clases.factura;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,26 +13,41 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class ModeloLogin {
+public class ModeloLogin extends DBTask<acceso>{
 	
 	private Connection miConexion=null;
 	private Conexion conectar;
+	private acceso acc;
+	private String usuario;
+	private String contra;
+	
+	@Override
+	protected acceso call() throws Exception {
+		return autenticacion(usuario,contra);
+	}
 	public ModeloLogin() {
 		
 		conectar = new Conexion();
 		
 	}
+	public ModeloLogin(String usuario, String contra) throws ClassNotFoundException, SQLException, IOException {
+		conectar = new Conexion();
+		this.usuario = usuario;
+		this.contra = contra;
 	
+	   
+	}
+
 	@SuppressWarnings("resource")
-	public acceso autenticacion(String usuario, String contrasena) throws SQLException, ClassNotFoundException, IOException {
+	public acceso autenticacion(String usuario, String contrasena)  throws SQLException, ClassNotFoundException, IOException {
 		ResultSet miResulset=null;
 		acceso access=null;
 		PreparedStatement statement=null;
 		
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
-
 			miConexion = conectar.conectar();
+			
 			String instruccion="SELECT id,nivel FROM usuario WHERE usuario=? AND contrasena=?";
 			statement=miConexion.prepareStatement(instruccion);
 			statement.setString(1, usuario);
@@ -63,7 +80,7 @@ public class ModeloLogin {
 									miResulset.getDouble(13)));
 						} while (miResulset.next());
 					}
-
+					
 					access = new acceso(id, usuario, nivel, lista);
 				} else if (nivel == 1) {
 					
@@ -76,8 +93,21 @@ public class ModeloLogin {
 				statement.close();
 				miConexion.close();
 			}
-		
+		setAcc(access);
 		return access;
 	}
+
+
+	public acceso getAcc() {
+		return acc;
+	}
+
+	public void setAcc(acceso acc) {
+		this.acc = acc;
+	}
+
+
+
+	
 
 }
