@@ -57,7 +57,7 @@ public class ModeloLogin extends DBTask<acceso>{
 			if(miResulset.next()) {
 				int id = miResulset.getInt(1);
 				int nivel = miResulset.getInt(2);
-				if (nivel == 2) {
+				/*if (nivel == 2) {
 					ObservableList<factura> lista = FXCollections.observableArrayList();
 					instruccion = "SELECT facturas.id, facturas.fecha, facturas.tipo, facturas.prefijo, facturas.nrofactura, facturas.proveedor,"
 							+ " facturas.cuit, facturas.subtotal, facturas.iva1, facturas.iva2, facturas.iva3, "
@@ -83,9 +83,9 @@ public class ModeloLogin extends DBTask<acceso>{
 					
 					access = new acceso(id, usuario, nivel, lista);
 				} else if (nivel == 1) {
-					
+					}*/
 					access = new acceso(id, usuario, nivel);
-				}
+				
 			}}catch(SQLException e) {
 				e.printStackTrace();
 			}finally {

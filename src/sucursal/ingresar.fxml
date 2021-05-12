@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -123,6 +124,7 @@
                   <TableColumn fx:id="totalT" prefWidth="60.0" text="TOTAL" />
                </columns>
             </TableView>
+            <ProgressIndicator fx:id="indicador" layoutX="400.0" layoutY="150.0" maxHeight="50.0" maxWidth="50.0" prefHeight="50.0" prefWidth="50.0" progress="0.0" />
          </children>
       </Pane>
    </children>

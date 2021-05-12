@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
@@ -25,6 +26,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -47,6 +49,7 @@ public class ControladorIngresarFactura implements Initializable {
 	@FXML private TextField total;
 	@FXML private TextField nrofactura;
 	@FXML private TextField prefijo;
+	@FXML ProgressIndicator indicador;
 	private ObservableList<String> tipo = FXCollections.observableArrayList("A", "B", "C");
 	private ObservableList<String> pago = FXCollections.observableArrayList("corriente", "contado");
 	private ObservableList<String> proveedor;
@@ -56,6 +59,8 @@ public class ControladorIngresarFactura implements Initializable {
 	private ControladorSucursal superior;
 	private ModeloSucursal modelo;
 	private int id;
+	private ExecutorService databaseExecutor;
+	
 
 	// Configurar tabla de un modelo de factura
 
@@ -96,7 +101,7 @@ public class ControladorIngresarFactura implements Initializable {
 			cargarLista(id);
 
 		});
-
+///////////////////////////////////////////////
 		/// Solicita los datos a la BBDD los nombres de proveedor y su CUIT
 		ModeloSucursal modelo = new ModeloSucursal();
 		ArrayList<proveedor> listaProveedores = new ArrayList<proveedor>();
@@ -333,9 +338,11 @@ public class ControladorIngresarFactura implements Initializable {
 
 	}
 
-	public void setUsuario(int id) {
+	public void setUsuario(int id, ExecutorService databaseExecutor, ProgressIndicator indicador) {
 		this.id = id;
 		modelo = new ModeloSucursal();
+		this.databaseExecutor = databaseExecutor;
+		//this.indicador = indicador;
 	}
 
 	public void blanquear() {
@@ -357,18 +364,27 @@ public class ControladorIngresarFactura implements Initializable {
 	public void cargarLista(int id) {
 		if (id != 0) {
 			tableview.getItems().clear();
-			try {
-				tableview.setItems(modelo.cargarData(id));
+		/*	try {tableview.setItems(modelo.cargarData(id));
 			} catch (ClassNotFoundException | IOException | SQLException e) {
-				/* tratar excepcion  */
-			}
-
+				/// GENERAR EXCEPCION CONTROLADA }*/
+			
+		    final ModeloSucursal modelo = new ModeloSucursal(id);
+		    indicador.visibleProperty().bind(
+		    		modelo.runningProperty()
+		    		);
+		    indicador.progressProperty().bind(
+		            modelo.progressProperty()
+		    );
+		    
+			modelo.setOnSucceeded(e ->{
+				ObservableList<factura> lista = modelo.getValue().getLista();
+				tableview.setItems(lista);
+			   }
+					);
+			databaseExecutor.submit(modelo);
 		} else {
-			/// Tablas de ejemplo
 			tableview.setItems(null);
-
 		}
-
 	}
 
 	public void setClase(ControladorSucursal controladorSucursal) {

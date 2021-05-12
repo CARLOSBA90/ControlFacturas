@@ -46,8 +46,8 @@ public class ControladorInicial implements Initializable{
 	@FXML ProgressIndicator databaseActivityIndicator;
 	acceso acc = null;
 	private ExecutorService databaseExecutor;
-	private Future          databaseSetupFuture;
-	private static final Logger logger = Logger.getLogger(ControladorInicial.class.getName());
+	//private Future          databaseSetupFuture;
+	//private static final Logger logger = Logger.getLogger(ControladorInicial.class.getName());
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		/*Oyente para controlar la cantidad de caracteres permitidos en los Textfield
@@ -120,7 +120,7 @@ public class ControladorInicial implements Initializable{
 						}
 					else if (acc.getNivel() == 2)
 						try {
-							Sucursal(acc);
+							Sucursal(acc, databaseExecutor);
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -159,6 +159,7 @@ public class ControladorInicial implements Initializable{
 	}
 	
 	public void accesoSucursal() throws IOException {
+		databaseExecutor = Executors.newFixedThreadPool(1, new DatabaseThreadFactory()); 
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucursal/VistaSucursal.fxml"));
 		Parent root = (Parent)loader.load();
@@ -167,7 +168,7 @@ public class ControladorInicial implements Initializable{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		ControladorSucursal controlador = loader.getController();
-		controlador.setUsuario(2, "Palermo");
+		controlador.setUsuario(2, "Palermo",databaseExecutor);
 		primaryStage.show();
 		status.getScene().getWindow().hide();
 	
@@ -175,7 +176,7 @@ public class ControladorInicial implements Initializable{
 	
 	
 	//Acceso comun, en caso de validarse el acceso
-	public void Sucursal(acceso acc) throws IOException {
+	public void Sucursal(acceso acc, ExecutorService databaseExecutor) throws IOException {
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/sucursal/VistaSucursal.fxml"));
 		Parent root = (Parent)loader.load();
@@ -184,7 +185,7 @@ public class ControladorInicial implements Initializable{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
         ControladorSucursal controlador = loader.getController();
-		controlador.setUsuario(acc.getId(),acc.getNombre(),acc.getCargarData());
+		controlador.setUsuario(acc.getId(),acc.getNombre(),databaseExecutor);
 		primaryStage.show();
 		status.getScene().getWindow().hide();
 		

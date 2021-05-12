@@ -4,6 +4,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+
 import clases.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -12,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,7 +35,9 @@ public class ControladorSucursal implements Initializable {
 	@FXML private Label idLabel;
 	private int id;
 	private String nombre;
-	private ObservableList<factura> cargarData;
+	private ExecutorService databaseExecutor;
+	//private ObservableList<factura> cargarData;
+	
 
 	// Configurar tabla de un modelo de factura
 	@FXML private TableView<factura> tableview;
@@ -49,6 +54,7 @@ public class ControladorSucursal implements Initializable {
 	@FXML private TableColumn<factura, Double> iva3;
 	@FXML private TableColumn<factura, Double> otros;
 	@FXML private TableColumn<factura, Double> total;
+	@FXML ProgressIndicator indicador;
 
 	//// Inicializa la vista con las propiedades y atributos de la tabla de un
 	//// modelo de factura
@@ -66,6 +72,7 @@ public class ControladorSucursal implements Initializable {
 		iva3.setCellValueFactory(new PropertyValueFactory<factura, Double>("iva3"));
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
+		indicador.setVisible(false);
 
 		/// Carga de datos despues de generar las vista, para poder cargar el ID
 		Platform.runLater(() -> {
@@ -80,6 +87,7 @@ public class ControladorSucursal implements Initializable {
 		cargarLista(id);
 		tableview.setPrefHeight(524);
 		central.getChildren().add(tableview);
+		central.getChildren().add(indicador);
 		Label tituloCabecera = new Label("Ultimas facturas ingresadas");
 		tituloCabecera.setFont(new Font("Calibri", 34));
 		tituloCabecera.setTextFill(Color.web("#868686"));
@@ -105,7 +113,7 @@ public class ControladorSucursal implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(ui + ".fxml"));
 		Parent root = (Parent) loader.load();
 		ControladorIngresarFactura controlador = loader.getController();
-		controlador.setUsuario(id);
+		controlador.setUsuario(id,databaseExecutor,indicador);
 		controlador.setClase(this);
 		blanquear();
 		Label tituloCabecera = new Label("Ingreso de nueva factura");
@@ -126,11 +134,12 @@ public class ControladorSucursal implements Initializable {
 	}
 
 	// Codigo para identificar de que sucursal se carga el ID
-	public void setUsuario(int i, String string, ObservableList<factura> observableList) {
+	public void setUsuario(int i, String string, ExecutorService databaseExecutor) {
 		this.id = i;
 		modelo = new ModeloSucursal();
 		nombre = string;
-		cargarData=observableList;
+		this.databaseExecutor = databaseExecutor;
+		//cargarData=observableList;
 	}
 
 	/// Carga la listview desde la BBDD
@@ -138,16 +147,24 @@ public class ControladorSucursal implements Initializable {
 		if (id != 0) {
 			idLabel.setText("Sucursal : " + nombre);
 			tableview.getItems().clear();
-			try {
-				if (cargarData != null) {
-					tableview.setItems(cargarData);
-				System.out.println(cargarData);}
-				else {
-					tableview.setItems(modelo.cargarData(id));
-				}
+		/*	try {tableview.setItems(modelo.cargarData(id));
 			} catch (ClassNotFoundException | IOException | SQLException e) {
-				/* GENERAR EXCEPCION CONTROLADA */
-			}
+				/// GENERAR EXCEPCION CONTROLADA }*/
+			
+		    final ModeloSucursal modelo = new ModeloSucursal(id);
+		    indicador.visibleProperty().bind(
+		    		modelo.runningProperty()
+		    		);
+		    indicador.progressProperty().bind(
+		            modelo.progressProperty()
+		    );
+		    
+			modelo.setOnSucceeded(e ->{
+				ObservableList<factura> lista = modelo.getValue().getLista();
+				tableview.setItems(lista);
+			   }
+					);
+			databaseExecutor.submit(modelo);
 		} else {
 			tableview.setItems(null);
 		}
