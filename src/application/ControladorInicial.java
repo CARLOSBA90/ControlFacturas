@@ -113,7 +113,7 @@ public class ControladorInicial implements Initializable{
 				if (acc != null) {
 					if (acc.getNivel() == 1)
 						try {
-							OfPrincipal(acc);
+							OfPrincipal(acc, databaseExecutor);
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -143,6 +143,7 @@ public class ControladorInicial implements Initializable{
 
 	/// Acceso mediante atajos de boton, fines demostrativos
 	public void OfPrincipal(ActionEvent event) throws IOException {
+		databaseExecutor = Executors.newFixedThreadPool(1, new DatabaseThreadFactory()); 
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/principal/VistaPrincipal.fxml"));
 		Parent root = (Parent)loader.load();
@@ -151,7 +152,7 @@ public class ControladorInicial implements Initializable{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		ControladorPrincipal controlador = loader.getController();
-		controlador.setAcc(new acceso (1,"principal",1));
+		controlador.setAcc(new acceso (1,"principal",1), databaseExecutor);
 		controlador.setStage(primaryStage);
 		primaryStage.show();
 		status.getScene().getWindow().hide();
@@ -191,7 +192,7 @@ public class ControladorInicial implements Initializable{
 		
 	}
 	
-	public void OfPrincipal(acceso acc) throws IOException {
+	public void OfPrincipal(acceso acc, ExecutorService databaseExecutor) throws IOException {
 		Stage primaryStage = new Stage();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/principal/VistaPrincipal.fxml"));
 		Parent root = (Parent)loader.load();
@@ -200,7 +201,7 @@ public class ControladorInicial implements Initializable{
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		ControladorPrincipal controlador = loader.getController();
-		controlador.setAcc(acc);
+		controlador.setAcc(acc, databaseExecutor);
 		controlador.setStage(primaryStage);
 		primaryStage.show();
 		status.getScene().getWindow().hide();

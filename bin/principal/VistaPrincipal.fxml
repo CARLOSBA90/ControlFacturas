@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
@@ -169,7 +170,7 @@
             </Pane>
           <Pane fx:id="central" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="850.0">
                <children>
-                  <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="524.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
+                  <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
                     <columns>
                       <TableColumn fx:id="fecha" prefWidth="77.0" text="FECHA" />
                       <TableColumn fx:id="tipo" prefWidth="33.0" text="TIPO" />
@@ -186,6 +187,7 @@
                         <TableColumn fx:id="total" prefWidth="60.0" text="TOTAL" />
                     </columns>
                   </TableView>
+                  <ProgressIndicator fx:id="indicador" layoutX="400.0" layoutY="180.0" maxHeight="50.0" maxWidth="50.0" prefHeight="50.0" prefWidth="50.0" progress="0.0" />
                </children>
             </Pane>
          </children></VBox>

@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+
 import clases.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -17,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -69,6 +72,8 @@ public class ControladorPrincipal implements Initializable {
 	@FXML private ComboBox<String> ListaZona;
 	private Stage stage;
 	private acceso access;
+	private ExecutorService databaseExecutor;
+	@FXML ProgressIndicator indicador;
 
 	//// Inicializa la vista con las propiedades y atributos de la tabla de un
 	//// modelo de factura
@@ -95,6 +100,7 @@ public class ControladorPrincipal implements Initializable {
 		tableview.setItems(null);
 		modelo = new ModeloPrincipal();
 		modeloSucursal = new ModeloSucursal();
+		indicador.setVisible(false);
 
 		try {
 			ListaZona.setItems(listarZonas());
@@ -316,8 +322,9 @@ public class ControladorPrincipal implements Initializable {
 		stage=primaryStage;
 	}
 
-	public void setAcc(acceso acc) {
+	public void setAcc(acceso acc, ExecutorService databaseExecutor) {
 	 this.access=acc;	
+	 this.databaseExecutor=databaseExecutor;
 	}
 
 }

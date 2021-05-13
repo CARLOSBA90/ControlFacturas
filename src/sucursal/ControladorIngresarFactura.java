@@ -32,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import modelo.ModeloSucursal;
+import modelo.ModeloSucursalIngreso;
 import clases.factura;
 import clases.proveedor;
 
@@ -60,6 +61,7 @@ public class ControladorIngresarFactura implements Initializable {
 	private ModeloSucursal modelo;
 	private int id;
 	private ExecutorService databaseExecutor;
+	private ArrayList<proveedor> listaProveedores;
 	
 
 	// Configurar tabla de un modelo de factura
@@ -97,26 +99,9 @@ public class ControladorIngresarFactura implements Initializable {
 
 		/// Carga de datos despues de generar las vista, para poder cargar el ID
 		Platform.runLater(() -> {
-
 			cargarLista(id);
-
 		});
-///////////////////////////////////////////////
-		/// Solicita los datos a la BBDD los nombres de proveedor y su CUIT
-		ModeloSucursal modelo = new ModeloSucursal();
-		ArrayList<proveedor> listaProveedores = new ArrayList<proveedor>();
-		try {
-			listaProveedores = modelo.listaProveedores();
-		} catch (ClassNotFoundException | SQLException | IOException e) {
-			/* tratar excepcion*/
-		}
-
-		// Genera lista en ArrayList tipo String
-		generarListas(listaProveedores);
-
 		/// Inserta los datos en cada lista de la GUI
-		listaProveedor.setItems(proveedor);
-		listaCuit.setItems(cuit);
 		listaDeTipos.setItems(tipo);
 		listaPago.setItems(pago);
 
@@ -368,7 +353,7 @@ public class ControladorIngresarFactura implements Initializable {
 			} catch (ClassNotFoundException | IOException | SQLException e) {
 				/// GENERAR EXCEPCION CONTROLADA }*/
 			
-		    final ModeloSucursal modelo = new ModeloSucursal(id);
+		    final ModeloSucursalIngreso modelo = new ModeloSucursalIngreso(id);
 		    indicador.visibleProperty().bind(
 		    		modelo.runningProperty()
 		    		);
@@ -379,6 +364,12 @@ public class ControladorIngresarFactura implements Initializable {
 			modelo.setOnSucceeded(e ->{
 				ObservableList<factura> lista = modelo.getValue().getLista();
 				tableview.setItems(lista);
+				listaProveedores = modelo.getValue().getProveedores();
+				// Genera lista en ArrayList tipo String
+				generarListas(listaProveedores);
+				listaProveedor.setItems(proveedor);
+				/// Inserta los datos en cada lista de la GUI
+				listaCuit.setItems(cuit);
 			   }
 					);
 			databaseExecutor.submit(modelo);

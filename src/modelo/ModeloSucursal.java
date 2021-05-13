@@ -9,10 +9,10 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import clases.factura;
+import clases.listado;
 import clases.proveedor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sucursal.listado;
 
 public class ModeloSucursal extends DBTask<listado>{
 	private Connection miConexion = null;
