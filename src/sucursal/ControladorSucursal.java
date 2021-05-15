@@ -152,18 +152,13 @@ public class ControladorSucursal implements Initializable {
 				/// GENERAR EXCEPCION CONTROLADA }*/
 			
 		    final ModeloSucursal modelo = new ModeloSucursal(id);
-		    indicador.visibleProperty().bind(
-		    		modelo.runningProperty()
-		    		);
-		    indicador.progressProperty().bind(
-		            modelo.progressProperty()
-		    );
+			indicador.visibleProperty().bind(modelo.runningProperty());
+			indicador.progressProperty().bind(modelo.progressProperty());
 		    
 			modelo.setOnSucceeded(e ->{
 				ObservableList<factura> lista = modelo.getValue().getLista();
 				tableview.setItems(lista);
-			   }
-					);
+			   });
 			databaseExecutor.submit(modelo);
 		} else {
 			tableview.setItems(null);

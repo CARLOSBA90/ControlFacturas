@@ -32,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import modelo.ModeloSucursal;
+import modelo.ModeloSucursalFactura;
 import modelo.ModeloSucursalIngreso;
 import clases.factura;
 import clases.proveedor;
@@ -242,6 +243,7 @@ public class ControladorIngresarFactura implements Initializable {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void facturaBBDD() throws SQLException {
 
 		LocalDate datoFecha = fecha.getValue();
@@ -262,30 +264,46 @@ public class ControladorIngresarFactura implements Initializable {
 
 		factura factura = new factura(datoFecha, datoTipo, datoProveedor, datoCuit, datoPrefijo, datoNroFactura,
 				datoPago, datoSubtotal, datoIva1, datoIva2, datoIva3, datoIvaOtros, datoTotal);
-		ModeloSucursal modelo = new ModeloSucursal();
-		boolean insercion = modelo.insertarFactura(factura, id);
+		
+		////
+		final ModeloSucursalFactura modelo = new ModeloSucursalFactura(factura, id);
+		indicador.visibleProperty().bind(modelo.runningProperty());
+		indicador.progressProperty().bind(modelo.progressProperty());
+		modelo.setOnSucceeded(e ->{
+			boolean	insercion=(boolean) modelo.getValue();
+			if (insercion) {
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setHeaderText(null);
+				alert.setTitle("Factura insertada");
+				alert.setContentText("Los datos han sido guardados correctamente");
+				ButtonType boton = new ButtonType("Ok");
+				ButtonType cancelar = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+				alert.getButtonTypes().setAll(boton, cancelar);
+				alert.getDialogPane().lookupButton(cancelar).setVisible(false);
+				alert.showAndWait();
+				cargarLista(id);
+				blanquear();
 
-		if (insercion) {
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setHeaderText(null);
-			alert.setTitle("Factura insertada");
-			alert.setContentText("Los datos han sido guardados correctamente");
-			ButtonType boton = new ButtonType("Ok");
-			ButtonType cancelar = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-			alert.getButtonTypes().setAll(boton, cancelar);
-			alert.getDialogPane().lookupButton(cancelar).setVisible(false);
-			alert.showAndWait();
-			cargarLista(id);
-			blanquear();
-
-		} else {
+			} else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setHeaderText(null);
+				alert.setTitle("Error");
+				alert.setContentText("Intento de guardar datos: fallido!");
+				alert.showAndWait();
+			}
+		   }
+				);
+		
+		modelo.setOnFailed(e ->{
 			Alert alert = new Alert(Alert.AlertType.ERROR);
 			alert.setHeaderText(null);
 			alert.setTitle("Error");
-			alert.setContentText("Intento de guardar datos: fallido!");
+			alert.setContentText("Conexion a base de datos: fallido!");
 			alert.showAndWait();
-		}
-
+			
+		});
+   
+		databaseExecutor.submit(modelo);
 	}
 
 	@FXML

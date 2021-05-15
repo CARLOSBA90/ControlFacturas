@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -30,6 +31,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import modelo.ListarZonas;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 import sucursal.ControladorSucursal;
@@ -101,16 +103,15 @@ public class ControladorPrincipal implements Initializable {
 		modelo = new ModeloPrincipal();
 		modeloSucursal = new ModeloSucursal();
 		indicador.setVisible(false);
-
-		try {
-			ListaZona.setItems(listarZonas());
-		} catch (ClassNotFoundException | SQLException | IOException e) {
-			/* controlar excepcion */
-		}
-
 		ListaSucursales.setItems(null);
 		/// Finalizacion total del sistema
 		Platform.runLater(() -> {
+			try {
+				listarZonas();
+			} catch (ClassNotFoundException | SQLException | IOException e) {
+				/* controlar excepcion */
+			}	
+		
 		stage.setOnHiding(new EventHandler<WindowEvent>() {
 
 	         @Override
@@ -128,14 +129,28 @@ public class ControladorPrincipal implements Initializable {
 
 	}
 
-	public ObservableList<String> listarZonas() throws ClassNotFoundException, SQLException, IOException {
+	public void listarZonas() throws ClassNotFoundException, SQLException, IOException {
 		/// Listar todas las zonas
-		zonas = modelo.listaZonas();
-		ObservableList<String> lista = FXCollections.observableArrayList();
-
-		/// Uso for each mejorado, expresión Lambda.
-		zonas.forEach(n -> lista.add(n.getNombre()));
-		return lista;
+		final ListarZonas modeloZona = new ListarZonas();
+		indicador.visibleProperty().bind(modeloZona.runningProperty());
+		indicador.progressProperty().bind(modeloZona.progressProperty());
+		
+		modeloZona.setOnSucceeded(e ->{
+			zonas = modeloZona.getValue();
+			ObservableList<String> lista = FXCollections.observableArrayList();
+			/// Uso for each mejorado, expresión Lambda.
+			zonas.forEach(n -> lista.add(n.getNombre()));
+			ListaZona.setItems(lista);
+		   });
+		
+		modeloZona.setOnFailed(e->{
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setHeaderText(null);
+			alert.setTitle("Error");
+			alert.setContentText("Conexion a base de datos: fallido!");
+			alert.showAndWait();
+			});
+		databaseExecutor.submit(modeloZona);
 
 	}
 
