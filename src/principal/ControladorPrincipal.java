@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
 import clases.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -32,9 +31,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import modelo.ListarZonas;
-import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
-import sucursal.ControladorSucursal;
 
 public class ControladorPrincipal implements Initializable {
 
@@ -49,8 +46,6 @@ public class ControladorPrincipal implements Initializable {
 	@SuppressWarnings("unused")
 	private Label labelSucursal = new Label("SUCURSAL");
 	private Label tituloCabecera = new Label(" ");
-	private ModeloPrincipal modelo;
-	private ModeloSucursal modeloSucursal;
 	private ArrayList<zona> zonas;
 	private ArrayList<sucursal> sucursales;
 
@@ -100,8 +95,6 @@ public class ControladorPrincipal implements Initializable {
 		otros.setCellValueFactory(new PropertyValueFactory<factura, Double>("otros"));
 		total.setCellValueFactory(new PropertyValueFactory<factura, Double>("total"));
 		tableview.setItems(null);
-		modelo = new ModeloPrincipal();
-		modeloSucursal = new ModeloSucursal();
 		indicador.setVisible(false);
 		ListaSucursales.setItems(null);
 		/// Finalizacion total del sistema
@@ -144,36 +137,53 @@ public class ControladorPrincipal implements Initializable {
 		   });
 		
 		modeloZona.setOnFailed(e->{
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setHeaderText(null);
-			alert.setTitle("Error");
-			alert.setContentText("Conexion a base de datos: fallido!");
-			alert.showAndWait();
+		    conexionFallida();
 			});
 		databaseExecutor.submit(modeloZona);
 
 	}
 
 	public void seleccionZonas() throws ClassNotFoundException, IOException, SQLException {
-		sucursales = modelo.listaSucursales(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
-		ObservableList<String> lista = FXCollections.observableArrayList();
-		sucursales.forEach(n -> lista.add(n.getNombre()));
-		ListaSucursales.setItems(lista);
-		ListaSucursales.getSelectionModel().selectFirst();	
+		final modelo.seleccionZonas modelo = new modelo.seleccionZonas(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
+		indicador.visibleProperty().bind(modelo.runningProperty());
+		indicador.progressProperty().bind(modelo.progressProperty());
+		modelo.setOnSucceeded(e ->{
+			sucursales = modelo.getValue();
+			ObservableList<String> lista = FXCollections.observableArrayList();
+			sucursales.forEach(n -> lista.add(n.getNombre()));
+			ListaSucursales.setItems(lista);
+			//ListaSucursales.getSelectionModel().selectFirst();	
+		   });
+		modelo.setOnFailed(e->{
+		    conexionFallida();
+			});
+		databaseExecutor.submit(modelo);
 	}
 
 	public void seleccionSucursal() throws ClassNotFoundException, IOException, SQLException {
-		///FIXME, MAL RENDIMIENTO, CONTINUO LANZAMIENTO DE EXCEPCIONES
-			try {
-				if (!ListaSucursales.getSelectionModel().getSelectedItem().equals("Sin datos")) 
-					tableview.setItems(modeloSucursal
-							.cargarData(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId()));
-			}catch(Exception e) {
-				//FIXME
-				/*TRATAR EXCEPCION*/
-			}
-		    
-		 
+		///////////////////////////////////
+		if(ListaSucursales.getSelectionModel().getSelectedIndex()>=0) {
+		 final ModeloSucursal modelo = new ModeloSucursal(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId());
+			indicador.visibleProperty().bind(modelo.runningProperty());
+			indicador.progressProperty().bind(modelo.progressProperty());
+			modelo.setOnSucceeded(e ->{
+				ObservableList<factura> lista = modelo.getValue().getLista();
+				tableview.setItems(lista);
+			   });
+			databaseExecutor.submit(modelo);
+			
+			modelo.setOnFailed(e->{
+			    conexionFallida();
+				});
+			databaseExecutor.submit(modelo);
+		}}
+	
+	public void conexionFallida() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setHeaderText(null);
+		alert.setTitle("Error");
+		alert.setContentText("Conexion a base de datos: fallido!");
+		alert.showAndWait();
 	}
 
 	/// Metodo de salida del programa
@@ -240,6 +250,8 @@ public class ControladorPrincipal implements Initializable {
 			tituloCabecera.setTranslateY(24.0);
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 			cabecera.getChildren().add(tituloCabecera);
+			ControladorHistorial controladorHistorial = loader.getController();
+			controladorHistorial.set(databaseExecutor);
 			central.getChildren().add(root);
 			break;
 

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
@@ -10,7 +11,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="principal.ControladorHistorial">
    <children>
-      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="51.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;">
+      <Pane fx:id="panel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="61.0" prefWidth="850.0" style="-fx-background-color: #F5F5F5;">
         
               
          <children>
@@ -28,21 +29,26 @@
             </Label>
          </children>
       </Pane>
-      <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onSort="#seleccionSucursal" prefHeight="472.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
-         <columns>
-            <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
-            <TableColumn fx:id="tipo" prefWidth="40.0" text="TIPO" />
-            <TableColumn fx:id="prefijo" prefWidth="51.0" text="PREFIJO" />
-            <TableColumn fx:id="nrofactura" prefWidth="84.0" text="FACTURA" />
-            <TableColumn fx:id="proveedor" prefWidth="100.0" text="PROVEEDOR" />
-            <TableColumn fx:id="cuit" prefWidth="90.0" text="CUIT" />
-            <TableColumn fx:id="subtotal" prefWidth="84.0" text="SUBTOTAL" />
-            <TableColumn fx:id="iva" prefWidth="65.0" text="IVA " />
-            <TableColumn fx:id="iva2" prefWidth="56.0" text="IVA 2 " />
-            <TableColumn fx:id="iva3" prefWidth="56.0" text="IVA 3 " />
-            <TableColumn fx:id="otros" prefWidth="56.0" text="OTROS " />
-            <TableColumn fx:id="total" prefWidth="70.0" text="TOTAL" />
-         </columns>
-      </TableView>
+      <Pane prefHeight="472.0" prefWidth="850.0">
+         <children>
+            <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" onSort="#seleccionSucursal" prefHeight="472.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true">
+               <columns>
+                  <TableColumn fx:id="fecha" prefWidth="75.0" text="FECHA" />
+                  <TableColumn fx:id="tipo" prefWidth="40.0" text="TIPO" />
+                  <TableColumn fx:id="prefijo" prefWidth="51.0" text="PREFIJO" />
+                  <TableColumn fx:id="nrofactura" prefWidth="84.0" text="FACTURA" />
+                  <TableColumn fx:id="proveedor" prefWidth="100.0" text="PROVEEDOR" />
+                  <TableColumn fx:id="cuit" prefWidth="90.0" text="CUIT" />
+                  <TableColumn fx:id="subtotal" prefWidth="84.0" text="SUBTOTAL" />
+                  <TableColumn fx:id="iva" prefWidth="65.0" text="IVA " />
+                  <TableColumn fx:id="iva2" prefWidth="56.0" text="IVA 2 " />
+                  <TableColumn fx:id="iva3" prefWidth="56.0" text="IVA 3 " />
+                  <TableColumn fx:id="otros" prefWidth="56.0" text="OTROS " />
+                  <TableColumn fx:id="total" prefWidth="70.0" text="TOTAL" />
+               </columns>
+            </TableView>
+            <ProgressIndicator fx:id="indicador" layoutX="400.0" layoutY="190.0" maxHeight="50.0" maxWidth="50.0" prefHeight="50.0" prefWidth="50.0" progress="0.0" />
+         </children>
+      </Pane>
    </children>
 </VBox>

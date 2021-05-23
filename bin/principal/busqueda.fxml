@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -87,7 +88,12 @@
             <RadioButton layoutX="674.0" layoutY="54.0" mnemonicParsing="false" text="NINGUNO" toggleGroup="$IMPUESTOS" />
          </children>
       </Pane>
-     <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true" />
+      <Pane prefHeight="375.0" prefWidth="850.0">
+         <children>
+           <TableView fx:id="tableview" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="850.0" style="-fx-background-color: #eeeeee;" tableMenuButtonVisible="true" />
+            <ProgressIndicator fx:id="indicador" layoutX="400.0" layoutY="140.0" maxHeight="50.0" maxWidth="50.0" prefHeight="50.0" prefWidth="50.0" progress="0.0" />
+         </children>
+      </Pane>
       <Pane prefHeight="24.0" prefWidth="850.0">
          <children>
             <Label fx:id="labelNroFactura" layoutX="15.0" layoutY="4.0" prefHeight="17.0" prefWidth="177.0" text="Número de facturas:" />
