@@ -92,7 +92,7 @@ public class ControladorHistorial implements Initializable {
 		modeloZona.setOnSucceeded(e ->{
 			zonas = modeloZona.getValue();
 			ObservableList<String> lista = FXCollections.observableArrayList();
-			/// Uso for each mejorado, expresión Lambda.
+			/// Uso for each mejorado, expresiÃ³n Lambda.
 			zonas.forEach(n -> lista.add(n.getNombre()));
 			ListaZona.setItems(lista);
 		   });
@@ -112,22 +112,20 @@ public class ControladorHistorial implements Initializable {
 	}
 
 	public void seleccionZonas(ActionEvent event) throws ClassNotFoundException, IOException, SQLException{
-		///////////////////////////////////
-		System.out.println("aca");
-		if(ListaSucursales.getSelectionModel().getSelectedIndex()>=0) {
-		 final ModeloSucursal modelo = new ModeloSucursal(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId());
-			indicador.visibleProperty().bind(modelo.runningProperty());
-			indicador.progressProperty().bind(modelo.progressProperty());
-			modelo.setOnSucceeded(e ->{
-				ObservableList<factura> lista = modelo.getValue().getLista();
-				tableview.setItems(lista);
-			   });
-			databaseExecutor.submit(modelo);
-			
-			modelo.setOnFailed(e->{
-			    conexionFallida();
-				});
-			databaseExecutor.submit(modelo);
+	final modelo.seleccionZonas modelo = new modelo.seleccionZonas(zonas.get(ListaZona.getSelectionModel().getSelectedIndex()).getId());
+		indicador.visibleProperty().bind(modelo.runningProperty());
+		indicador.progressProperty().bind(modelo.progressProperty());
+		modelo.setOnSucceeded(e ->{
+			sucursales = modelo.getValue();
+			ObservableList<String> lista = FXCollections.observableArrayList();
+			sucursales.forEach(n -> lista.add(n.getNombre()));
+			ListaSucursales.setItems(lista);
+			//ListaSucursales.getSelectionModel().selectFirst();	
+		   });
+		modelo.setOnFailed(e->{
+		    conexionFallida();
+			});
+		databaseExecutor.submit(modelo);
 		}}
 
 	public void seleccionSucursal(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
