@@ -37,13 +37,14 @@ public class ControladorBusqueda implements Initializable {
 	private ArrayList<sucursal> sucursales;
 	private ObservableList<String> listaCondicion1 = FXCollections.observableArrayList("PROVEEDOR", "TIPO", "PREFIJO", "FECHA");
 	private ObservableList<String> listaFecha = FXCollections.observableArrayList("ULTIMO DIA", "ULTIMA SEMANA", "ULTIMO MES",
-			                                                              "ULTIMO AÑO");
+			                                                              "ULTIMO AÃ‘O");
 	private ObservableList<String> listaTipo = FXCollections.observableArrayList("A", "B", "C");
 	private ObservableList<String> listaProve;
 	private ObservableList<String> listaPrefijo;
 	private ArrayList<proveedor> proveedores;
 	private ObservableList<factura> lista = FXCollections.observableArrayList();
 	private boolean fechaBloqueada = false;
+	private ExecutorService databaseExecutor;
 
 	// Configurar tabla de un modelo de factura
 	@FXML private TableView<factura> tableview;
@@ -59,6 +60,7 @@ public class ControladorBusqueda implements Initializable {
 	@FXML private Label labelNroFactura;
 	@FXML private Label labelSubtotalAcumu;
 	@FXML private Label labelTotalAcumu;
+	@FXML ProgressIndicator indicador;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		condicion1.setItems(listaCondicion1);
@@ -98,7 +100,7 @@ public class ControladorBusqueda implements Initializable {
 		/// Listar todas las zonas
 		zonas = modelo.listaZonas();
 		ObservableList<String> lista = FXCollections.observableArrayList();
-		/// Uso for each mejorado, expresión Lambda.
+		/// Uso for each mejorado, expresiÃ³n Lambda.
 		zonas.forEach(n -> lista.add(n.getNombre()));
 		return lista;
 	}
@@ -117,6 +119,7 @@ public class ControladorBusqueda implements Initializable {
 		switch (condicion1.getSelectionModel().getSelectedItem()) {
 
 		case "PROVEEDOR":
+				/////
 			proveedores = modelo.cargarListaProve();
 			ObservableList<String> lista = FXCollections.observableArrayList();
 			proveedores.forEach(n -> lista.add(n.getNombre()));
@@ -130,6 +133,7 @@ public class ControladorBusqueda implements Initializable {
 			break;
 
 		case "PREFIJO":
+		            /////
 			condicion2.setItems(modelo.cargarListaPre());
             if(fechaBloqueada) DesbloquearFecha();
 			break;
@@ -180,6 +184,7 @@ public class ControladorBusqueda implements Initializable {
 		String impuestos = botonSeleccionImpuestos.getText();
 		LocalDate fecha1 = fechaDesde.getValue();
 		LocalDate fecha2 = fechaHasta.getValue();
+		////////
 		lista = modeloBusqueda.obtenerLista(zona, sucursal, condicional1, condicional2, formaPago, impuestos, fecha1,
 				fecha2);
 
@@ -234,10 +239,14 @@ public class ControladorBusqueda implements Initializable {
 		   tempSub+=n.getSubtotal();
 		   tempTotal+=n.getTotal();
 		}
-		labelNroFactura.setText("Número de facturas: "+lista.size());
+		labelNroFactura.setText("NÃºmero de facturas: "+lista.size());
 		labelSubtotalAcumu.setText("Subtotal acumulado: "+String.format("%.00f", tempSub));
 		labelTotalAcumu.setText("Total acumulado: "+String.format("%.00f", tempTotal));
 
+	}
+	
+	public void setAcc(ExecutorService databaseExecutor) {
+	 this.databaseExecutor=databaseExecutor;
 	}
 
 }
