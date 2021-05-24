@@ -131,7 +131,7 @@ public class ControladorPrincipal implements Initializable {
 		modeloZona.setOnSucceeded(e ->{
 			zonas = modeloZona.getValue();
 			ObservableList<String> lista = FXCollections.observableArrayList();
-			/// Uso for each mejorado, expresión Lambda.
+			/// Uso for each mejorado, expresiÃ³n Lambda.
 			zonas.forEach(n -> lista.add(n.getNombre()));
 			ListaZona.setItems(lista);
 		   });
@@ -266,6 +266,8 @@ public class ControladorPrincipal implements Initializable {
 			cabecera.getChildren().add(tituloCabecera);
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 			central.setPrefHeight(120);
+			ControladorBusqueda ControladorBusqueda = loader.getController();
+			ControladorBusqueda.set(databaseExecutor);
 			central.getChildren().add(root);
 			break;
 
