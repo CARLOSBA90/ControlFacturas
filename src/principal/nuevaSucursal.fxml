@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -45,7 +46,7 @@
                   <Insets left="40.0" />
                </GridPane.margin>
             </Label>
-            <Button mnemonicParsing="false" onAction="#ingresarSucursal" text="CREAR" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="botonCrear" mnemonicParsing="false" onAction="#ingresarSucursal" text="CREAR" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="50.0" />
                </GridPane.margin>
@@ -69,6 +70,11 @@
             <ListView fx:id="zona" accessibleRole="COMBO_BOX" maxHeight="130.0" maxWidth="150.0" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="1" />
             <PasswordField fx:id="pass" maxHeight="25.0" maxWidth="150.0" prefHeight="25.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <PasswordField fx:id="rpass" maxHeight="25.0" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ProgressIndicator fx:id="indicador" maxHeight="35.0" maxWidth="35.0" prefHeight="35.0" prefWidth="35.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="60.0" />
+               </GridPane.margin>
+            </ProgressIndicator>
          </children>
       </GridPane>
       <Label fx:id="mensaje" textAlignment="CENTER" textFill="#ff0606">

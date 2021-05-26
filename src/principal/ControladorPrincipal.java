@@ -70,7 +70,7 @@ public class ControladorPrincipal implements Initializable {
 	private Stage stage;
 	private acceso access;
 	private ExecutorService databaseExecutor;
-	@FXML ProgressIndicator indicador;
+	@FXML private ProgressIndicator indicador;
 
 	//// Inicializa la vista con las propiedades y atributos de la tabla de un
 	//// modelo de factura
@@ -161,7 +161,6 @@ public class ControladorPrincipal implements Initializable {
 	}
 
 	public void seleccionSucursal() throws ClassNotFoundException, IOException, SQLException {
-		///////////////////////////////////
 		if(ListaSucursales.getSelectionModel().getSelectedIndex()>=0) {
 		 final ModeloSucursal modelo = new ModeloSucursal(sucursales.get(ListaSucursales.getSelectionModel().getSelectedIndex()).getId());
 			indicador.visibleProperty().bind(modelo.runningProperty());
@@ -251,7 +250,7 @@ public class ControladorPrincipal implements Initializable {
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 			cabecera.getChildren().add(tituloCabecera);
 			ControladorHistorial controladorHistorial = loader.getController();
-			controladorHistorial.set(databaseExecutor);
+			controladorHistorial.setDatabaseExecutor(databaseExecutor);
 			central.getChildren().add(root);
 			break;
 
@@ -267,7 +266,7 @@ public class ControladorPrincipal implements Initializable {
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 			central.setPrefHeight(120);
 			ControladorBusqueda ControladorBusqueda = loader.getController();
-			ControladorBusqueda.set(databaseExecutor);
+			ControladorBusqueda.setDatabaseExecutor(databaseExecutor);
 			central.getChildren().add(root);
 			break;
 
@@ -327,7 +326,7 @@ public class ControladorPrincipal implements Initializable {
 			cabecera.setStyle("-fx-background-color: #F8F8FF;");
 			central.setPrefHeight(600);
 			ControladorZonas controlador = loader.getController();
-			controlador.setAcc(access);
+			controlador.setAcc(access, databaseExecutor);
 			central.getChildren().add(root);
 
 			break;

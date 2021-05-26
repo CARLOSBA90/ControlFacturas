@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 import clases.acceso;
 import javafx.application.Platform;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
@@ -22,6 +24,8 @@ public class ControladorEditarZona implements Initializable{
 	private int id;
 	private ModeloPrincipal modelo;
 	ControladorZonas controlador;
+	@FXML private ProgressIndicator indicador;
+	private ExecutorService databaseExecutor;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -69,7 +73,7 @@ public class ControladorEditarZona implements Initializable{
 		
 	}
 	
-	public void objetos(String string, int i, ControladorZonas controladorZonas) {
+	public void objetos(String string, int i, ControladorZonas controladorZonas, ExecutorService databaseExecutor) {
 		this.zona = string;
 		this.id = i;
 		this.controlador = controladorZonas;

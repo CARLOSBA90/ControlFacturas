@@ -7,21 +7,46 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import clases.factura;
+import clases.listado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ModeloBusquedaPrincipal {
+public class ModeloBusquedaPrincipal extends DBTask<ObservableList<factura>>{
 	private Connection miConexion = null;
 	private Conexion conectar;
 	private boolean puerta = false;
+	private int zona;
+	private int sucursal;
+	private String condicional1;
+	private String condicional2;
+	private String formaPago;
+	private String impuestos;
+	private LocalDate fecha1;
+	private LocalDate fecha2;
 
 	public ModeloBusquedaPrincipal() {
 		conectar = new Conexion();
 	}
+	
+	
+	public ModeloBusquedaPrincipal(int zona, int sucursal, String condicional1,
+			String condicional2, String formaPago, String impuestos, LocalDate fecha1, LocalDate fecha2) {
+		conectar = new Conexion();
+		this.zona = zona;
+		this.sucursal = sucursal;
+		this.condicional1 = condicional1;
+		this.condicional2 = condicional2;
+		this.formaPago = formaPago;
+		this.impuestos = impuestos;
+		this.fecha1 = fecha1;
+		this.fecha2 = fecha2;
+	}
 
-	public ObservableList<factura> obtenerLista(int zona, int sucursal, String condicional1, String condicional2,
-			String formaPago, String impuestos, LocalDate fecha1, LocalDate fecha2)
-			throws ClassNotFoundException, IOException, SQLException {
+	protected ObservableList<factura> call() throws Exception {
+		return obtenerLista();
+	}
+
+	public ObservableList<factura> obtenerLista() throws ClassNotFoundException, IOException, SQLException {
 
 		String Zona = (zona == -1) ? "*" : "" + zona;
 		String Sucursal = (sucursal == -1) ? "*" : "" + sucursal;
@@ -249,5 +274,7 @@ public class ModeloBusquedaPrincipal {
 		return lista;
 
 	}
+
+	
 
 }

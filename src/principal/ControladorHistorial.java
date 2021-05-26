@@ -126,7 +126,7 @@ public class ControladorHistorial implements Initializable {
 		    conexionFallida();
 			});
 		databaseExecutor.submit(modelo);
-		}}
+		}
 
 	public void seleccionSucursal(ActionEvent event) throws ClassNotFoundException, IOException, SQLException {
 		///////////////////////////////////
@@ -146,7 +146,7 @@ public class ControladorHistorial implements Initializable {
 			databaseExecutor.submit(modelo);
 		}}
 
-	public void set(ExecutorService databaseExecutor) {
+	public void setDatabaseExecutor(ExecutorService databaseExecutor) {
 		this.databaseExecutor = databaseExecutor;
 	}
 

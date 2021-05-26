@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 import clases.acceso;
 import clases.zona;
@@ -15,19 +16,23 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
+import modelo.editarSucursal;
 
 public class ControladorEditarSucursal implements Initializable{
 	@FXML Label nombre;
 	@FXML TextField user;
 	@FXML TextField pass;
 	@FXML ListView<String> zona;
-	@FXML private javafx.scene.control.Button botonSalir;
+	@FXML private Button botonSalir;
+	@FXML private Button botonCambiar;
 	private ObservableList<String> lista;
 	private ModeloSucursal modeloSucursal;
 	private ArrayList<zona> zonasArray;
@@ -36,10 +41,14 @@ public class ControladorEditarSucursal implements Initializable{
 	private int index;
 	private int idZona;
 	private ControladorZonas controlador;
+	@FXML private ProgressIndicator indicador;
+	private ExecutorService databaseExecutor;
+	
 
 	public void initialize(URL location, ResourceBundle resources) {
 		controlador = new ControladorZonas();
 		modeloSucursal = new ModeloSucursal();
+		indicador.setVisible(false);
 		Platform.runLater(() -> {
 			zona.setItems(lista);
 			nombre.setText(nombreSucursal);
@@ -76,7 +85,7 @@ public class ControladorEditarSucursal implements Initializable{
   	  stage.close();
   }
 
-	public void objetos(ArrayList<clases.zona> zonasArray, String nombre, int id, int index, int idZona, ControladorZonas controladorZonas) {
+	public void objetos(ArrayList<clases.zona> zonasArray, String nombre, int id, int index, int idZona, ControladorZonas controladorZonas, ExecutorService databaseExecutor) {
 		this.zonasArray = zonasArray;
 		lista = FXCollections.observableArrayList();
 		/// Uso for each mejorado, expresión Lambda.
@@ -86,6 +95,7 @@ public class ControladorEditarSucursal implements Initializable{
 		this.index = index;
 		this.idZona = idZona;
 		this.controlador = controladorZonas;
+		this.databaseExecutor = databaseExecutor;
 	}
 	
 	public void cambiar() throws SQLException, ClassNotFoundException, IOException {
@@ -98,27 +108,55 @@ public class ControladorEditarSucursal implements Initializable{
 		 * - id zona anterior, este valor se envia para el query de actualizacion de zona
 		 */
 		if (!zona.getSelectionModel().isEmpty()) {
-			int edicion = modeloSucursal.editarSucursal(idSucursal,
+			
+			final editarSucursal modelo = new editarSucursal(idSucursal,
 					(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId() == idZona) ? -2
 							: zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),
 					(nombreSucursal.equals(user.getText())) ? null : user.getText(),
 					(pass.getText().equals("") ? null : pass.getText()),
 					idZona);
-			if(edicion==1) {
-				Alert alert = new Alert(Alert.AlertType.INFORMATION);
-				alert.setHeaderText(null);
-				alert.setTitle("Edicion Exitosa");
-				alert.setContentText("Los datos han sido correctamente actualizado!");
-				alert.showAndWait();
-				controlador.actualizarZona();
-				this.salir(null); 
-			}else {
+			
+
+			indicador.visibleProperty().bind(modelo.runningProperty());
+			indicador.progressProperty().bind(modelo.progressProperty());
+			botonCambiar.setVisible(false);
+			botonSalir.setVisible(false);
+			
+			modelo.setOnSucceeded(e ->{
+				int edicion = modelo.getValue().getEntero();
+				if(edicion==1) {
+					Alert alert = new Alert(Alert.AlertType.INFORMATION);
+					alert.setHeaderText(null);
+					alert.setTitle("Edicion Exitosa");
+					alert.setContentText("Los datos han sido correctamente actualizado!");
+					alert.showAndWait();
+					try {
+						controlador.actualizarZona();
+					} catch (ClassNotFoundException | SQLException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					this.salir(null); 
+				}else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setHeaderText(null);
+					alert.setTitle("Error");
+					alert.setContentText("Intento de actualizar datos: fallido!");
+					alert.showAndWait();
+				}
+			   });
+			
+			modelo.setOnFailed(e->{
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setTitle("Error");
 				alert.setContentText("Intento de actualizar datos: fallido!");
 				alert.showAndWait();
-			}
+				});
+			databaseExecutor.submit(modelo);
+
+			
+	
 		}
 	}
 

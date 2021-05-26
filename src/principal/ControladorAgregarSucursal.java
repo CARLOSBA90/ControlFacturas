@@ -4,6 +4,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 import clases.zona;
 import javafx.application.Platform;
@@ -14,12 +15,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
+import modelo.nuevaSucursal;
 
 public class ControladorAgregarSucursal implements Initializable {
 	private ModeloPrincipal modelo;
@@ -30,14 +34,19 @@ public class ControladorAgregarSucursal implements Initializable {
 	@FXML TextField pass = new TextField();
 	@FXML TextField rpass = new TextField();
 	@FXML Label mensaje;
-	@FXML private javafx.scene.control.Button botonSalir;
+	@FXML private Button botonSalir;
+	@FXML private Button botonCrear;
 	private ObservableList<String> lista;
 	private ControladorZonas controlador;
+	@FXML private ProgressIndicator indicador;
+	private ExecutorService databaseExecutor;
+	
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		controlador = new ControladorZonas();
 		modelo = new ModeloPrincipal();
 		modeloSucursal = new ModeloSucursal();
+		indicador.setVisible(false);
 
 		/// Algoritmo que solo permite caracteres alfabeticos en el Textfield user
 		Platform.runLater(() -> {
@@ -79,14 +88,25 @@ public class ControladorAgregarSucursal implements Initializable {
 	public void ingresarSucursal() throws SQLException, ClassNotFoundException, IOException {
 		if (zona.getSelectionModel().getSelectedItem() != null && !user.getText().equals("")
 				&& !pass.getText().equals("") && !rpass.getText().equals("")) {
-			try {
+			
 				if (pass.getText().contentEquals(rpass.getText())) {
-					int insercion = modeloSucursal.nuevaSucursal(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),user.getText(),pass.getText());
+				final nuevaSucursal modelo = new nuevaSucursal(zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),user.getText(),pass.getText());
+				indicador.visibleProperty().bind(modelo.runningProperty());
+				indicador.progressProperty().bind(modelo.progressProperty());
+				botonSalir.setVisible(false);
+				botonCrear.setVisible(false);
+				modelo.setOnSucceeded(e ->{
+					int insercion = modelo.getValue().getEntero();
 					switch(insercion) {
 			          
 					case 0:
 						this.salir(null);
-						controlador.actualizarZona();
+						try {
+							controlador.actualizarZona();
+						} catch (ClassNotFoundException | SQLException | IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						Alert alert = new Alert(Alert.AlertType.INFORMATION);
 						alert.setHeaderText(null);
 						alert.setTitle("Información");
@@ -99,13 +119,18 @@ public class ControladorAgregarSucursal implements Initializable {
 					
 					case 2: mensaje.setText("Error en base datos, transaccion fallida!"); break;
 			
-					}
+					}	
+				   });
+				modelo.setOnFailed(e->{
+				    conexionFallida();
+					});
+				databaseExecutor.submit(modelo);
+				
+				
+					
 				} else
 					mensaje.setText("Las contraseñas deben coincidir");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		} else {
 			mensaje.setText("Faltan campos por completar");
 		}
@@ -116,14 +141,22 @@ public class ControladorAgregarSucursal implements Initializable {
     	  stage.close();
     }
 
-	public void objetos(ArrayList<clases.zona> zonasArray2, ControladorZonas controladorZonas) {
+	public void objetos(ArrayList<clases.zona> zonasArray2, ControladorZonas controladorZonas, ExecutorService databaseExecutor) {
 		zonasArray = zonasArray2;
 		lista = FXCollections.observableArrayList();
 		/// Uso for each mejorado, expresión Lambda.
 		zonasArray.forEach(n -> lista.add(n.getNombre()));
 		controlador= controladorZonas;
+		this.databaseExecutor = databaseExecutor;
 		
 	}
 	
+	public void conexionFallida() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setHeaderText(null);
+		alert.setTitle("Error");
+		alert.setContentText("Conexion a base de datos: fallido!");
+		alert.showAndWait();
+	}
 	
 }
