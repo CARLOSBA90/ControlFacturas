@@ -78,9 +78,9 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </HBox>
-            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
+            <HBox cacheShape="false" centerShape="false" depthTest="DISABLE" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#zonas" prefHeight="40.0" prefWidth="199.0" scaleShape="false" styleClass="btns">
                <children>
-                  <Label onMouseClicked="#zonas" text="Zonas - Credenciales" textFill="WHITE">
+                  <Label text="Zonas - Credenciales" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>

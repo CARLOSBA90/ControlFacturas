@@ -4,7 +4,6 @@ public class booleano {
 	
 	private boolean booleano;
 	public booleano(boolean booleano) {
-		super();
 		this.booleano = booleano;
 	}
 

@@ -25,7 +25,6 @@ public class eliminarSucursal extends DBTask<booleano>{
 
 	@Override
 	protected booleano call() throws Exception {
-		// TODO Auto-generated method stub
 		return eliminar();
 	}
 	
@@ -34,6 +33,7 @@ public class eliminarSucursal extends DBTask<booleano>{
 		boolean validacion = false;
 		boolean eliminado = false;
 		miConexion = conectar.conectar();
+		
         /// Validacion administrador y contraseña
 		PreparedStatement statement=null;
 		String sql = "SELECT usuario.id from usuario WHERE usuario.id=? and usuario.contrasena=?";
@@ -44,7 +44,6 @@ public class eliminarSucursal extends DBTask<booleano>{
 		if(rs.next()) validacion = true;
 		rs.close();
 		statement.close();
-		
 		if(validacion) {
 			 sql = "DELETE FROM usuario WHERE usuario.id=?";
 			 statement = null;
@@ -55,7 +54,7 @@ public class eliminarSucursal extends DBTask<booleano>{
 			 eliminado=true;
 		}
 		
-		
+		miConexion.close();
 		return new booleano(eliminado);
 	}
 

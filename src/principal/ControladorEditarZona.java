@@ -11,11 +11,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modelo.ModeloPrincipal;
+import modelo.editarZona;
 
 public class ControladorEditarZona implements Initializable{
 	@FXML Label label;
@@ -26,11 +28,13 @@ public class ControladorEditarZona implements Initializable{
 	ControladorZonas controlador;
 	@FXML private ProgressIndicator indicador;
 	private ExecutorService databaseExecutor;
+	@FXML private Button editar;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		controlador = new ControladorZonas();
 		modelo = new ModeloPrincipal();
+		indicador.setVisible(false);
 		
 		Platform.runLater(() -> {
 			nombre.setText(zona);
@@ -49,34 +53,56 @@ public class ControladorEditarZona implements Initializable{
 	
 	public void editar() throws ClassNotFoundException, IOException {
 		
-		try {
 			if(!nombre.getText().equals("") && !nombre.getText().equals(zona)) {
-			   boolean query = modelo.editarZona(id, nombre.getText());
-			   if(query) {
-				    Stage stage = (Stage) nombre.getScene().getWindow();
-				  	stage.close();
-				    controlador.actualizarZona();
-					Alert alert = new Alert(Alert.AlertType.INFORMATION);
-					alert.setHeaderText(null);
-					alert.setTitle("NOMBRE DE ZONA");
-					alert.setContentText("Editado con exito!");
-					alert.showAndWait();
-			   }
-			
-			}
-			else { label.setText("OPERACIÓN INVÁLIDA");
 				
-			}
-		} catch (SQLException e) {
-			// TODO controlar excepcion
-		}
+				final editarZona modelo = new editarZona(id, nombre.getText());
+				indicador.visibleProperty().bind(modelo.runningProperty());
+				indicador.progressProperty().bind(modelo.progressProperty());
+				editar.setVisible(false);
+				
+				modelo.setOnSucceeded(e ->{
+					boolean edicion = modelo.getValue().isBooleano();
+					if(edicion) {
+					    Stage stage = (Stage) nombre.getScene().getWindow();
+					  	stage.close();
+					    try {
+							controlador.actualizarZona();
+						} catch (ClassNotFoundException | SQLException | IOException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setHeaderText(null);
+						alert.setTitle("NOMBRE DE ZONA");
+						alert.setContentText("Editado con exito!");
+						alert.showAndWait();
+					}
+					}
+				   );
+				
+				modelo.setOnFailed(e->{
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setHeaderText(null);
+					alert.setTitle("Error");
+					alert.setContentText("Intento de actualizar datos: fallido!");
+					alert.showAndWait();
+					});
+	  	
+				databaseExecutor.submit(modelo);
+				
+	
+			
+		}}
+			
 		
-	}
+	
+
 	
 	public void objetos(String string, int i, ControladorZonas controladorZonas, ExecutorService databaseExecutor) {
 		this.zona = string;
 		this.id = i;
 		this.controlador = controladorZonas;
+		this.databaseExecutor = databaseExecutor;
 	}
 	
 

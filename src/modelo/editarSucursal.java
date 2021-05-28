@@ -89,8 +89,6 @@ public class editarSucursal extends DBTask<entero>{
 			}
 		}
 		
-		
-
 		return new entero(insercion);
 	}
 

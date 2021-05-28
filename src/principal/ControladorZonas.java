@@ -161,7 +161,7 @@ public class ControladorZonas implements Initializable{
 	public void agregarZona() throws IOException, ClassNotFoundException, SQLException {
 		ventana ventana = new ventana("/principal/nuevaZona.fxml");
 		ControladorNuevaZona controlador = ventana.getLoader().getController();
-		controlador.setClaseZona(this);
+		controlador.setClaseZona(this, databaseExecutor);
 		ventana.getStage().show();
 	}
 	
@@ -179,7 +179,7 @@ public class ControladorZonas implements Initializable{
 		ventana ventana = new ventana("/principal/eliminarZona.fxml");
 		ControladorEliminarZona controlador = ventana.getLoader().getController();
 		controlador.objetos((String) zona.getSelectionModel().getSelectedItem(),
-				zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),access,this);
+				zonasArray.get(zona.getSelectionModel().getSelectedIndex()).getId(),access,this, databaseExecutor);
 		ventana.getStage().show();
 	}
 
