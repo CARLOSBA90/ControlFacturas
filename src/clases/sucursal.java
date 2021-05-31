@@ -25,6 +25,4 @@ public class sucursal {
 	}
 	private SimpleStringProperty nombre;
 	private SimpleIntegerProperty id;
-	
-	
 }

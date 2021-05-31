@@ -1,7 +1,6 @@
 package clases;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 /*
  * Clase que describe los atributos comunes de un Proveedor
  */

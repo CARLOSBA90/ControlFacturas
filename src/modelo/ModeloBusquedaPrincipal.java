@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import clases.factura;
-import clases.listado;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -267,6 +266,7 @@ public class ModeloBusquedaPrincipal extends DBTask<ObservableList<factura>>{
 		} catch (SQLException e) {
 			/* Agregar excepcion al metodo */
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}

@@ -1,11 +1,8 @@
 package modelo;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import clases.entero;
-import javafx.collections.ObservableList;
 
 public class editarSucursal extends DBTask<entero>{
     private Connection miConexion=null;
@@ -26,11 +23,11 @@ public class editarSucursal extends DBTask<entero>{
 	}
 
 	protected entero call() throws Exception {
-		return editarSucursal();
+		return editar();
 	}
 
 
-	public entero editarSucursal() throws SQLException {
+	public entero editar() throws SQLException {
 	    ///FIXME traer valor de id zona anterior, arreglar problemas en edicion de user y pass
 		int insercion = 0;
 		try {

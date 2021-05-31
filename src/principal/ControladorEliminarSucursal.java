@@ -5,12 +5,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
 import clases.acceso;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -19,8 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modelo.ListarZonas;
-import modelo.ModeloSucursal;
 import modelo.eliminarSucursal;
 
 public class ControladorEliminarSucursal implements Initializable{
@@ -29,7 +24,6 @@ public class ControladorEliminarSucursal implements Initializable{
 	@FXML Label msjpass;
 	private String sucursal;
 	private int id;
-	private ModeloSucursal modelo;
 	private acceso access;
 	ControladorZonas controlador;
 	private ExecutorService databaseExecutor;
@@ -38,7 +32,6 @@ public class ControladorEliminarSucursal implements Initializable{
 
 	public void initialize(URL location, ResourceBundle resources) {
 		controlador = new ControladorZonas();
-		modelo = new ModeloSucursal();
 		indicador.setVisible(false);
 		
 		Platform.runLater(() -> {

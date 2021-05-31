@@ -47,6 +47,7 @@ public class ListarZonas extends DBTask<ArrayList<zona>>{
 
 			e.printStackTrace();
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}

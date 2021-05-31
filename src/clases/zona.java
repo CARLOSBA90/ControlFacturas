@@ -1,5 +1,4 @@
 package clases;
-
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -7,7 +6,9 @@ public class zona {
 	/*
 	 * Define los atributos de una zona
 	 */
-
+	private SimpleStringProperty nombre;
+	private SimpleIntegerProperty id;
+	
 	public zona(int id, String nombre) {
 		this.nombre = new SimpleStringProperty(nombre);
 		this.id = new SimpleIntegerProperty(id);
@@ -24,7 +25,4 @@ public class zona {
 	public void setId(SimpleIntegerProperty id) {
 		this.id = id;
 	}
-	private SimpleStringProperty nombre;
-	private SimpleIntegerProperty id;
-
 }

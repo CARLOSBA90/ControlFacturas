@@ -3,42 +3,27 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
 import clases.acceso;
 import clases.sucursal;
 import clases.ventana;
 import clases.zona;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import modelo.ListarZonas;
 import modelo.ModeloPrincipal;
 import modelo.ModeloSucursal;
 //FIXME OPTIMIZACION DE CODIGO, RENDIMIENTO?
 
 public class ControladorZonas implements Initializable{
-	private ModeloPrincipal modelo;
-	private ModeloSucursal modeloSucursal;
 	@FXML ListView zona;
 	@FXML ListView sucursal;
 	private ArrayList<zona> zonasArray;
@@ -49,8 +34,6 @@ public class ControladorZonas implements Initializable{
 	private ExecutorService databaseExecutor;
 	
 	public void initialize(URL location, ResourceBundle resources) {
-		modelo = new ModeloPrincipal();
-		modeloSucursal = new ModeloSucursal();
 		indicador1.setVisible(false);
 		indicador2.setVisible(false);
 		Platform.runLater(() -> {

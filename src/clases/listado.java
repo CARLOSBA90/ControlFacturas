@@ -1,7 +1,5 @@
 package clases;
-
 import java.util.ArrayList;
-
 import javafx.collections.ObservableList;
 
 public class listado {
@@ -32,8 +30,4 @@ public class listado {
 	public void setProveedores(ArrayList<proveedor> proveedores) {
 		this.proveedores = proveedores;
 	}
-	
-	
-	
-
 }

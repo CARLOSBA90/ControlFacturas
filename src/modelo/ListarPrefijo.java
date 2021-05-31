@@ -1,14 +1,9 @@
 package modelo;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import clases.factura;
-import clases.proveedor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -31,7 +26,7 @@ public class ListarPrefijo extends DBTask<ObservableList<String>>{
 		ObservableList<String> lista = FXCollections.observableArrayList();
 		Statement miStatement = null;
 		ResultSet miResulset = null;
-
+		
 		try {
 			// ESTABLECER CONEXION Y USAR SENTENCIA SQL
 			miConexion = conectar.conectar();
@@ -53,6 +48,7 @@ public class ListarPrefijo extends DBTask<ObservableList<String>>{
 		} catch (SQLException e) {
           /* GENERAR EXCEPCION CONTROLADA*/
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}

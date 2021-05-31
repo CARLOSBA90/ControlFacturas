@@ -64,6 +64,7 @@ public class ModeloSucursal extends DBTask<listado>{
 		} catch (SQLException e) {
                      /* GENERAR EXCEPCION CONTROLADA */
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}
@@ -106,6 +107,7 @@ public class ModeloSucursal extends DBTask<listado>{
 		} catch (SQLException e) {
                      /* GENERAR EXCEPCION CONTROLADA */
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}
@@ -136,6 +138,7 @@ public class ModeloSucursal extends DBTask<listado>{
 		     } catch (SQLException e) {
                        /* GENERAR EXCEPCION CONTROLADA */
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}
@@ -163,6 +166,7 @@ public class ModeloSucursal extends DBTask<listado>{
 				proximo = rs_AU.getInt(1);
 			}
 			rs_AU.close();
+			statementAU.close();
 
 			/// ------------------------------------------------------------------------------------------------
 
@@ -185,6 +189,8 @@ public class ModeloSucursal extends DBTask<listado>{
 			if (cod_proveedor == 0 || proximo == 0)
 				throw new Exception("Valores no encontrado: proximo ID factura o codigo Proveedor");
 			
+			statementProveedor.close();
+			rs_Proveedor.close();
 			/// ------------------------------------------------------------------------------------------------
 			/// INSERCION VALORES TABLA FACTURA
 			String sql = "INSERT INTO facturas(fecha,tipo,prefijo,nrofactura,proveedor,cuit,"
@@ -275,6 +281,7 @@ public class ModeloSucursal extends DBTask<listado>{
 			rs_AU = statementAU.executeQuery(sqlAU);
 			if (rs_AU.next())  proximo = rs_AU.getInt(1);
 			rs_AU.close();
+			statementAU.close();
 			
 			///TABLA SUCURSAL
 			 sql = "INSERT INTO usuario(id,usuario,contrasena,nivel) values(?,?,?,2)";
@@ -334,7 +341,9 @@ public class ModeloSucursal extends DBTask<listado>{
 			 eliminado=true;
 		}
 		
-		
+		rs.close();
+		statement.close();
+		miConexion.close();
 		return eliminado;
 	}
 

@@ -23,11 +23,11 @@ public class nuevaSucursal extends DBTask<entero>{
 	}
 
 	protected entero call() throws Exception {
-		return nuevaSucursal();
+		return nueva();
 	}
 
 	
-	public entero nuevaSucursal() throws SQLException {
+	public entero nueva() throws SQLException {
 		int insercion = -1;
 		try {
 			miConexion = conectar.conectar();
@@ -37,7 +37,12 @@ public class nuevaSucursal extends DBTask<entero>{
 			statement = miConexion.prepareStatement(sql);
 			statement.setString(1,user);
 			ResultSet rs = statement.executeQuery();
-			if(rs.next()) return new entero(1);
+			if(rs.next()) {
+				rs.close();
+				statement.close();
+				miConexion.close();
+				return new entero(1);
+			}
 			rs.close();
 			statement.close();
 			
@@ -55,6 +60,7 @@ public class nuevaSucursal extends DBTask<entero>{
 			rs_AU = statementAU.executeQuery(sqlAU);
 			if (rs_AU.next())  proximo = rs_AU.getInt(1);
 			rs_AU.close();
+			statementAU.close();
 			
 			///TABLA SUCURSAL
 			 sql = "INSERT INTO usuario(id,usuario,contrasena,nivel) values(?,?,?,2)";

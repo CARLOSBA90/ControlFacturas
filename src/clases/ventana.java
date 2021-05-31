@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 /*
  * Clase para simplificar las apertura de ventanas
  * en la vista zona Controlador, invoca un stage y envia

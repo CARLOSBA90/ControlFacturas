@@ -1,9 +1,6 @@
 package clases;
-
 public class entero {
-	
 	private int entero;
-
 	public entero(int entero) {
 		this.entero = entero;
 	}
@@ -15,9 +12,4 @@ public class entero {
 	public void setEntero(int entero) {
 		this.entero = entero;
 	}
-	
-	
-	
-	
-
 }

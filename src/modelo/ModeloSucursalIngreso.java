@@ -76,6 +76,7 @@ public class ModeloSucursalIngreso extends DBTask<listado>{
 		} catch (SQLException e) {
                      /* GENERAR EXCEPCION CONTROLADA */
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}

@@ -1,11 +1,9 @@
 package modelo;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import clases.booleano;
 
 public class eliminarSucursal extends DBTask<booleano>{
@@ -33,6 +31,7 @@ public class eliminarSucursal extends DBTask<booleano>{
 		boolean validacion = false;
 		boolean eliminado = false;
 		miConexion = conectar.conectar();
+	    ///FIXME BBDD NO REALIZA LA QUERY (LOCK)
 		
         /// Validacion administrador y contraseña
 		PreparedStatement statement=null;

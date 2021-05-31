@@ -1,11 +1,9 @@
 package sucursal;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
 import clases.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;

@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
-import clases.acceso;
 import clases.zona;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -22,8 +20,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modelo.ModeloPrincipal;
-import modelo.ModeloSucursal;
 import modelo.editarSucursal;
 
 public class ControladorEditarSucursal implements Initializable{
@@ -34,7 +30,6 @@ public class ControladorEditarSucursal implements Initializable{
 	@FXML private Button botonSalir;
 	@FXML private Button botonCambiar;
 	private ObservableList<String> lista;
-	private ModeloSucursal modeloSucursal;
 	private ArrayList<zona> zonasArray;
 	private int idSucursal;
 	private String nombreSucursal;
@@ -47,7 +42,6 @@ public class ControladorEditarSucursal implements Initializable{
 
 	public void initialize(URL location, ResourceBundle resources) {
 		controlador = new ControladorZonas();
-		modeloSucursal = new ModeloSucursal();
 		indicador.setVisible(false);
 		Platform.runLater(() -> {
 			zona.setItems(lista);

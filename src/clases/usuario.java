@@ -1,7 +1,6 @@
 package clases;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 public class usuario {
 	/*
 	 *  Describe los atributos comunes del usuario de la aplicación
@@ -9,6 +8,8 @@ public class usuario {
 	 *  dos tipos de usuario: los de oficina principal(usuario de primer nivel)
 	 *  y los de sucursales(usuarios de segundo nivel)
 	 */
+	private SimpleStringProperty  usuario, contrasena;
+	private SimpleIntegerProperty id, nivel;
 	
 	public usuario(int id, String usuario, String contrasena, int nivel) {
 		this.id = new SimpleIntegerProperty(id);
@@ -42,7 +43,4 @@ public class usuario {
 		this.nivel = nivel;
 	}
 
-
-	private SimpleStringProperty  usuario, contrasena;
-	private SimpleIntegerProperty id, nivel;
 }

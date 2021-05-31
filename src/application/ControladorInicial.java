@@ -6,12 +6,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.logging.Logger;
-
 import clases.acceso;
 import javafx.beans.value.ChangeListener;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +16,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import modelo.ModeloLogin;
 import principal.ControladorPrincipal;
@@ -46,8 +40,6 @@ public class ControladorInicial implements Initializable{
 	@FXML ProgressIndicator databaseActivityIndicator;
 	acceso acc = null;
 	private ExecutorService databaseExecutor;
-	//private Future          databaseSetupFuture;
-	//private static final Logger logger = Logger.getLogger(ControladorInicial.class.getName());
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		/*Oyente para controlar la cantidad de caracteres permitidos en los Textfield

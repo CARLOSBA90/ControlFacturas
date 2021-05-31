@@ -18,8 +18,6 @@ public class Conexion {
 	String password = "root";
 	int port = 3306;
 	String url = String.format("jdbc:mysql://%s:%d/%s?useSSL=false", host, port, db);*/
-    
-	
 
 	public Connection conectar() throws SQLException, ClassNotFoundException, IOException {
 

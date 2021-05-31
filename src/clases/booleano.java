@@ -1,7 +1,5 @@
 package clases;
-
 public class booleano {
-	
 	private boolean booleano;
 	public booleano(boolean booleano) {
 		this.booleano = booleano;
@@ -14,8 +12,4 @@ public class booleano {
 	public void setBooleano(boolean booleano) {
 		this.booleano = booleano;
 	}
-	
-	
-	
-
 }

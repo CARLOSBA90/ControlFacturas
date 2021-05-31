@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
 import clases.zona;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -26,8 +25,6 @@ import modelo.ModeloSucursal;
 import modelo.nuevaSucursal;
 
 public class ControladorAgregarSucursal implements Initializable {
-	private ModeloPrincipal modelo;
-	private ModeloSucursal modeloSucursal;
 	private ArrayList<zona> zonasArray;
 	@FXML ListView zona;
 	@FXML TextField user = new TextField();
@@ -44,8 +41,6 @@ public class ControladorAgregarSucursal implements Initializable {
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		controlador = new ControladorZonas();
-		modelo = new ModeloPrincipal();
-		modeloSucursal = new ModeloSucursal();
 		indicador.setVisible(false);
 
 		/// Algoritmo que solo permite caracteres alfabeticos en el Textfield user

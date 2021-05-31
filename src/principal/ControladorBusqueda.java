@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
 import clases.factura;
 import clases.proveedor;
 import clases.sucursal;
@@ -32,22 +31,17 @@ import modelo.ListarPrefijo;
 import modelo.ListarZonas;
 import modelo.ModeloBusquedaPrincipal;
 import modelo.ModeloPrincipal;
-import modelo.ModeloSucursal;
 
 public class ControladorBusqueda implements Initializable {
 	
 	// Variables
 	private ModeloPrincipal modelo;
-	private ModeloSucursal modeloSucursal;
-	private ModeloBusquedaPrincipal modeloBusqueda;
 	private ArrayList<zona> zonas;
 	private ArrayList<sucursal> sucursales;
 	private ObservableList<String> listaCondicion1 = FXCollections.observableArrayList("PROVEEDOR", "TIPO", "PREFIJO", "FECHA");
 	private ObservableList<String> listaFecha = FXCollections.observableArrayList("ULTIMO DIA", "ULTIMA SEMANA", "ULTIMO MES",
 			                                                              "ULTIMO AÑO");
 	private ObservableList<String> listaTipo = FXCollections.observableArrayList("A", "B", "C");
-	private ObservableList<String> listaProve;
-	private ObservableList<String> listaPrefijo;
 	private ArrayList<proveedor> proveedores;
 	private ObservableList<factura> lista = FXCollections.observableArrayList();
 	private boolean fechaBloqueada = false;
@@ -72,8 +66,6 @@ public class ControladorBusqueda implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		condicion1.setItems(listaCondicion1);
 		modelo = new ModeloPrincipal();
-		modeloSucursal = new ModeloSucursal();
-		modeloBusqueda = new ModeloBusquedaPrincipal();
 		indicador.setVisible(false);
 
 		/// Oyente para colocar la fecha como tope hasta el dia actual

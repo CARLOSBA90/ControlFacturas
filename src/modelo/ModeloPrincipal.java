@@ -1,15 +1,11 @@
 package modelo;
-
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import clases.factura;
 import clases.proveedor;
 import clases.sucursal;
 import clases.zona;
@@ -53,6 +49,7 @@ public class ModeloPrincipal {
 
 			e.printStackTrace();
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}
@@ -88,6 +85,7 @@ public class ModeloPrincipal {
 		} catch (SQLException e) {
 			/* GENERAR EXCEPCION CONTROLADA */
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}
@@ -124,6 +122,7 @@ public class ModeloPrincipal {
 		} catch (SQLException e) {
                /* GENERAR EXCEPCION CONTROLADA*/
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}
@@ -160,6 +159,7 @@ public class ModeloPrincipal {
 		} catch (SQLException e) {
           /* GENERAR EXCEPCION CONTROLADA*/
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}
@@ -176,6 +176,8 @@ public class ModeloPrincipal {
 		java.sql.PreparedStatement statement = miConexion.prepareStatement(sql);
 		statement.setString(1, nombre);
 		statement.execute();
+		statement.close();
+		miConexion.close();
 		return 1;
 	}
 
@@ -206,7 +208,7 @@ public class ModeloPrincipal {
 			 eliminado=true;
 		}
 		
-		
+		miConexion.close();
 		return eliminado;
 	}
 

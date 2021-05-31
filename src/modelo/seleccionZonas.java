@@ -51,6 +51,7 @@ public class seleccionZonas extends DBTask<ArrayList<sucursal>> {
 		} catch (SQLException e) {
 			/* GENERAR EXCEPCION CONTROLADA */
 		} finally {
+			miResulset.close();
 			miStatement.close();
 			miConexion.close();
 		}

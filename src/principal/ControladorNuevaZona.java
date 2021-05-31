@@ -1,11 +1,9 @@
 package principal;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
-
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,8 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modelo.ModeloPrincipal;
-import modelo.editarZona;
 import modelo.nuevaZona;
 
 
@@ -25,7 +21,6 @@ public class ControladorNuevaZona implements Initializable{
 
 	@FXML TextField nombre;
 	@FXML Label etiqueta;
-	private ModeloPrincipal modelo;
 	ControladorZonas controlador;
 	@FXML private ProgressIndicator indicador;
 	@FXML private Button boton;
@@ -33,7 +28,6 @@ public class ControladorNuevaZona implements Initializable{
 
 	public void initialize(URL location, ResourceBundle resources) {
 		indicador.setVisible(false);
-		modelo = new ModeloPrincipal();
 		
 		ChangeListener<String> soloLetras = (observable, valorViejo, valorNuevo) -> {
 			 if (!valorNuevo.matches("\\sa-zA-Z*")) {

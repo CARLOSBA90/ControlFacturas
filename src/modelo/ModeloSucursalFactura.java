@@ -51,6 +51,7 @@ public class ModeloSucursalFactura extends DBTask{
 				proximo = rs_AU.getInt(1);
 			}
 			rs_AU.close();
+			statementAU.close();
 
 			/// ------------------------------------------------------------------------------------------------
 
@@ -70,6 +71,7 @@ public class ModeloSucursalFactura extends DBTask{
 				cod_proveedor = rs_Proveedor.getInt(1);
 			}
 			rs_Proveedor.close();
+			statementProveedor.close();
 			if (cod_proveedor == 0 || proximo == 0)
 				throw new Exception("Valores no encontrado: proximo ID factura o codigo Proveedor");
 			
